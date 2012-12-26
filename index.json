@@ -1,0 +1,16 @@
+{
+	"moduleID": "{e5aa629b-75bd-45c0-9bcb-845c102b0411}",
+	"moduleName": "Unwetterzentrale",
+	"moduleType": "Device",
+	"vendor": "paresy",
+	"aliases": 
+	[
+		"Unwetterzentrale"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+
+	"prefix": "UWZ",
+	"singleton": false	
+}

@@ -1,11 +1,25 @@
 {
 	"elements":
 	[
-		{ "name": "area", "type": "Select", "caption": "Gebiet", options: 
-		[ { label: '1', value: '1' }, { label: '1,5', value: '1.5' }, { label: '2', value: '2' } 
-		] } }, },
+		{ "name": "area", "type": "Select", "caption": "Gebiet", 
+			"options": [
+				{ "label": "Deutschland", "value": "dwddg" }, 
+				{ "label": "Baden-Württemberg", "value": "dbad" }, 
+				{ "label": "Bayern", "value": "dbay" }, 
+				{ "label": "Brandenburg/Berlin", "value": "dber" }, 
+				{ "label": "Hessen", "value": "dhes" }, 
+				{ "label": "Mecklenburg-Vorpommern", "value": "dmec" }, 
+				{ "label": "Niedersachsen/Bremen", "value": "dnie" }, 
+				{ "label": "NRW", "value": "dnrw" }, 
+				{ "label": "Rheinland-Pfalz/Saarland", "value": "drlp" },
+				{ "label": "Sachsen", "value": "dsac" },
+				{ "label": "Sachsen-Anhalt", "value": "dsan" },
+				{ "label": "Schleswig-Holstein/Hamburg", "value": "dsch" },
+				{ "label": "Thüringen", "value": "dtue" }
+			]
+		},
 		{ "name": "homeX", "type": "NumberSpinner", "caption": "X" },
-		{ "name": "homeY", "type": "NumberSpinner", "caption": "Y" }
+		{ "name": "homeY", "type": "NumberSpinner", "caption": "Y" },
 		{ "name": "homeRadius", "type": "NumberSpinner", "caption": "Radius" }
 	]
 }

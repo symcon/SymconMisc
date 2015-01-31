@@ -1,0 +1,14 @@
+{
+	"id": "{e5aa629b-75bd-45c0-9bcb-845c102b0411}",
+	"name": "Unwetterzentrale",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"Unwetterzentrale"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "UWZ"
+}

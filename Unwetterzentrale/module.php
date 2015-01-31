@@ -1,6 +1,6 @@
 <?
 
-	class Unwetterzentrale extends IPSModule
+	class Unwetterzentrale /*extends IPSModule*/
 	{
 		private $imagePath = "";
 		private $rainValueVariableID = 0;

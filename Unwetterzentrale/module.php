@@ -1,33 +1,37 @@
 <?
 
-	class Unwetterzentrale /*extends IPSModule*/
+	class Unwetterzentrale extends IPSModule
 	{
-		private $imagePath = "";
-		private $rainValueVariableID = 0;
-	
+        
+        private $imagePath;
+        
 		public function __construct($InstanceID)
 		{
+            //Never delete this line!
 			parent::__construct($InstanceID);
-			
-			$this->imagePath = "media/radar".$InstanceID.".gif";
-			
-			$this->RegisterProperty("area", "dsch");
-			$this->RegisterProperty("homeX", "324");
-			$this->RegisterProperty("homeY", "179");
-			$this->RegisterProperty("homeRadius", "10");
-						
-			$this->rainValueVariableID = $this->RegisterVariableInteger("RainValue", "Regenwert");
-			
-			$this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
-			$this->RegisterEventCyclic("UpdateTimer", "Automatische aktualisierung", 15);
-			
+            
+            //These lines are parsed on Symcon Startup or Instance creation
+            //You cannot use variables here. Just static values.
+			$this->RegisterPropertyString("area", "dsch");
+			$this->RegisterPropertyInteger("homeX", 324);
+			$this->RegisterPropertyInteger("homeY", 179);
+			$this->RegisterPropertyInteger("homeRadius", 10);
+            
+            //You can add custom code below.
+            $this->imagePath = "media/radar".$InstanceID.".gif";
+            
 		}
 	
 		public function ApplyChanges()
 		{
-			//Sobald der Nutzer neue Eigenschaften per Übernehmen speichert, wollen wir direkt neu Laden
-			//Eventuelle Fehler werden dann an die Konsole weitergegeben
-			$this->RequestInfo();
+            //Never delete this line!
+            parent::ApplyChanges();
+            
+            $this->RegisterVariableInteger("RainValue", "Regenwert");
+
+            //$this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
+            //$this->RegisterEventCyclic("UpdateTimer", "Automatische aktualisierung", 15);
+            
 		}
 	
 		/**
@@ -40,6 +44,12 @@
 		public function RequestInfo()
 		{
 		
+            $imagePath = IPS_GetKernelDir() . $this->imagePath;
+            $area = $this->ReadPropertyString("area");
+            $homeX = $this->ReadPropertyInteger("homeX");
+            $homeY = $this->ReadPropertyInteger("homeY");
+            $homeRadius = $this->ReadPropertyInteger("homeRadius");
+            
 			//Zeit berechnen
 			$minute=floor(date("i") / 15) * 15;
 			$dateline=mktime(date("H"), $minute, 0, date("m"), date("d"), date("y"));
@@ -69,18 +79,18 @@
 			 return;
 			}
 
-			file_put_contents(IPS_GetKernelDir().$this->imagePath, $data);
+			file_put_contents($imagePath, $data);
 
 			//Radarbild auswerten
-			$im = ImageCreateFromGIF (IPS_GetKernelDir().$this->imagePath);
+			$im = ImageCreateFromGIF($imagePath);
 
 			//Stärken 
-			$regen[6] = imagecolorresolve  ($im, 250,2,250); 
-			$regen[5] = imagecolorresolve  ($im, 156,50,156); 
-			$regen[4] = imagecolorresolve  ($im,  28,126,220); 
-			$regen[3] = imagecolorresolve  ($im,  44,170,252); 
-			$regen[2] = imagecolorresolve  ($im,  84,210,252); 
-			$regen[1] = imagecolorresolve  ($im, 172,254,252);  
+			$regen[6] = imagecolorresolve($im, 250,2,250);
+			$regen[5] = imagecolorresolve($im, 156,50,156);
+			$regen[4] = imagecolorresolve($im,  28,126,220);
+			$regen[3] = imagecolorresolve($im,  44,170,252);
+			$regen[2] = imagecolorresolve($im,  84,210,252);
+			$regen[1] = imagecolorresolve($im, 172,254,252);
 
 			//Pixel durchgehen
 			$regenmenge = 0;
@@ -102,7 +112,8 @@
 
 			imagedestroy($im);
 
-			SetValue($this->rainValueVariableID, $regenmenge);			
+			SetValue($this->GetStatusVariableID("RainValue"), $regenmenge);
+            
 		}
 	
 	}

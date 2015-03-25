@@ -1,4 +1,4 @@
-Colletion of Misc PHP Module for IP-Symcon
+Misc PHP Modules for IP-Symcon
 ================
 
 * Unwetterzentrale

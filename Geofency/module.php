@@ -54,6 +54,9 @@
 		*/
 		public function ProcessHookData()
 		{
+			//workaround for bug
+			if(!isset($_IPS))
+				global $_IPS;
 			if($_IPS['SENDER'] == "Execute") {
 				echo "This script cannot be used this way.";
 				return;

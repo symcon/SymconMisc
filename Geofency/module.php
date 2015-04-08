@@ -54,8 +54,10 @@
 		*/
 		public function ProcessHookData()
 		{
-		
-			
+			if($_IPS['SENDER'] == "Execute") {
+				echo "This script cannot be used this way.";
+				return;
+			}
 			if(!isset($_POST['device']) || !isset($_POST['id']) || !isset($_POST['name'])) {
 				IPS_LogMessage("Geofency", "Malformed data: ".print_r($_POST, true));
 			}

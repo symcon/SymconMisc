@@ -1,7 +1,0 @@
-{
-	"actions":
-	[
-		{ "name": "Text", "type": "ValidationTextBox", "caption": "Text" },
-		{ "type": "Button", "label": "Send", "onClick": "IOT_Send($id, $Text);" }
-	]
-}

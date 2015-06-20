@@ -2,8 +2,8 @@
 	"elements":
 	[
 		{ "name": "IPAddress",        "type": "ValidationTextBox", "caption": "IP-Address"     },
-		{ "name": "FavoriteStation",  "type": "ValidationTextBox", "caption": "Lieblingsradio" },
-		{ "name": "WebFrontStations", "type": "ValidationTextBox", "caption": "Sender im WebFront" }
+		{ "name": "FavoriteStation",  "type": "ValidationTextBox", "caption": "Favorite radio station" },
+		{ "name": "WebFrontStations", "type": "ValidationTextBox", "caption": "Radio stations in WebFront" }
 	],
 	"actions":
 	[

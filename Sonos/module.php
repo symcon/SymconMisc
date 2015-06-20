@@ -50,9 +50,10 @@
                           }
                         }
 
-                        
+                        if(IPS_VariableProfileExists("Radio.SONOS")) {
+                           IPS_DeleteVariableProfile("Radio.SONOS");
+                        }                        
                         $this->RegisterProfileIntegerEx("Radio.SONOS", "Speaker", "", "", $Associations);
-
 			
 			$this->RegisterVariableInteger("Status", "Status", "Status.SONOS");
 			$this->EnableAction("Status");
@@ -116,7 +117,7 @@
                        include(__DIR__ . "/sonos.php");
                        include(__DIR__ . "/radio_stations.php");
                        (new PHPSonos($this->ReadPropertyString("IPAddress")))->SetRadio( get_station_url($radio));
-	               (new PHPSonos($this->ReadPropertyString("IPAddress")))->Play();
+                       (new PHPSonos($this->ReadPropertyString("IPAddress")))->Play();
 
                 }
              
@@ -166,25 +167,20 @@
 		//Remove on next Symcon update
 		protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize) {
 		
-//			if(!IPS_VariableProfileExists($Name)) {
-//				IPS_CreateVariableProfile($Name, 1);
-//			} else {
-//				$profile = IPS_GetVariableProfile($Name);
-//				if($profile['ProfileType'] != 1)
-//					throw new Exception("Variable profile type does not match for profile ".$Name);
-//			}
-
-                        if(IPS_VariableProfileExists($Name)) {
-                           IPS_DeleteVariableProfile($Name);
-                        }
-                        IPS_CreateVariableProfile($Name, 1);
+			if(!IPS_VariableProfileExists($Name)) {
+				IPS_CreateVariableProfile($Name, 1);
+			} else {
+				$profile = IPS_GetVariableProfile($Name);
+				if($profile['ProfileType'] != 1)
+					throw new Exception("Variable profile type does not match for profile ".$Name);
+			}
 			
 			IPS_SetVariableProfileIcon($Name, $Icon);
 			IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
 			IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
 			
-		}
-		
+		}		
+
 		protected function RegisterProfileIntegerEx($Name, $Icon, $Prefix, $Suffix, $Associations) {
                         if ( sizeof($Associations) === 0 ){
                           $MinValue = 0;

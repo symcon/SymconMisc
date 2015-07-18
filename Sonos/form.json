@@ -37,9 +37,6 @@
                   ] },
 
 		{ "name": "WebFrontStations", "type": "ValidationTextBox", "caption": "Stations in WebFront" },
-                { "type": "Label", "label": "Setting which are needed if you want to push infotmation to a LCN Display"},
-                { "name": "LCNDisplayId",     "type": "NumberSpinner",     "caption": "LCN Display ID" },
-                { "name": "LCNDisplayLine",   "type": "NumberSpinner",     "caption": "Display Line" }
 	],
 	"actions":
 	[

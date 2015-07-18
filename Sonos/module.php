@@ -20,8 +20,6 @@ class Sonos extends IPSModule
         $this->RegisterPropertyString("FavoriteStation", "");
         $this->RegisterPropertyString("WebFrontStations", "<all>");
         $this->RegisterPropertyString("RINCON", "");
-        $this->RegisterPropertyInteger("LCNDisplayId", 0);
-        $this->RegisterPropertyInteger("LCNDisplayLine", 0);
        
     }
     
@@ -151,7 +149,7 @@ class Sonos extends IPSModule
         
         // 2e) GroupVolume, GroupMembers, MemberOfGroup
         if ( $this->ReadPropertyBoolean("GroupCoordinator")){
-            $this->RegisterVariableString("GroupMembers", "GroupMembers", "", 10);
+            IPS_SetHidden( $this->RegisterVariableString("GroupMembers", "GroupMembers", "", 10), true);
             $this->RegisterVariableInteger("GroupVolume", "GroupVolume", "Volume.SONOS", 11);
             $this->EnableAction("GroupVolume");
             $this->removeVariableAction("MemberOfGroup", $links);
@@ -255,20 +253,6 @@ if (Sys_Ping($ip, 1000) == true) {
 
     if ($actuallyPlaying <> $nowPlaying) {
         SetValueString(IPS_GetObjectIDByName("nowPlaying", IPS_GetParent($_IPS["SELF"])), $actuallyPlaying);
-        $DisplayId   = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "LCNDisplayId");
-        $DisplayLine = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "LCNDisplayLine");
-
-        if ($DisplayId != 0) {
-            if (strlen($positionInfo["streamContent"]) != 0)
-                $actuallyPlaying = $actuallyPlaying."-".$title;
-
-            LCN_SendCommand($DisplayId, "GT", "DT" . $DisplayLine . "1" . utf8_decode(substr($actuallyPlaying,  0, 12)));
-            LCN_SendCommand($DisplayId, "GT", "DT" . $DisplayLine . "2" . utf8_decode(substr($actuallyPlaying, 12, 12)));
-            LCN_SendCommand($DisplayId, "GT", "DT" . $DisplayLine . "3" . utf8_decode(substr($actuallyPlaying, 24, 12)));
-            LCN_SendCommand($DisplayId, "GT", "DT" . $DisplayLine . "4" . utf8_decode(substr($actuallyPlaying, 36, 12)));
-            LCN_SendCommand($DisplayId, "GT", "DT" . $DisplayLine . "5" . utf8_decode(substr($actuallyPlaying, 48, 12)));
-        }
-
     }
 }
 

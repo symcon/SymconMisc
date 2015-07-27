@@ -10,17 +10,22 @@
 			//Never delete this line!
 			parent::__construct($InstanceID);
 			
-			//These lines are parsed on Symcon Startup or Instance creation
-			//You cannot use variables here. Just static values.
+			//You can add custom code below.
+			$this->imagePath = "media/radar".$InstanceID.".gif";
+			
+		}
+		
+		public function Create()
+		{
+			//Never delete this line!
+			parent::Create();
+			
 			$this->RegisterPropertyString("area", "dsch");
 			$this->RegisterPropertyInteger("homeX", 324);
 			$this->RegisterPropertyInteger("homeY", 179);
 			$this->RegisterPropertyInteger("homeRadius", 10);
 			
-			//You can add custom code below.
-			$this->imagePath = "media/radar".$InstanceID.".gif";
-			
-		}
+		}		
 	
 		public function ApplyChanges()
 		{

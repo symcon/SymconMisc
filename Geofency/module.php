@@ -3,13 +3,11 @@
 	class Geofency extends IPSModule
 	{
 		
-		public function __construct($InstanceID)
+		public function Create()
 		{
 			//Never delete this line!
-			parent::__construct($InstanceID);
+			parent::Create();
 			
-			//These lines are parsed on Symcon Startup or Instance creation
-			//You cannot use variables here. Just static values.
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
 		}
@@ -54,13 +52,25 @@
 		*/
 		public function ProcessHookData()
 		{
-			//workaround for bug
-			if(!isset($_IPS))
-				global $_IPS;
 			if($_IPS['SENDER'] == "Execute") {
 				echo "This script cannot be used this way.";
 				return;
 			}
+			
+			if((IPS_GetProperty($this->InstanceID, "Username") != "") || (IPS_GetProperty($this->InstanceID, "Password") != "")) {
+				if(!isset($_SERVER['PHP_AUTH_USER']))
+					$_SERVER['PHP_AUTH_USER'] = "";
+				if(!isset($_SERVER['PHP_AUTH_PW']))
+					$_SERVER['PHP_AUTH_PW'] = "";
+					
+				if(($_SERVER['PHP_AUTH_USER'] != IPS_GetProperty($this->InstanceID, "Username")) || ($_SERVER['PHP_AUTH_PW'] != IPS_GetProperty($this->InstanceID, "Password"))) {
+					header('WWW-Authenticate: Basic Realm="Geofency WebHook"');
+					header('HTTP/1.0 401 Unauthorized');
+					echo "Authorization required";
+					return;
+				}
+			}
+			
 			if(!isset($_POST['device']) || !isset($_POST['id']) || !isset($_POST['name'])) {
 				IPS_LogMessage("Geofency", "Malformed data: ".print_r($_POST, true));
 				return;

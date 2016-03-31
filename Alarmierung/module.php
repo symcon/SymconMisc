@@ -151,14 +151,14 @@
 		
 		}
 
-		function GetProfileName($variable) {
+		private function GetProfileName($variable) {
 			if($variable['VariableCustomProfile'] != "")
 				return $variable['VariableCustomProfile'];
 			else
 				return $variable['VariableProfile'];
 		}
 
-		function GetProfileAction($variable) {
+		private function GetProfileAction($variable) {
 			if($variable['VariableCustomAction'] != "")
 				return $variable['VariableCustomAction'];
 			else

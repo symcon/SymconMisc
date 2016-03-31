@@ -75,6 +75,9 @@
 						$this->SetAlert(true);
 					}
 					break;
+				case "~Lock.Reversed":
+				case "~Battery.Reversed":
+				case "~Presence.Reversed":
 				case "~Window.Reversed":
 					if(!$sourceValue) {
 						$this->SetAlert(true);

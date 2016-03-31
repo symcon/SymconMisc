@@ -1,0 +1,14 @@
+{
+	"id": "{98612669-D883-4040-AB6E-2D8E3EAF61DF}",
+	"name": "Alarmierung",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"Alarmierung"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "ARM"
+}

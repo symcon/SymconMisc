@@ -1,0 +1,12 @@
+{
+	"elements":
+	[
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Quelle" },
+		{ "name": "Formula", "type": "ValidationTextBox", "caption": "Formel" }
+	],
+	"actions":
+	[
+		{ "name": "Value", "type": "ValidationTextBox", "caption": "Value" },
+		{ "type": "Button", "label": "Calculate", "onClick": "echo UMR_Calculate($id, $Value);" },
+	]
+}

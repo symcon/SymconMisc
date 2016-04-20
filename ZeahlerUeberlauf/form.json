@@ -1,0 +1,7 @@
+{
+	"elements":
+	[
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Quelle" },
+		{ "name": "MaximumValue", "type": "NumberSpinner", "caption": "Maximalwert" }
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"id": "{89625B8F-7F45-4D21-9442-9EEC3CAC4A2D}",
+	"name": "EnergiezaehlerStrom",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"Energiezaehler (Strom)"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "EZS"
+}

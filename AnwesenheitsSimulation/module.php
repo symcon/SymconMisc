@@ -99,7 +99,8 @@ class AnwesenheitsSimulation extends IPSModule
 						$values[$key]['TimeStamp'] = date("H:i:s", $value['TimeStamp']);
 					}
 					
-					$dayData[$targetID] = $values;
+					//Reverse array to have the Timestamps ascending
+					$dayData[$targetID] = array_reverse($values);
 				}
 			}
 		}
@@ -178,6 +179,7 @@ class AnwesenheitsSimulation extends IPSModule
 						foreach ($value as $key) {
 							if (date("H:i:s") > $key["TimeStamp"]) {
 								$varValue = $key["Value"];
+							} else {
 								break;
 							}
 						}

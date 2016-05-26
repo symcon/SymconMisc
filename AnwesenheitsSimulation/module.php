@@ -19,7 +19,7 @@ class AnwesenheitsSimulation extends IPSModule
 		//Variables
 		$this->RegisterVariableString("SimulationData", "SimulationData", "");
 		IPS_SetHidden(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), true);
-		$this->RegisterVariableString("SimulationDay", "Simulationquelle (Tag)", "");
+		$this->RegisterVariableString("SimulationDay", "Simulationsquelle (Tag)", "");
 		$this->RegisterVariableBoolean("Active", "Simulation aktiv", "~Switch");
 		$this->EnableAction("Active");
 		
@@ -67,10 +67,10 @@ class AnwesenheitsSimulation extends IPSModule
 	//Returns all "real" variableID's as array, which are linked in the "Targets" category
 	public function GetTargets() {
 		
-		$targetsID = IPS_GetChildrenIDs(IPS_GetObjectIDByIdent("Targets", $this->InstanceID));
+		$targetIDs = IPS_GetChildrenIDs(IPS_GetObjectIDByIdent("Targets", $this->InstanceID));
 		
 		$result = array();
-		foreach($targetsID as $targetID) {
+		foreach($targetIDs as $targetID) {
 			//Only allow links
 			if (IPS_LinkExists($targetID)) {
 				if (IPS_VariableExists(IPS_GetLink($targetID)['TargetID']))
@@ -81,77 +81,81 @@ class AnwesenheitsSimulation extends IPSModule
 	}
 
 	// 
-	public function GetDayData($day, $targetsID) {
+	public function GetDayData($day, $targetIDs) {
+		$dayStart = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+		$dayDiff = $day * 24 * 3600;
 		$dayData = array();
-		$werte = array();
+		$values = array();
 		
 		//Going through all linked variables
-		foreach($targetsID as $targetID) {
+		foreach($targetIDs as $targetID) {
 			if (AC_GetLoggingStatus($this->ReadPropertyInteger("ArchiveControlID"), $targetID)) {
 				//Fetch Data for all variables but only one day
-				$werte = AC_GetLoggedValues($this->ReadPropertyInteger("ArchiveControlID"), $targetID, strtotime("-". $day-1 ." day"), strtotime("-". $day ." days"), 0);
-				if (sizeof($werte) > 0){
+				$values = AC_GetLoggedValues($this->ReadPropertyInteger("ArchiveControlID"), $targetID, $dayStart - $dayDiff, $dayStart + (24 * 3600) - $dayDiff - 1, 0);
+				if (sizeof($values) > 0){
 					
 					//Transform UnixTimeStamp into human readable value
-					foreach($werte as $key => $value){
-						$werte[$key]['TimeStamp'] = date("H:i:s", $value['TimeStamp']);
+					foreach($values as $key => $value){
+						$values[$key]['TimeStamp'] = date("H:i:s", $value['TimeStamp']);
 					}
-					$dayData[$targetID] = $werte;
+					
+					$dayData[$targetID] = $values;
 				}
 			}
 		}
 		
 		// return all values for linked variables for one day in a array
-		if (sizeof($werte) > 0){
-			return array("Date" => date("d.m.Y",strtotime("-". $day-1 ." days")), "Data" => $dayData);
+		if (sizeof($values) > 0){
+			return array("Date" => date("d.m.Y", $dayStart - $dayDiff), "Data" => $dayData);
 		}
 		
 	}
 
 	//returns a array of all linked variables for 1 day and checks if this meets the needed switchcount
-	public function GetDataArray($days, $targetsID) {
+	public function GetDataArray($days, $targetIDs) {
 		
 		//Get the dayData for all variables
-		foreach ($days as $key => $day) {
-			$data = $this->GetDayData($day, $targetsID);
+		foreach ($days as $day) {
+			$data = $this->GetDayData($day, $targetIDs);
 			if (sizeof($data['Data']) > 0) {
-				$simulationData = $data['Data'];
-				$switchCounts = 0;
 				
 				//Sum up the switchCount
-				foreach ($simulationData as $value){
+				$switchCounts = 0;
+				foreach ($data['Data'] as $value){
 					$switchCounts += sizeof($value);
 				}
+				
 				//Check if the needed switchCount requierement is meet
-				if ($switchCounts >= ($this->ReadPropertyInteger("RequiredSwitchCount") * sizeof($targetsID))){
-					return array("Date" => $data['Date'], "Data" => $simulationData);
+				if ($switchCounts >= ($this->ReadPropertyInteger("RequiredSwitchCount") * sizeof($targetIDs))){
+					return $data;
 				}
+				
 			}
 		}
+		
+		return array();
+
 	}
 
 	//Fetches the needed SimulationData for a whole day
 	public function UpdateData() {
-		$targetsID = $this->GetTargets();
+		$targetIDs = $this->GetTargets();
 
 		//Tries to fetch data for a random but same weekday for the last 4 weeks
-		$days = array(7, 14, 21, 28);
-		shuffle($days);
-		$simulationDataArray = $this->GetDataArray($days, $targetsID);
+		$weekDays = array(7, 14, 21, 28);
+		shuffle($weekDays);
 
-		//If no same weekday possible -> fetch 1 out of the last 30 days
-		if (sizeof($simulationDataArray['Data']) < ($this->ReadPropertyInteger("RequiredSwitchCount") * sizeof($targetsID))) { 
-			$days = range(1, 30);
-			shuffle($days);
-			$simulationDataArray = $this->GetDataArray($days, $targetsID);
-		}
-
-		if(sizeof($simulationDataArray) == 0) {
+		//If no same weekday possible -> fetch 1 out of the last 30 days (but not the last 4 weeks)
+		$singleDays = array_diff(range(1, 30), $weekDays);
+		shuffle($singleDays);
+		
+		$simulationData = $this->GetDataArray(array_merge($weekDays, $singleDays), $targetIDs);
+		if(sizeof($simulationData) == 0) {
 			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), "Zu wenig Daten!");
 			return false;
 		} else {
-			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), $simulationDataArray['Date']);
-			SetValue(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), wddx_serialize_value($simulationDataArray['Data']));
+			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), $simulationData['Date']);
+			SetValue(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), wddx_serialize_value($simulationData['Data']));
 			return true;
 		}
 
@@ -161,12 +165,12 @@ class AnwesenheitsSimulation extends IPSModule
 	
 		//If simulation is activated
 		if (GetValueBoolean(IPS_GetObjectIDByIdent("Active", $this->InstanceID))){
-			$simulationDataArray = wddx_deserialize(GetValueString(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID)));
+			$simulationData = wddx_deserialize(GetValueString(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID)));
 			
 			//Being sure there is simulationData
-			if($simulationDataArray != NULL && $simulationDataArray != "") {
+			if($simulationData != NULL && $simulationData != "") {
 				//Going through all variableID's of the simulationData
-				foreach($simulationDataArray as $id => $value) {
+				foreach($simulationData as $id => $value) {
 					if (IPS_VariableExists($id)) {
 						$varValue = null;
 

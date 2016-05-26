@@ -1,0 +1,7 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Number of Scenes" },
+	{ "type": "NumberSpinner", "name": "SceneCount", "caption": "Scenes" }
+  ]
+}

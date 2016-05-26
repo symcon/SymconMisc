@@ -1,0 +1,14 @@
+{
+    "id": "{87F46796-CC43-442D-94FD-AAA0BD8D9F54}",
+    "name": "SzenenSteuerung",
+    "type": 3,
+    "vendor": "",
+    "aliases": 
+    [
+        "SzenenSteuerung"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SZS"
+}

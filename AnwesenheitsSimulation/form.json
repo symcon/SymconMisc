@@ -1,0 +1,9 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Mindestanzahl an täglichen Variablenänderungen" },
+	{ "type": "NumberSpinner", "name": "RequiredSwitchCount", "caption": "Anzahl" },
+	{ "type": "Label", "label":  "Intervall für das Aktualisieren der simulierten Variablen" },
+	{ "type": "IntervalBox", "name" : "Interval", "caption": "Sekunden" }
+  ]
+}

@@ -10,10 +10,11 @@ class SzenenSteuerung extends IPSModule {
 		$this->RegisterPropertyInteger("SceneCount", 3);
 		
 		if(!IPS_VariableProfileExists("SZS.SceneControl")){
-			IPS_CreateVariableProfile("SZS.SceneControl", 0);
+			IPS_CreateVariableProfile("SZS.SceneControl", 1);
+			IPS_SetVariableProfileValues("SZS.SceneControl", 1, 2, 0);
 			//IPS_SetVariableProfileIcon("SZS.SceneControl", "");
-			IPS_SetVariableProfileAssociation("SZS.SceneControl", 0, "Speichern", "", -1);
-			IPS_SetVariableProfileAssociation("SZS.SceneControl", 1, "Ausführen", "", -1);
+			IPS_SetVariableProfileAssociation("SZS.SceneControl", 1, "Speichern", "", -1);
+			IPS_SetVariableProfileAssociation("SZS.SceneControl", 2, "Ausführen", "", -1);
 		}
 
 	}
@@ -32,7 +33,7 @@ class SzenenSteuerung extends IPSModule {
 		for($i = 1; $i <= $this->ReadPropertyInteger("SceneCount"); $i++) {
 			if(@IPS_GetObjectIDByIdent("Scene".$i, $this->InstanceID) == 0){
 				//Scene
-				$vid = IPS_CreateVariable(0 /* Scene */);
+				$vid = IPS_CreateVariable(1 /* Scene */);
 				IPS_SetParent($vid, $this->InstanceID);
 				IPS_SetName($vid, "Scene".$i);
 				IPS_SetIdent($vid, "Scene".$i);
@@ -61,10 +62,10 @@ class SzenenSteuerung extends IPSModule {
 	public function RequestAction($Ident, $Value) {
 		
 		switch($Value) {
-			case "0":
+			case "1":
 				$this->SaveValues($Ident);
 				break;
-			case "1":
+			case "2":
 				$this->LoadValues($Ident);
 				break;
 			default:
@@ -74,28 +75,28 @@ class SzenenSteuerung extends IPSModule {
 	
 	public function SaveValues($Scene) {
 		
-		$TargetIDs = IPS_GetObjectIDByIdent("Targets", $this->InstanceID);
-		$Data = Array();
+		$targetIDs = IPS_GetObjectIDByIdent("Targets", $this->InstanceID);
+		$data = Array();
 		
 		//We want to save all Lamp Values
-		foreach(IPS_GetChildrenIDs($TargetIDs) as $TargetID) {
+		foreach(IPS_GetChildrenIDs($targetIDs) as $TargetID) {
 			//only allow links
 			if(IPS_LinkExists($TargetID)) {
 				$linkVariableID = IPS_GetLink($TargetID)['TargetID'];
 				if(IPS_VariableExists($linkVariableID)) {
-					$Data[linkVariableID] = GetValue($linkVariableID);
+					$data[$linkVariableID] = GetValue($linkVariableID);
 				}
 			}
 		}
-		SetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID), wddx_serialize_value($wddx));
+		SetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID), wddx_serialize_value($data));
 	}
 	
 	public function LoadValues($Scene) {
 		
-		$Data = wddx_deserialize(GetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID)));
+		$data = wddx_deserialize(GetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID)));
 		
-		if($Data != NULL) {
-			foreach($Data as $id => $value) {
+		if($data != NULL) {
+			foreach($data as $id => $value) {
 				if (IPS_VariableExists($id)){
 					$o = IPS_GetObject($id);
 					$v = IPS_GetVariable($id);

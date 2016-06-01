@@ -11,7 +11,7 @@
 			parent::__construct($InstanceID);
 			
 			//You can add custom code below.
-			$this->imagePath = "media/radar".$InstanceID.".gif";
+			$this->imagePath = "media/radar".$InstanceID.".png";
 			
 		}
 		
@@ -20,12 +20,14 @@
 			//Never delete this line!
 			parent::Create();
 			
-			$this->RegisterPropertyString("area", "dsch");
-			$this->RegisterPropertyInteger("homeX", 324);
-			$this->RegisterPropertyInteger("homeY", 179);
+			$this->RegisterPropertyString("area", "SHS");
+			$this->RegisterPropertyInteger("homeX", 420);
+			$this->RegisterPropertyInteger("homeY", 352);
 			$this->RegisterPropertyInteger("homeRadius", 10);
+			$this->RegisterPropertyInteger("Interval", 900);
 			
-		}		
+			$this->RegisterTimer("UpdateTimer", 0, 'UWZ_RequestInfo($_IPS[\'TARGET\']);');
+		}
 	
 		public function ApplyChanges()
 		{
@@ -34,8 +36,7 @@
 			
 			$this->RegisterVariableInteger("RainValue", "Regenwert");
 
-			//$this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
-			//$this->RegisterEventCyclic("UpdateTimer", "Automatische aktualisierung", 15);
+			$this->SetTimerInterval("UpdateTimer", $this->ReadPropertyInteger("Interval")*1000);
 			
 		}
 	
@@ -63,31 +64,29 @@
 			$opts = array(
 			'http'=>array(
 				'method'=>"GET",
-				'max_redirects'=>1
+				'max_redirects'=>1,
+				'header'=>"User-Agent: "."Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
 			)
 			);
 			$context = stream_context_create($opts);
 
-			$remoteImage = "http://www.wetteronline.de/daten/radar/$area/".gmdate("Y", $dateline)."/".gmdate("m", $dateline)."/".gmdate("d", $dateline)."/".gmdate("Hi", $dateline).".gif";
+			$remoteImage = "http://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".gmdate("Y", $dateline)."/".gmdate("m", $dateline)."/".gmdate("d", $dateline)."/".$area."/grey_flat/".gmdate("YmdHi", $dateline)."_".$area.".png";
 			$data = @file_get_contents($remoteImage, false, $context);
-			if($data === false) {
-				//No new picture. Download old one.
-				$dateline -= 15*60;
-				$remoteImage = "http://www.wetteronline.de/daten/radar/$area/".gmdate("Y", $dateline)."/".gmdate("m", $dateline)."/".gmdate("d", $dateline)."/".gmdate("Hi", $dateline).".gif";
-				$data = @file_get_contents($remoteImage, false, $context);
-				if($data === false) {
-					return;
-				}
-			}
 
 			if((strpos($http_response_header[0], "200") === false)) {
-			return;
+				echo $http_response_header[0]." ".$data;
+				return;
 			}
 
 			file_put_contents($imagePath, $data);
 
+			$mid = $this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
+			
+			//Bild aktualisiern lassen in IP-Symcon
+			IPS_SendMediaEvent($mid);
+			
 			//Radarbild auswerten
-			$im = ImageCreateFromGIF($imagePath);
+			$im = ImageCreateFromPNG($imagePath);
 
 			//Stärken 
 			$regen[6] = imagecolorresolve($im, 250,2,250);
@@ -113,11 +112,38 @@
 			$rot = ImageColorAllocate ($im, 255, 0, 0);
 			imagerectangle($im, $homeX-$homeRadius, $homeY-$homeRadius, $homeX+$homeRadius, $homeY+$homeRadius, $rot);
 			imagesetpixel($im, $homeX, $homeY, $rot);
-			imagegif($im, $localImage);
+			imagepng($im, $imagePath);
 
 			imagedestroy($im);
 
 			SetValue($this->GetIDForIdent("RainValue"), $regenmenge);
+			
+		}
+		
+		private function RegisterMediaImage($Ident, $Name, $Path) {
+		
+			//search for already available media with proper ident
+			$mid = @IPS_GetObjectIDByIdent($Ident, $this->InstanceID);
+		
+			//properly update mediaID
+			if($mid === false)
+				$mid = 0;
+				
+			//we need to create one
+			if($mid == 0)
+			{
+				$mid = IPS_CreateMedia(1);
+				
+				//configure it
+				IPS_SetParent($mid, $this->InstanceID);
+				IPS_SetIdent($mid, $Ident);
+				IPS_SetName($mid, $Name);
+				//IPS_SetReadOnly($mid, true);
+				
+				IPS_SetMediaFile($mid, $Path, false);
+			}
+			
+			return $mid;
 			
 		}
 	

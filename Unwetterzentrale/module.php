@@ -89,12 +89,12 @@
 			$im = ImageCreateFromPNG($imagePath);
 
 			//Stärken 
-			$regen[6] = imagecolorresolve($im, 250,2,250);
-			$regen[5] = imagecolorresolve($im, 156,50,156);
-			$regen[4] = imagecolorresolve($im,  28,126,220);
-			$regen[3] = imagecolorresolve($im,  44,170,252);
-			$regen[2] = imagecolorresolve($im,  84,210,252);
-			$regen[1] = imagecolorresolve($im, 172,254,252);
+			$regen[6] = imagecolorresolve($im, 252,65,255);
+			$regen[5] = imagecolorresolve($im, 153,51,153);
+			$regen[4] = imagecolorresolve($im,  28,126,217);
+			$regen[3] = imagecolorresolve($im,  42,170,255);
+			$regen[2] = imagecolorresolve($im,  83,210,255);
+			$regen[1] = imagecolorresolve($im, 170,255,255);
 
 			//Pixel durchgehen
 			$regenmenge = 0;

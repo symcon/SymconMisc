@@ -118,6 +118,9 @@ class AnwesenheitsSimulation extends IPSModule
 		//Get the dayData for all variables
 		foreach ($days as $day) {
 			$data = $this->GetDayData($day, $targetIDs);
+
+			$this->SendDebug("Fetch", "Fetched day -".$day." with ".sizeof($data['Data'])." valid device(s)", 0);
+
 			if (sizeof($data['Data']) > 0) {
 				
 				//Sum up the switchCount
@@ -125,6 +128,8 @@ class AnwesenheitsSimulation extends IPSModule
 				foreach ($data['Data'] as $value){
 					$switchCounts += sizeof($value);
 				}
+
+				$this->SendDebug("Fetch", "> Required entropy of ".($this->ReadPropertyInteger("RequiredSwitchCount") * sizeof($targetIDs)).". Have ".$switchCounts, 0);
 				
 				//Check if the needed switchCount requierement is meet
 				if ($switchCounts >= ($this->ReadPropertyInteger("RequiredSwitchCount") * sizeof($targetIDs))){
@@ -173,20 +178,29 @@ class AnwesenheitsSimulation extends IPSModule
 				//Going through all variableID's of the simulationData
 				foreach($simulationData as $id => $value) {
 					if (IPS_VariableExists($id)) {
-						$varValue = null;
+						unset($varValue);
+						unset($varTime);
 
 						//Getting the value to set
 						foreach ($value as $key) {
 							if (date("H:i:s") > $key["TimeStamp"]) {
 								$varValue = $key["Value"];
+								$varTime = $key["TimeStamp"];
 							} else {
 								break;
 							}
 						}
-						
+
 						$v = IPS_GetVariable($id);
+						
+						if(!isset($varValue)) {
+							$this->SendDebug("Update", "Device ".$id." will not be simulated today", 0);
+						} else {
+							$this->SendDebug("Update", "Device ".$id." shall be ".$varValue." since ".$varTime." and current is ".$v["VariableValue"], 0);
+						}
+
 						//Set variableValue, if there is a varValue and its not the same as already set
-						if ($varValue != null && $varValue != $v["VariableValue"]) {
+						if (isset($varValue) && ($varValue != $v["VariableValue"])) {
 							$o = IPS_GetObject($id);
 							if($v['VariableCustomAction'] != "") {
 								$actionID = $v['VariableCustomAction'];
@@ -194,6 +208,8 @@ class AnwesenheitsSimulation extends IPSModule
 								$actionID = $v['VariableAction'];
 							}
 							
+							$this->SendDebug("Action", "Device ".$id." will be updated!", 0);
+
 							if(IPS_InstanceExists($actionID)) {
 								IPS_RequestAction($actionID, $o['ObjectIdent'], $varValue);
 							} else if(IPS_ScriptExists($actionID)) {

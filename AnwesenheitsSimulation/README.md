@@ -37,6 +37,7 @@ Ist auch innerhalb dieser 30 Tage kein gültiger Tagesdatensatz vorhanden, ist k
 - Alle zu schaltenden Variablen müssen in der "Targets (Simulation)"-Kategorie verlinkt werden.
 
 __Konfigurationsseite__:
+
 Name          | Beschreibung
 ------------- | ---------------------------------
 Mindestanzahl | Dies beschreibt die durchschnittliche Mindestanzahl von Variablenschaltungen aller verlinkten Variablen vorhanden sein müssen.
@@ -66,8 +67,8 @@ Falls nicht genügend oder ungültige Daten vorhanden sind, wird dieses ebenfall
 ### 7. PHP-Befehlsreferenz
 
 `boolean AS_SetSimulation(integer $InstanzID, boolean $SetActive);`  
-Aktiviert ($SetActive == true) oder Deaktiviert ($SetActive == true) die Anwesenheits-Simulation mit der InstanzID $InstanzID.  
+$SetActive aktiviert (true) oder deaktiviert (false) die Anwesenheits-Simulation mit der InstanzID $InstanzID.  
 Die Funktion liefert keinerlei Rückgabewert.  
 
-Example:  
+Beispiel:  
 `AS_SetSimulation(12345, true);`

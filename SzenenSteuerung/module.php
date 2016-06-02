@@ -66,16 +66,16 @@ class SzenenSteuerung extends IPSModule {
 				$this->SaveValues($Ident);
 				break;
 			case "2":
-				$this->LoadValues($Ident);
+				$this->CallValues($Ident);
 				break;
 			default:
 				throw new Exception("Invalid action");
 		}
 	}
 
-	public function LoadScene(integer $SceneNumber){
+	public function CallScene(integer $SceneNumber){
 		
-		$this->LoadValues("Scene".$SceneNumber);
+		$this->CallValues("Scene".$SceneNumber);
 
 	}
 
@@ -103,7 +103,7 @@ class SzenenSteuerung extends IPSModule {
 		SetValue(IPS_GetObjectIDByIdent($SceneIdent."Data", $this->InstanceID), wddx_serialize_value($data));
 	}
 
-	private function LoadValues($SceneIdent) {
+	private function CallValues($SceneIdent) {
 		
 		$data = wddx_deserialize(GetValue(IPS_GetObjectIDByIdent($SceneIdent."Data", $this->InstanceID)));
 		

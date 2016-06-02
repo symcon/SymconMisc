@@ -92,7 +92,7 @@
 
 		}
 		
-		public function SetAlert($status)
+		public function SetAlert(boolean $status)
 		{
 		
 			$targetsID = $this->CreateCategoryByIdent($this->InstanceID, "Targets", "Alert Target");

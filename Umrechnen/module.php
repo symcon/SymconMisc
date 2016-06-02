@@ -43,7 +43,7 @@
 		* UMR_Calculate($id);
 		*
 		*/
-		public function Calculate($Value)
+		public function Calculate(float $Value)
 		{
 			
 			eval("\$Value = " . $this->ReadPropertyString("Formula") . ";");

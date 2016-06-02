@@ -10,7 +10,6 @@ class AnwesenheitsSimulation extends IPSModule
 		//You cannot use variables here. Just static values.
 		$this->RegisterPropertyInteger("RequiredSwitchCount", 4);
 		$this->RegisterPropertyInteger("ArchiveControlID", IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}")[0]);
-		$this->RegisterPropertyInteger("Interval", 600);
 		
 		//Timer
 		$this->RegisterTimer("UpdateDataTimer", 0, 'AS_UpdateData($_IPS[\'TARGET\']);');
@@ -46,8 +45,6 @@ class AnwesenheitsSimulation extends IPSModule
 			if($this->UpdateData()) {
 				$this->UpdateTargets();
 			}
-			//Set timer for fetching data after midnight at 00:00:01
-			$this->SetTimerInterval("UpdateDataTimer", (strtotime("tomorrow") - time() + 1)*1000);
 		} else {
 			//When deactivating the simulation, kill data for simulation and deactivate timer for updating targets
 			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), "Simulation deaktiviert");
@@ -166,80 +163,80 @@ class AnwesenheitsSimulation extends IPSModule
 		$simulationData = $this->GetDataArray(array_merge($weekDays, $singleDays), $targetIDs);
 		if(sizeof($simulationData) == 0) {
 			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), "Zu wenig Daten!");
-			return false;
 		} else {
 			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), $simulationData['Date']);
 			SetValue(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), wddx_serialize_value($simulationData['Data']));
-			return true;
 		}
 
+		//Set timer for fetching data after midnight at 00:00:01
+		$this->SetTimerInterval("UpdateDataTimer", (strtotime("tomorrow") - time() + 1) * 1000);
+
+		return sizeof($simulationData) > 0;
+		
 	}
 
 	public function UpdateTargets() {
 	
-		//If simulation is activated
-		if (GetValueBoolean(IPS_GetObjectIDByIdent("Active", $this->InstanceID))){
-			$simulationData = wddx_deserialize(GetValueString(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID)));
-			
-			$nextSwitchTimestamp = PHP_INT_MAX;
-			
-			//Being sure there is simulationData
-			if($simulationData !== NULL && $simulationData != "") {
-				//Going through all variableID's of the simulationData
-				foreach($simulationData as $id => $value) {
-					if (IPS_VariableExists($id)) {
-						unset($varValue);
-						unset($varTime);
+		$simulationData = wddx_deserialize(GetValueString(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID)));
+		
+		$nextSwitchTimestamp = PHP_INT_MAX;
+		
+		//Being sure there is simulationData
+		if($simulationData !== NULL && $simulationData != "") {
+			//Going through all variableID's of the simulationData
+			foreach($simulationData as $id => $value) {
+				if (IPS_VariableExists($id)) {
+					unset($varValue);
+					unset($varTime);
 
-						//Getting the value to set
-						foreach ($value as $key) {
-							if (date("H:i:s") > $key["TimeStamp"]) {
-								$varValue = $key["Value"];
-								$varTime = $key["TimeStamp"];
-							} else {
-								$nextSwitchTimestamp = min($nextSwitchTimestamp, strtotime($key["TimeStamp"]));
-								break;
-							}
-						}
-
-						$v = IPS_GetVariable($id);
-						
-						if(!isset($varValue)) {
-							$this->SendDebug("Update", "Device ".$id." will not be simulated today", 0);
+					//Getting the value to set
+					foreach ($value as $key) {
+						if (date("H:i:s") > $key["TimeStamp"]) {
+							$varValue = $key["Value"];
+							$varTime = $key["TimeStamp"];
 						} else {
-							$this->SendDebug("Update", "Device ".$id." shall be ".$varValue." since ".$varTime." and current is ".$v["VariableValue"], 0);
+							$nextSwitchTimestamp = min($nextSwitchTimestamp, strtotime($key["TimeStamp"]));
+							break;
 						}
+					}
 
-						//Set variableValue, if there is a varValue and its not the same as already set
-						if (isset($varValue) && ($varValue != $v["VariableValue"])) {
-							$o = IPS_GetObject($id);
-							if($v['VariableCustomAction'] != "") {
-								$actionID = $v['VariableCustomAction'];
-							} else {
-								$actionID = $v['VariableAction'];
-							}
-							
-							$this->SendDebug("Action", "Device ".$id." will be updated!", 0);
+					$v = IPS_GetVariable($id);
+					
+					if(!isset($varValue)) {
+						$this->SendDebug("Update", "Device ".$id." will not be simulated today", 0);
+					} else {
+						$this->SendDebug("Update", "Device ".$id." shall be ".$varValue." since ".$varTime." and current is ".$v["VariableValue"], 0);
+					}
 
-							if(IPS_InstanceExists($actionID)) {
-								IPS_RequestAction($actionID, $o['ObjectIdent'], $varValue);
-							} else if(IPS_ScriptExists($actionID)) {
-								echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $id, "VALUE" => $varValue));
-							}
+					//Set variableValue, if there is a varValue and its not the same as already set
+					if (isset($varValue) && ($varValue != $v["VariableValue"])) {
+						$o = IPS_GetObject($id);
+						if($v['VariableCustomAction'] != "") {
+							$actionID = $v['VariableCustomAction'];
+						} else {
+							$actionID = $v['VariableAction'];
+						}
+						
+						$this->SendDebug("Action", "Device ".$id." will be updated!", 0);
+
+						if(IPS_InstanceExists($actionID)) {
+							IPS_RequestAction($actionID, $o['ObjectIdent'], $varValue);
+						} else if(IPS_ScriptExists($actionID)) {
+							echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $id, "VALUE" => $varValue));
 						}
 					}
 				}
-			} else {
-				echo "No valid SimulationData";
 			}
-			
-			if( $nextSwitchTimestamp == PHP_INT_MAX) {
-				//Timer set off because no oncoming actorswitch
-				$this->SetTimerInterval("UpdateTargetsTimer", 0);
-			} else {
-				//Timer set on the next switch of an simulated actor
-				$this->SetTimerInterval("UpdateTargetsTimer", ($nextSwitchTimestamp - time() + 1)*1000);
-			}
+		} else {
+			echo "No valid SimulationData";
+		}
+		
+		if( $nextSwitchTimestamp == PHP_INT_MAX) {
+			//Timer set off because no oncoming actorswitch
+			$this->SetTimerInterval("UpdateTargetsTimer", 0);
+		} else {
+			//Timer set on the next switch of an simulated actor
+			$this->SetTimerInterval("UpdateTargetsTimer", ($nextSwitchTimestamp - time() + 1) * 1000);
 		}
 	
 	}

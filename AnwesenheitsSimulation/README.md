@@ -12,7 +12,6 @@ Ist auch innerhalb dieser 30 Tage kein gültiger Tagesdatensatz vorhanden, ist k
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
-8. [Parameter / Modul-Infos](#8-parameter--modul-infos)
 
 ### 1. Funktionsumfang
 

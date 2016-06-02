@@ -58,7 +58,7 @@ class SzenenSteuerung extends IPSModule {
 			}
 		}
 	}
-	
+
 	public function RequestAction($Ident, $Value) {
 		
 		switch($Value) {
@@ -72,8 +72,20 @@ class SzenenSteuerung extends IPSModule {
 				throw new Exception("Invalid action");
 		}
 	}
-	
-	public function SaveValues($Scene) {
+
+	public function LoadScene(integer $SceneNumber){
+		
+		$this->LoadValues("Scene".$SceneNumber);
+
+	}
+
+	public function SaveScene(integer $SceneNumber){
+		
+		$this->SaveValues("Scene".$SceneNumber);
+
+	}
+
+	private function SaveValues($SceneIdent) {
 		
 		$targetIDs = IPS_GetObjectIDByIdent("Targets", $this->InstanceID);
 		$data = Array();
@@ -88,12 +100,12 @@ class SzenenSteuerung extends IPSModule {
 				}
 			}
 		}
-		SetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID), wddx_serialize_value($data));
+		SetValue(IPS_GetObjectIDByIdent($SceneIdent."Data", $this->InstanceID), wddx_serialize_value($data));
 	}
-	
-	public function LoadValues($Scene) {
+
+	private function LoadValues($SceneIdent) {
 		
-		$data = wddx_deserialize(GetValue(IPS_GetObjectIDByIdent($Scene."Data", $this->InstanceID)));
+		$data = wddx_deserialize(GetValue(IPS_GetObjectIDByIdent($SceneIdent."Data", $this->InstanceID)));
 		
 		if($data != NULL) {
 			foreach($data as $id => $value) {

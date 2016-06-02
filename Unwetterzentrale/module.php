@@ -54,10 +54,6 @@
 			$homeY = $this->ReadPropertyInteger("homeY");
 			$homeRadius = $this->ReadPropertyInteger("homeRadius");
 			
-			//Calculate time
-			$minute=floor(date("i") / 15) * 15;
-			$dateline=mktime(date("H"), $minute, 0, date("m"), date("d"), date("y"));
-
 			//Download picture
 			$opts = array(
 			'http'=>array(
@@ -68,9 +64,17 @@
 			);
 			$context = stream_context_create($opts);
 
-			$remoteImage = "http://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".gmdate("Y", $dateline)."/".gmdate("m", $dateline)."/".gmdate("d", $dateline)."/".$area."/grey_flat/".gmdate("YmdHi", $dateline)."_".$area.".png";
+			$content = file_get_contents("http://www.wetteronline.de/regenradar", false, $context);
+			if(preg_match("/wmapsextract\/vermarktung\/global2maps\/(.*?)&/", $content, $url) != 1) {
+				echo "URL matching failed";
+				return;
+			}
+			
+			$remoteImage = "http://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".$url[1];
 			$data = @file_get_contents($remoteImage, false, $context);
 
+			$this->SendDebug($http_response_header[0], $remoteImage, 0);
+			
 			if((strpos($http_response_header[0], "200") === false)) {
 				echo $http_response_header[0]." ".$data;
 				return;

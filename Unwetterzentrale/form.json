@@ -20,8 +20,7 @@
 		},
 		{ "name": "homeX", "type": "NumberSpinner", "caption": "X" },
 		{ "name": "homeY", "type": "NumberSpinner", "caption": "Y" },
-		{ "name": "homeRadius", "type": "NumberSpinner", "caption": "Radius" },
-		{ "type": "IntervalBox", "name" : "Interval", "caption": "Sekunden" }
+		{ "name": "homeRadius", "type": "NumberSpinner", "caption": "Radius" }
 	],
 	"actions":
 	[

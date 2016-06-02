@@ -26,7 +26,7 @@
 			$this->RegisterPropertyInteger("homeRadius", 10);
 			$this->RegisterPropertyInteger("Interval", 900);
 			
-			$this->RegisterTimer("UpdateTimer", 0, 'UWZ_RequestInfo($_IPS[\'TARGET\']);');
+			$this->RegisterTimer("UpdateTimer", 900, 'UWZ_RequestInfo($_IPS[\'TARGET\']);');
 		}
 	
 		public function ApplyChanges()
@@ -36,8 +36,6 @@
 			
 			$this->RegisterVariableInteger("RainValue", "Regenwert");
 
-			$this->SetTimerInterval("UpdateTimer", $this->ReadPropertyInteger("Interval")*1000);
-			
 		}
 	
 		/**

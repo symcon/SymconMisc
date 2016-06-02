@@ -39,33 +39,41 @@ class AnwesenheitsSimulation extends IPSModule
 		
 	}
 
-	public function RequestAction($Ident, $Value) {
-			switch($Ident) {
-				case "Active":
-					SetValue($this->GetIDForIdent($Ident), $Value);
-					if ($Value){
-						//When activating the simulation, fetch actual data for a day and activate timer for updating targets
-						if($this->UpdateData()) {
-							$this->SetTimerInterval("UpdateTargetsTimer", $this->ReadPropertyInteger("Interval")*1000);
-						}
-						//Set timer for fetching data after midnight at 00:00:01
-						$this->SetTimerInterval("UpdateDataTimer", (strtotime("tomorrow") - time() + 1)*1000);
-					} else {
-						//When deactivating the simulation, kill data for simulation and deactivate timer for updating targets
-						SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), "Simulation deaktiviert");
-						SetValue(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), "");
-						$this->SetTimerInterval("UpdateTargetsTimer", 0);
-						$this->SetTimerInterval("UpdateDataTimer", 0);
-					}
-					break;
-				default:
-					throw new Exception("Invalid ident");
+	public function SetSimulation(boolean $SwitchOn){
+		
+		if ($SwitchOn){
+			//When activating the simulation, fetch actual data for a day and activate timer for updating targets
+			if($this->UpdateData()) {
+				$this->SetTimerInterval("UpdateTargetsTimer", $this->ReadPropertyInteger("Interval")*1000);
 			}
+			//Set timer for fetching data after midnight at 00:00:01
+			$this->SetTimerInterval("UpdateDataTimer", (strtotime("tomorrow") - time() + 1)*1000);
+		} else {
+			//When deactivating the simulation, kill data for simulation and deactivate timer for updating targets
+			SetValue(IPS_GetObjectIDByIdent("SimulationDay", $this->InstanceID), "Simulation deaktiviert");
+			SetValue(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), "");
+			$this->SetTimerInterval("UpdateTargetsTimer", 0);
+			$this->SetTimerInterval("UpdateDataTimer", 0);
+		}
+		
+		SetValue($this->GetIDForIdent("Active"), $SwitchOn);
+		
+	}
+
+	public function RequestAction($Ident, $Value) {
+		
+		switch($Ident) {
+			case "Active":
+				$this->SetSimulation($Value);
+				break;
+			default:
+				throw new Exception("Invalid ident");
+		}
 		
 	}
 
 	//Returns all "real" variableID's as array, which are linked in the "Targets" category
-	public function GetTargets() {
+	private function GetTargets() {
 		
 		$targetIDs = IPS_GetChildrenIDs(IPS_GetObjectIDByIdent("Targets", $this->InstanceID));
 		
@@ -80,8 +88,8 @@ class AnwesenheitsSimulation extends IPSModule
 		return $result;
 	}
 
-	// 
-	public function GetDayData($day, $targetIDs) {
+	//returns a array of the dayData of 1 Variable
+	private function GetDayData($day, $targetIDs) {
 		$dayStart = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 		$dayDiff = $day * 24 * 3600;
 		$dayData = array();
@@ -113,7 +121,7 @@ class AnwesenheitsSimulation extends IPSModule
 	}
 
 	//returns a array of all linked variables for 1 day and checks if this meets the needed switchcount
-	public function GetDataArray($days, $targetIDs) {
+	private function GetDataArray($days, $targetIDs) {
 		
 		//Get the dayData for all variables
 		foreach ($days as $day) {

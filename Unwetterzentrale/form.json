@@ -1,21 +1,21 @@
 {
 	"elements":
 	[
-		{ "name": "area", "type": "Select", "caption": "Gebiet", 
+		{ "name": "area", "type": "Select", "caption": "Gebiet",
 			"options": [
-				{ "label": "Deutschland", "value": "DL" }, 
-				{ "label": "Baden-Württemberg", "value": "BWB" }, 
-				{ "label": "Bayern", "value": "BAY" }, 
-				{ "label": "Brandenburg/Berlin", "value": "BRA" }, 
-				{ "label": "Hessen", "value": "HES" }, 
-				{ "label": "Mecklenburg-Vorpommern", "value": "MVP" }, 
-				{ "label": "Niedersachsen/Bremen", "value": "NIE" }, 
-				{ "label": "NRW", "value": "NRW" }, 
+				{ "label": "Deutschland", "value": "DL" },
+				{ "label": "Baden-WÃ¼rttemberg", "value": "BWB" },
+				{ "label": "Bayern", "value": "BAY" },
+				{ "label": "Brandenburg/Berlin", "value": "BRA" },
+				{ "label": "Hessen", "value": "HES" },
+				{ "label": "Mecklenburg-Vorpommern", "value": "MVP" },
+				{ "label": "Niedersachsen/Bremen", "value": "NIE" },
+				{ "label": "NRW", "value": "NRW" },
 				{ "label": "Rheinland-Pfalz/Saarland", "value": "RHP" },
 				{ "label": "Sachsen", "value": "SAC" },
 				{ "label": "Sachsen-Anhalt", "value": "SAH" },
 				{ "label": "Schleswig-Holstein/Hamburg", "value": "SHS" },
-				{ "label": "Thüringen", "value": "THU" }
+				{ "label": "ThÃ¼ringen", "value": "THU" }
 			]
 		},
 		{ "name": "homeX", "type": "NumberSpinner", "caption": "X" },
@@ -25,5 +25,5 @@
 	"actions":
 	[
 		{ "type": "Button", "label": "Update", "onClick": "UWZ_RequestInfo($id);" }
-	]	
+	]
 }

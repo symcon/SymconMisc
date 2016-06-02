@@ -44,7 +44,7 @@ class AnwesenheitsSimulation extends IPSModule
 		if ($SwitchOn){
 			//When activating the simulation, fetch actual data for a day and activate timer for updating targets
 			if($this->UpdateData()) {
-				$this->SetTimerInterval("UpdateTargetsTimer", $this->ReadPropertyInteger("Interval")*1000);
+				$this->UpdateTargets();
 			}
 			//Set timer for fetching data after midnight at 00:00:01
 			$this->SetTimerInterval("UpdateDataTimer", (strtotime("tomorrow") - time() + 1)*1000);
@@ -181,8 +181,10 @@ class AnwesenheitsSimulation extends IPSModule
 		if (GetValueBoolean(IPS_GetObjectIDByIdent("Active", $this->InstanceID))){
 			$simulationData = wddx_deserialize(GetValueString(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID)));
 			
+			$nextSwitchTimestamp = PHP_INT_MAX;
+			
 			//Being sure there is simulationData
-			if($simulationData != NULL && $simulationData != "") {
+			if($simulationData !== NULL && $simulationData != "") {
 				//Going through all variableID's of the simulationData
 				foreach($simulationData as $id => $value) {
 					if (IPS_VariableExists($id)) {
@@ -195,6 +197,7 @@ class AnwesenheitsSimulation extends IPSModule
 								$varValue = $key["Value"];
 								$varTime = $key["TimeStamp"];
 							} else {
+								$nextSwitchTimestamp = min($nextSwitchTimestamp, strtotime($key["TimeStamp"]));
 								break;
 							}
 						}
@@ -228,6 +231,14 @@ class AnwesenheitsSimulation extends IPSModule
 				}
 			} else {
 				echo "No valid SimulationData";
+			}
+			
+			if( $nextSwitchTimestamp == PHP_INT_MAX) {
+				//Timer set off because no oncoming actorswitch
+				$this->SetTimerInterval("UpdateTargetsTimer", 0);
+			} else {
+				//Timer set on the next switch of an simulated actor
+				$this->SetTimerInterval("UpdateTargetsTimer", ($nextSwitchTimestamp - time() + 1)*1000);
 			}
 		}
 	

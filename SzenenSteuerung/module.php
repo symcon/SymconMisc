@@ -39,7 +39,7 @@ class SzenenSteuerung extends IPSModule {
 				IPS_SetIdent($vid, "Scene".$i);
 				IPS_SetVariableCustomProfile($vid, "SZS.SceneControl");
 				$this->EnableAction("Scene".$i);
-				SetValue($vid, 1);
+				SetValue($vid, 2);
 				//SceneData
 				$vid = IPS_CreateVariable(3 /* SceneData */);
 				IPS_SetParent($vid, $this->InstanceID);

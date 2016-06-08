@@ -1,0 +1,35 @@
+{
+  "elements":
+  [
+	{ "type": "ValidationTextBox", "name": "Location", "caption": "Standort" },
+	{ "type": "ValidationTextBox", "name": "Country", "caption": "Land" },
+	{ "type": "Label", "label": "Hier muss der API Key von der Seite https://www.wunderground.com/ eingetragen werden." },
+	{ "type": "ValidationTextBox", "name": "APIKey", "caption": "API Key" },
+	{ "type": "Label", "label": "Welche Daten sollen abgefragt werden?" },
+	{ "type": "CheckBox", "name": "FetchNow", "caption": "Aktuelle Daten abfragen" },
+	{ "type": "CheckBox", "name": "FetchHourly", "caption": "Stündliche Vorhersage abfragen" },
+	{ "type": "CheckBox", "name": "FetchHalfDaily", "caption": "12stündliche Vorhersage abfragen" },
+	{ "type": "CheckBox", "name": "FetchStormWarning", "caption": "Unwetterwarnung abfragen" },
+	{ "type": "Label", "label": "Wieviele Stunden sollen für die stündliche Vorhersage abgefragt werden (max: 24)" },
+	{ "type": "NumberSpinner", "name": "FetchHourlyHoursCount", "caption": "Anzahl Vorhersagen" },
+	{ "type": "Label", "label": "Wieviele 12 stündliche Vorhersagen (Halbtags) sollen abgefragt werden? (Max: 8)" },
+	{ "type": "NumberSpinner", "name": "FetchHalfDailyHalfDaysCount", "caption": "Anzahl Vorhersagen" },
+	{ "type": "Label", "label": "Wieviele Unwetterwarnungen sollen abgefragt werden? (Max: 6)" },
+	{ "type": "NumberSpinner", "name": "FetchStormWarningStormWarningCount", "caption": "Anzahl Unwetterwarnungen" },
+	{ "type": "Label", "label": "Update Wetterdaten alle X Minuten" },
+	{ "type": "IntervalBox", "name": "UpdateWeatherInterval", "caption": "Minuten" },
+	{ "type": "Label", "label": "Update Wetterwarnungen alle X Minuten" },
+	{ "type": "IntervalBox", "name": "UpdateWarningInterval", "caption": "Minuten" }
+  ],
+ "actions":
+  [ 
+	{ "type": "Button", "label": "Update Wetter", "onClick": "WGW_UpdateWeatherData($id);" }, 
+	{ "type": "Button", "label": "Update Unwetterwarnung", "onClick": "WGW_UpdateStormWarning($id);" }
+  ],
+  "status":
+  [
+	{ "code": 101, "icon": "active", "caption": "Instanz wird erstellt!" },
+	{ "code": 102, "icon": "active", "caption": "Instanz ist aktiv!" },
+	{ "code": 104, "icon": "inactive", "caption": "Instanz ist inaktiv!" }
+  ]
+}

@@ -63,7 +63,7 @@ class WundergroundWeather extends IPSModule {
 			$this->MaintainVariable("NowTemp", "Temperatur (aktuell)", 2, "Temperature", 70, $keep);
 			$this->MaintainVariable("NowTempFeel", "Temperatur gefühlt (aktuell)", 2, "Temperature", 80, $keep);
 			$this->MaintainVariable("NowTempDewpoint", "Temperatur Taupunkt (aktuell)", 2, "Temperature", 90, $keep);
-			$this->MaintainVariable("NowUV", "UV Strahlung (aktuell)", 2, "WGW.UVIndex", 100, $keep);
+			$this->MaintainVariable("NowUV", "UV Strahlung (aktuell)", 1, "WGW.UVIndex", 100, $keep);
 			$this->MaintainVariable("NowWindgust", "Windböe (aktuell)", 2, "WGW.WindSpeedkmh", 110, $keep);
 			$this->MaintainVariable("NowWindspeed", "Windgeschwindigkeit (aktuell)", 2, "WGW.WindSpeedkmh", 120, $keep);
 			$this->MaintainVariable("NowWindDeg", "Windrichtung (aktuell)", 2, "WindDirection.Text", 130, $keep);

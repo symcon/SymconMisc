@@ -1,7 +1,6 @@
 <?
 
-	class Alarmierung extends IPSModule
-	{
+	class Alarmierung extends IPSModule {
 		
 		public function Create()
 		{
@@ -9,9 +8,8 @@
 			parent::Create();
 			
 		}
-	
-		public function ApplyChanges()
-		{
+
+		public function ApplyChanges() {
 			//Never delete this line!
 			parent::ApplyChanges();
 			
@@ -24,7 +22,7 @@
 			$this->EnableAction("Alert");
 			
 		}
-	
+
 		/**
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
@@ -32,9 +30,8 @@
 		* ARM_UpdateEvents($id);
 		*
 		*/
-		public function UpdateEvents()
-		{
-
+		public function UpdateEvents() {
+			
 			$sensorsID = $this->CreateCategoryByIdent($this->InstanceID, "Sensors", "Sensors");
 			
 			//We want to listen for all changes on all sensorsID
@@ -57,21 +54,21 @@
 
 		}
 		
-		public function TriggerAlert($sourceID, $sourceValue) {
+		public function TriggerAlert($SourceID, $SourceValue) {
 			
 			//Only enable alarming if our module is active
 			if(!GetValue($this->GetIDForIdent("Active"))) {
 				return;
 			}
 			
-			switch($this->GetProfileName(IPS_GetVariable($sourceID))) {
+			switch($this->GetProfileName(IPS_GetVariable($SourceID))) {
 				case "~Window.Hoppe":
-					if($sourceValue == 0 || $sourceValue == 2) {
+					if($SourceValue == 0 || $SourceValue == 2) {
 						$this->SetAlert(true);
 					}
 					break;
 				case "~Window.HM":
-					if($sourceValue == 1 || $sourceValue == 2) {
+					if($SourceValue == 1 || $SourceValue == 2) {
 						$this->SetAlert(true);
 					}
 					break;
@@ -79,12 +76,12 @@
 				case "~Battery.Reversed":
 				case "~Presence.Reversed":
 				case "~Window.Reversed":
-					if(!$sourceValue) {
+					if(!$SourceValue) {
 						$this->SetAlert(true);
 					}
 					break;
 				default:
-					if($sourceValue) {
+					if($SourceValue) {
 						$this->SetAlert(true);
 					}
 					break;
@@ -92,9 +89,8 @@
 
 		}
 		
-		public function SetAlert(boolean $status)
-		{
-		
+		public function SetAlert(boolean $Status) {
+			
 			$targetsID = $this->CreateCategoryByIdent($this->InstanceID, "Targets", "Alert Target");
 			
 			//Lets notify all target devices
@@ -112,7 +108,7 @@
 						//If we somehow do not have a profile take care that we do not fail immediately
 						if($profileName != "") {
 							//If we are enabling analog devices we want to switch to the maximum value (e.g. 100%)
-							if ($status) {
+							if ($Status) {
 								$actionValue = IPS_GetVariableProfile($profileName)['MaxValue'];
 							} else {
 								$actionValue = 0;
@@ -122,7 +118,7 @@
 								$actionValue = $actionValue > 0;
 							}
 						} else {
-							$actionValue = $status;
+							$actionValue = $Status;
 						}
 
 						if(IPS_InstanceExists($actionID)) {
@@ -134,16 +130,22 @@
 				}
 			}
 			
-			SetValue($this->GetIDForIdent("Alert"), $status);
+			SetValue($this->GetIDForIdent("Alert"), $Status);
 		
 		}
 		
-		public function RequestAction($Ident, $Value)
-		{
+
+		public function SetActive(boolean $Value) {
+			
+			SetValue($this->GetIDForIdent("Active"), $Value);
+			
+		}
+
+		public function RequestAction($Ident, $Value) {
 			
 			switch($Ident) {
 				case "Active":
-					SetValue($this->GetIDForIdent($Ident), $Value);
+					$this->SetActive($Value);
 					break;
 				case "Alert":
 					$this->SetAlert($Value);
@@ -155,6 +157,7 @@
 		}
 
 		private function GetProfileName($variable) {
+			
 			if($variable['VariableCustomProfile'] != "")
 				return $variable['VariableCustomProfile'];
 			else
@@ -162,14 +165,15 @@
 		}
 
 		private function GetProfileAction($variable) {
+			
 			if($variable['VariableCustomAction'] != "")
 				return $variable['VariableCustomAction'];
 			else
 				return $variable['VariableAction'];
 		}
 		
-		private function CreateCategoryByIdent($id, $ident, $name)
-		 {
+		private function CreateCategoryByIdent($id, $ident, $name) {
+			
 			 $cid = @IPS_GetObjectIDByIdent($ident, $id);
 			 if($cid === false)
 			 {
@@ -181,8 +185,8 @@
 			 return $cid;
 		}
 		
-		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "")
-		 {
+		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {
+			
 			 $vid = @IPS_GetObjectIDByIdent($ident, $id);
 			 if($vid === false)
 			 {
@@ -195,7 +199,7 @@
 			 }
 			 return $vid;
 		}
-	
+
 	}
 
 ?>

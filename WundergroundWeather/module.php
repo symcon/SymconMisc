@@ -177,7 +177,7 @@ class WundergroundWeather extends IPSModule {
 
 }
 
-	public function UpdateStormWarning() {
+	public function UpdateStormWarningData() {
 
 		//Abfrage von Unwetterwarnungen
 		if ($this->ReadPropertyBoolean("FetchStormWarning")) {

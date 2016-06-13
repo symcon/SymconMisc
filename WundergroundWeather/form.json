@@ -24,7 +24,7 @@
  "actions":
   [ 
 	{ "type": "Button", "label": "Update Wetter", "onClick": "WGW_UpdateWeatherData($id);" }, 
-	{ "type": "Button", "label": "Update Unwetterwarnung", "onClick": "WGW_UpdateStormWarning($id);" }
+	{ "type": "Button", "label": "Update Unwetterwarnung", "onClick": "WGW_UpdateStormWarningData($id);" }
   ],
   "status":
   [

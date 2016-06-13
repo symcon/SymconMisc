@@ -23,5 +23,8 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Unwetterzentrale__ ([Dokumentation](Unwetterzentrale))  
 	Holt das aktuelle Regenradarbild von Wetteronline und wertet die Farbpixel der Regenmenge aus.
 
+- __WundergroundWeather__ ([Dokumentation](WundergroundWeather))  
+	Holt Wetterdaten (Aktuell/stündlich/12-stündlich/Unwetterwarnung) via API von www.wunderground.com
+
 - __Zähler-Überlauf__ ([Dokumentation](ZaehlerUeberlauf))  
 	Zähler, welche überlaufen können als Zähler dargestellt werden.

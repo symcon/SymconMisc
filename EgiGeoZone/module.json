@@ -1,0 +1,14 @@
+{
+	"id": "{0100CA50-D2DA-11E4-8830-0800200C9A67}",
+	"name": "EgiGeoZone",
+	"type": 0,
+	"vendor": "",
+	"aliases": 
+	[
+		"EgiGeoZone"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "EGZ"
+}

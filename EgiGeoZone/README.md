@@ -25,7 +25,7 @@ Das Modul dient zum empfangen von EgiGeoZone Daten.
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 4.x
-- EgiGeoZone App für Android OS
+- EgiGeoZone App für Google Android
 
 ### 3. Software-Installation
 

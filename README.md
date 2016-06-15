@@ -8,6 +8,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Anwesenheits-Simulation__ ([Dokumentation](AnwesenheitsSimulation))  
 	Simuliert die Anwesenheit von Personen im Haushalt.
 
+- __EgiGeoZone__ ([Dokumentation](EgiGeoZone))  
+	Empfängt Daten von der EgiGeoZone App für Google Android.
+
 - __Energiezähler Strom__ ([Dokumentation](EnergiezaehlerStrom))  
 	Rechnet Zählerwerte in einen Momentanverbrauch um.
 

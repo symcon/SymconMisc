@@ -75,7 +75,7 @@
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), $this->ParseFloat($_GET['latitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), $this->ParseFloat($_GET['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_GET['date'])));
-			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_GET['id']), utf8_decode($_GET['name']), 0, "~Presence"), intval($_GET['entry']) > 0);
+			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceToAllowedIdent($_GET['name']), utf8_decode($_GET['name']), 0, "~Presence"), intval($_GET['entry']) > 0);
 			
 		}
 		
@@ -123,6 +123,20 @@
 			$floatString = str_replace(".", $LocaleInfo["mon_decimal_point"], $floatString);
 			$floatString = str_replace(",", $LocaleInfo["mon_decimal_point"], $floatString);
 			return floatval($floatString); 
+		}
+		
+		//Replaces all unallowed Chars of a String with "_"
+		//Allowed Chars: "a..z", "A..Z", "_", "0..9"
+		private function ReduceToAllowedIdent($String) {
+
+			for($i = 0; $i < strlen($String) ; $i++) {
+				$val = ord($String[$i]);
+				//    Between (1..9)                Between (A..Z)                Underscore (_)  Between (a..z)
+				if (!(($val >= 48 && $val <= 57) || ($val >= 65 && $val <= 90) || ($val == 95) || ($val >= 97 && $val <= 122))) {
+					$String[$i] = "_";
+				}
+			}
+			return $String;
 		}
 	
 	}

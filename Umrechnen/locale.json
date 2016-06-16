@@ -1,0 +1,10 @@
+{
+	"translations": {
+		"de": { 
+			"Source": "Quelle",
+			"Formula": "Formel",
+			"Value": "Wert",
+			"Calculate": "Berechne"
+		}
+	}
+}

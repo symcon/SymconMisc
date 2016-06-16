@@ -1,9 +1,9 @@
 {
 	"elements":
 	[
-		{ "name": "area", "type": "Select", "caption": "Gebiet",
+		{ "name": "area", "type": "Select", "caption": "Area",
 			"options": [
-				{ "label": "Deutschland", "value": "DL" },
+				{ "label": "Germany", "value": "DL" },
 				{ "label": "Baden-Württemberg", "value": "BWB" },
 				{ "label": "Bayern", "value": "BAY" },
 				{ "label": "Brandenburg/Berlin", "value": "BRA" },

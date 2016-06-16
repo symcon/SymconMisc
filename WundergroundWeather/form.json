@@ -1,35 +1,35 @@
 {
   "elements":
   [
-	{ "type": "ValidationTextBox", "name": "Location", "caption": "Standort" },
-	{ "type": "ValidationTextBox", "name": "Country", "caption": "Land" },
-	{ "type": "Label", "label": "Hier muss der API Key von der Seite https://www.wunderground.com/ eingetragen werden." },
+	{ "type": "ValidationTextBox", "name": "Location", "caption": "Location" },
+	{ "type": "ValidationTextBox", "name": "Country", "caption": "Country" },
+	{ "type": "Label", "label": "API Key from https://www.wunderground.com/" },
 	{ "type": "ValidationTextBox", "name": "APIKey", "caption": "API Key" },
-	{ "type": "Label", "label": "Welche Daten sollen abgefragt werden?" },
-	{ "type": "CheckBox", "name": "FetchNow", "caption": "Aktuelle Daten abfragen" },
-	{ "type": "CheckBox", "name": "FetchHourly", "caption": "Stündliche Vorhersage abfragen" },
-	{ "type": "CheckBox", "name": "FetchHalfDaily", "caption": "12stündliche Vorhersage abfragen" },
-	{ "type": "CheckBox", "name": "FetchStormWarning", "caption": "Unwetterwarnung abfragen" },
-	{ "type": "Label", "label": "Wieviele Stunden sollen für die stündliche Vorhersage abgefragt werden (max: 24)" },
-	{ "type": "NumberSpinner", "name": "FetchHourlyHoursCount", "caption": "Anzahl Vorhersagen" },
-	{ "type": "Label", "label": "Wieviele 12 stündliche Vorhersagen (Halbtags) sollen abgefragt werden? (Max: 8)" },
-	{ "type": "NumberSpinner", "name": "FetchHalfDailyHalfDaysCount", "caption": "Anzahl Vorhersagen" },
-	{ "type": "Label", "label": "Wieviele Unwetterwarnungen sollen abgefragt werden? (Max: 6)" },
-	{ "type": "NumberSpinner", "name": "FetchStormWarningStormWarningCount", "caption": "Anzahl Unwetterwarnungen" },
-	{ "type": "Label", "label": "Update Wetterdaten alle X Minuten" },
-	{ "type": "IntervalBox", "name": "UpdateWeatherInterval", "caption": "Minuten" },
-	{ "type": "Label", "label": "Update Wetterwarnungen alle X Minuten" },
-	{ "type": "IntervalBox", "name": "UpdateWarningInterval", "caption": "Minuten" }
+	{ "type": "Label", "label": "Which Weatherdata should be fetched" },
+	{ "type": "CheckBox", "name": "FetchNow", "caption": "Fetch actual data" },
+	{ "type": "CheckBox", "name": "FetchHourly", "caption": "Fetch hourly data" },
+	{ "type": "CheckBox", "name": "FetchHalfDaily", "caption": "Fetch 12hours data" },
+	{ "type": "CheckBox", "name": "FetchStormWarning", "caption": "Fetch stormwarning data" },
+	{ "type": "Label", "label": "How many 1hour forecasts? (max: 24)" },
+	{ "type": "NumberSpinner", "name": "FetchHourlyHoursCount", "caption": "Count" },
+	{ "type": "Label", "label": "How many 12hours forecasts? (Max: 8)" },
+	{ "type": "NumberSpinner", "name": "FetchHalfDailyHalfDaysCount", "caption": "Count" },
+	{ "type": "Label", "label": "How many Stormwarnings? (Max: 6)" },
+	{ "type": "NumberSpinner", "name": "FetchStormWarningStormWarningCount", "caption": "Count" },
+	{ "type": "Label", "label": "Update weatherdata every X minutes" },
+	{ "type": "IntervalBox", "name": "UpdateWeatherInterval", "caption": "Minutes" },
+	{ "type": "Label", "label": "Update Stormwarnings every X minutes" },
+	{ "type": "IntervalBox", "name": "UpdateWarningInterval", "caption": "Minutes" }
   ],
  "actions":
   [ 
-	{ "type": "Button", "label": "Update Wetter", "onClick": "WGW_UpdateWeatherData($id);" }, 
-	{ "type": "Button", "label": "Update Unwetterwarnung", "onClick": "WGW_UpdateStormWarningData($id);" }
+	{ "type": "Button", "label": "Update Weather", "onClick": "WGW_UpdateWeatherData($id);" }, 
+	{ "type": "Button", "label": "Update Stormwarning", "onClick": "WGW_UpdateStormWarningData($id);" }
   ],
   "status":
   [
-	{ "code": 101, "icon": "active", "caption": "Instanz wird erstellt!" },
-	{ "code": 102, "icon": "active", "caption": "Instanz ist aktiv!" },
-	{ "code": 104, "icon": "inactive", "caption": "Instanz ist inaktiv!" }
+	{ "code": 101, "icon": "active", "caption": "Instance getting created!" },
+	{ "code": 102, "icon": "active", "caption": "Instance is active!" },
+	{ "code": 104, "icon": "inactive", "caption": "Instance is inactive!" }
   ]
 }

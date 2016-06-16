@@ -1,8 +1,8 @@
 {
 	"elements":
 	[
-		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Quelle" },
-		{ "name": "Impulses", "type": "NumberSpinner", "caption": "Impulse" },
-		{ "name": "Interval", "type": "IntervalBox", "caption": "Sekunden" }
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
+		{ "name": "Impulses", "type": "NumberSpinner", "caption": "Pulses" },
+		{ "name": "Interval", "type": "IntervalBox", "caption": "Seconds" }
 	]
 }

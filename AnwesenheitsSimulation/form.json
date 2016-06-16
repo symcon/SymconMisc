@@ -1,7 +1,7 @@
 {
   "elements":
   [
-	{ "type": "Label", "label": "Mindestanzahl an täglichen Variablenänderungen" },
-	{ "type": "NumberSpinner", "name": "RequiredSwitchCount", "caption": "Anzahl" }
+	{ "type": "Label", "label": "Minimum needed daily changes" },
+	{ "type": "NumberSpinner", "name": "RequiredSwitchCount", "caption": "Count" }
   ]
 }

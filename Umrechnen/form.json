@@ -1,8 +1,8 @@
 {
 	"elements":
 	[
-		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Quelle" },
-		{ "name": "Formula", "type": "ValidationTextBox", "caption": "Formel" }
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
+		{ "name": "Formula", "type": "ValidationTextBox", "caption": "Formula" }
 	],
 	"actions":
 	[

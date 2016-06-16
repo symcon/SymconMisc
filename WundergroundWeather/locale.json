@@ -1,0 +1,26 @@
+{
+	"translations": {
+		"de": { 
+			"Location": "Standort",
+			"Country": "Land",
+			"API Key from https://www.wunderground.com/": "API Key von https://www.wunderground.com/",
+			"Which Weatherdata should be fetched": "Welche Wetterdaten sollen abgefragt werden?",
+			"Fetch actual data": "Aktuelles Wetter abfragen",
+			"Fetch hourly data": "Stündliche Wettervorhersage abfragen",
+			"Fetch 12hours data": "12-stündliche Wettervorhersage abfragen",
+			"Fetch stormwarning data": "Unwetterwarnungen abfragen",
+			"How many 1hour forecasts? (max: 24)": "Wieviele stündliche Vorhersagen abfragen? (max: 24)",
+			"Count": "Anzahl",
+			"How many 12hours forecasts? (Max: 8)": "Wieviele 12-stündlichen Vorhersagen abfragen? (max: 8)",
+			"How many Stormwarnings? (Max: 6)": "Wieviele Unwetterwarnungen abfragen?",
+			"Update weatherdata every X minutes": "Wetterdaten alle X Minuten aktualisieren",
+			"Minutes": "Minuten",
+			"Update Stormwarnings every X minutes": "Unwetterwarnungen alle X Minuten aktualisieren",
+			"Update Weather": "Wetter aktualisieren",
+			"Update Stormwarning": "Unwetterwarnungen aktualisieren",
+			"Instance getting created!": "Instanz wird erstellt!",
+			"Instance is active!": "Instanz ist aktiv!",
+			"Instance is inactive!": "Instanz ist inaktiv"
+		}
+	}
+}

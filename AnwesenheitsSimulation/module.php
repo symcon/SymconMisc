@@ -213,7 +213,7 @@ class AnwesenheitsSimulation extends IPSModule
 					}
 					if (!isset($nextValue) || !isset($nextTime)) {
 						$nextValue = "-";
-						$nextTime = "Nie";
+						$nextTime = "-";
 					}
 					
 					$result[$id] = array("currentValue" => $currentValue, "currentTime" => $currentTime, "nextValue" => $nextValue, "nextTime" => $nextTime);
@@ -289,19 +289,26 @@ class AnwesenheitsSimulation extends IPSModule
 		$html = "<table style='width: 100%; border-collapse: collapse;'>";
 		$html .= "<tr>";
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Aktor</td>";
-		$html .= "<td style='padding: 5px; font-weight: bold;'>letzter Wert</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>Letzter Wert</td>";
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Seit</td>";
-		$html .= "<td style='padding: 5px; font-weight: bold;'>nächster Wert</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>Nächster Wert</td>";
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Um</td>";
 		$html .= "</tr>";
 
 		foreach ($targetIDs as $targetID) {
 			$html .= "<tr style='border-top: 1px solid rgba(255,255,255,0.10);'>";
 			$html .= "<td style='padding: 5px;'>".IPS_GetName(IPS_GetParent($targetID))."\\".IPS_GetName($targetID)."</td>";
-			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentValue"]."</td>";
-			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentTime"]."</td>";
-			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["nextValue"]."</td>";
-			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["nextTime"]."</td>";
+			if(isset($nextSimulationData[$targetID])) {
+				$html .= "<td style='padding: 5px;'>".(int)$nextSimulationData[$targetID]["currentValue"]."</td>";
+				$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentTime"]."</td>";
+				$html .= "<td style='padding: 5px;'>".(int)$nextSimulationData[$targetID]["nextValue"]."</td>";
+				$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["nextTime"]."</td>";
+			} else {
+				$html .= "<td style='padding: 5px;'>0</td>";
+				$html .= "<td style='padding: 5px;'>00:00</td>";
+				$html .= "<td style='padding: 5px;'>-</td>";
+				$html .= "<td style='padding: 5px;'>-</td>";
+			}
 			$html .= "</tr>";
 		}
 

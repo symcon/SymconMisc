@@ -185,23 +185,35 @@ class AnwesenheitsSimulation extends IPSModule
 			//Going through all variableID's of the simulationData
 			foreach($simulationData as $id => $value) {
 				if (IPS_VariableExists($id)) {
-					unset($varValue);
-					unset($varTime);
+					unset($currentValue);
+					unset($currentTime);
+					unset($nextValue);
+					unset($nextTime);
 
 					//Getting the value to set
 					foreach ($value as $key) {
 						if (date("H:i:s") > $key["TimeStamp"]) {
-							$varValue = $key["Value"];
-							$varTime = $key["TimeStamp"];
+							$currentValue = $key["Value"];
+							$currentTime = $key["TimeStamp"];
 						} else {
+							$nextValue = $key["Value"];
+							$nextTime = $key["TimeStamp"];
+							
 							$nextSwitchTimestamp = min($nextSwitchTimestamp, strtotime($key["TimeStamp"]));
 							break;
 						}
 					}
 
-					if (isset($varValue)) {
-						$result[$id] = array("varValue" => $varValue, "varTime" => $varTime);
+					if (!isset($currentValue) || !isset($currentTime)) {
+						$currentValue = false;
+						$currentTime = "00:00";
 					}
+					if (!isset($nextValue) || !isset($nextTime)) {
+						$nextValue = "-";
+						$nextTime = "Nie";
+					}
+					
+					$result[$id] = array("currentValue" => $currentValue, "currentTime" => $currentTime, "nextValue" => $nextValue, "nextTime" => $nextTime);
 
 				}
 			}
@@ -234,10 +246,10 @@ class AnwesenheitsSimulation extends IPSModule
 
 				$targetValue = false;
 			} else {
-				$this->SendDebug("Update", "Device ".$targetID." shall be ".(int)$NextSimulationData[$targetID]['varValue']." since ".$NextSimulationData[$targetID]['varTime']." and currently is ".(int)$v["VariableValue"], 0);
+				$this->SendDebug("Update", "Device ".$targetID." shall be ".(int)$NextSimulationData[$targetID]['currentValue']." since ".$NextSimulationData[$targetID]['currentTime']." and currently is ".(int)$v["VariableValue"], 0);
 
-				//Set variableValue, if there is a varValue and its not the same as already set
-				$targetValue = $NextSimulationData[$targetID]['varValue'];
+				//Set variableValue, if there is a currentValue and its not the same as already set
+				$targetValue = $NextSimulationData[$targetID]['currentValue'];
 			}
 
 			if ($targetValue != $v["VariableValue"]) {
@@ -274,23 +286,20 @@ class AnwesenheitsSimulation extends IPSModule
 		$html = "<table style='width: 100%; border-collapse: collapse;'>";
 		$html .= "<tr>";
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Aktor</td>";
-		$html .= "<td style='padding: 5px; font-weight: bold;'>Wert</td>";
-		$html .= "<td style='padding: 5px; font-weight: bold;'>Uhrzeit</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>letzter Wert</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>Seit</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>nächster Wert</td>";
+		$html .= "<td style='padding: 5px; font-weight: bold;'>Um</td>";
 		$html .= "</tr>";
 
 		foreach ($targetIDs as $targetID) {
-
 			$html .= "<tr style='border-top: 1px solid rgba(255,255,255,0.10);'>";
 			$html .= "<td style='padding: 5px;'>".IPS_GetName(IPS_GetParent($targetID))."\\".IPS_GetName($targetID)."</td>";
-			if(isset($nextSimulationData[$targetID])) {
-				$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["Value"]."</td>";
-				$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["TimeStamp"]."</td>";
-			} else {
-				$html .= "<td style='padding: 5px;'>Aus</td>";
-				$html .= "<td style='padding: 5px;'>Nie</td>";
-			}
+			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentValue"]."</td>";
+			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentTime"]."</td>";
+			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["nextValue"]."</td>";
+			$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["nextTime"]."</td>";
 			$html .= "</tr>";
-
 		}
 
 		$html .= "</table>";

@@ -17,7 +17,7 @@ class AnwesenheitsSimulation extends IPSModule
 
 		//Variables
 		$this->RegisterVariableString("SimulationData", "SimulationData", "");
-		IPS_SetHidden(IPS_GetObjectIDByIdent("SimulationData", $this->InstanceID), true);
+		IPS_SetHidden($this->GetIDForIdent("SimulationData"), true);
 		$this->RegisterVariableString("SimulationView", "Simulationsvorschau", "~HTMLBox");
 		$this->RegisterVariableString("SimulationDay", "Simulationsquelle (Tag)", "");
 		$this->RegisterVariableBoolean("Active", "Simulation aktiv", "~Switch");
@@ -46,6 +46,7 @@ class AnwesenheitsSimulation extends IPSModule
 			if($this->UpdateData()) {
 				$this->UpdateTargets();
 				IPS_SetEventActive($this->GetIDForIdent("UpdateDataTimer"), true);
+				IPS_SetHidden($this->GetIDForIdent("SimulationView"), false);
 			}
 		} else {
 			//When deactivating the simulation, kill data for simulation and deactivate timer for updating targets
@@ -53,6 +54,7 @@ class AnwesenheitsSimulation extends IPSModule
 			SetValue($this->GetIDForIdent("SimulationData"), "");
 			$this->SetTimerInterval("UpdateTargetsTimer", 0);
 			IPS_SetEventActive($this->GetIDForIdent("UpdateDataTimer"), false);
+			IPS_SetHidden($this->GetIDForIdent("SimulationView"), true);
 		}
 
 		SetValue($this->GetIDForIdent("Active"), $SwitchOn);

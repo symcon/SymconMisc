@@ -23,7 +23,7 @@
 			//Create our trigger
 			if(IPS_VariableExists($this->ReadPropertyInteger("SourceVariable"))) {
 				$eid = @IPS_GetObjectIDByIdent("SourceTrigger", $this->InstanceID);
-				if($eid == false) {
+				if($eid === false) {
 					$eid = IPS_CreateEvent(0 /* Trigger */);
 					IPS_SetParent($eid, $this->InstanceID);
 					IPS_SetIdent($eid, "SourceTrigger");

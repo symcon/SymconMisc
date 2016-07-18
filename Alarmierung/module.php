@@ -38,7 +38,7 @@
 			foreach(IPS_GetChildrenIDs($sensorsID) as $sensorID) {
 				//only allow links
 				if(IPS_LinkExists($sensorID)) {
-					if(@IPS_GetObjectIDByIdent("Sensor".$sensorID, $this->InstanceID) == 0) {
+					if(@IPS_GetObjectIDByIdent("Sensor".$sensorID, $this->InstanceID) === false) {
 						$linkVariableID = IPS_GetLink($sensorID)['TargetID'];
 						if(IPS_VariableExists($linkVariableID)) {
 							$eid = IPS_CreateEvent(0 /* Trigger */);

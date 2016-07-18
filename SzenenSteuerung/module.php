@@ -31,7 +31,7 @@ class SzenenSteuerung extends IPSModule {
 		$this->CreateCategoryByIdent($this->InstanceID, "Targets", "Targets");
 		
 		for($i = 1; $i <= $this->ReadPropertyInteger("SceneCount"); $i++) {
-			if(@IPS_GetObjectIDByIdent("Scene".$i, $this->InstanceID) == 0){
+			if(@IPS_GetObjectIDByIdent("Scene".$i, $this->InstanceID) === false){
 				//Scene
 				$vid = IPS_CreateVariable(1 /* Scene */);
 				IPS_SetParent($vid, $this->InstanceID);

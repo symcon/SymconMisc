@@ -44,6 +44,7 @@
 							$eid = IPS_CreateEvent(0 /* Trigger */);
 							IPS_SetParent($eid, $this->InstanceID);
 							IPS_SetName($eid, "Trigger for #".$linkVariableID);
+							IPS_SetIdent($eid, "Sensor".$sensorID);
 							IPS_SetEventTrigger($eid, 0, $linkVariableID);
 							IPS_SetEventScript($eid, "ARM_TriggerAlert(\$_IPS['TARGET'], \$_IPS['VARIABLE'], \$_IPS['VALUE']);");
 							IPS_SetEventActive($eid, true);

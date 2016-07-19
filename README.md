@@ -21,7 +21,10 @@ Folgende Module beinhaltet das SymconMisc Repository:
 	Speichert den Zustand einer belieben Anzahl an Aktoren und macht diese via WebFront/PHP-Funktion abrufbar.
 
 - __Umrechnen__ ([Dokumentation](Umrechnen))  
-	Rechnet eine Variable über eine selbstdefinierte Variable um.
+	Rechnet eine Variable über eine selbstdefinierte Formel um.
+
+- __UmrechnenMultiGrenzen__ ([Dokumentation](UmrechnenMultiGrenzen))  
+	Rechnet eine Variable in eingerichteten Grenzen über eine selbstdefinierte Formel um.
 
 - __Unwetterzentrale__ ([Dokumentation](Unwetterzentrale))  
 	Holt das aktuelle Regenradarbild von Wetteronline und wertet die Farbpixel der Regenmenge aus.

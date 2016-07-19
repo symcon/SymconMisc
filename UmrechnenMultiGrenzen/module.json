@@ -1,0 +1,14 @@
+{
+	"id": "{D40D120A-C525-4DFC-9F44-ED6E43890C63}",
+	"name": "UmrechnenMultiGrenzen",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"UmrechnenMultiGrenzen"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "UMG"
+}

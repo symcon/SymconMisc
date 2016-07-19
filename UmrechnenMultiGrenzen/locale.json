@@ -1,0 +1,30 @@
+{
+	"translations": {
+		"de": { 
+			"Source": "Quelle",
+			"Formula 1": "Formel 1",
+			"Formula 2": "Formel 2",
+			"Formula 3": "Formel 3",
+			"Formula 4": "Formel 4",
+			"Formula 5": "Formel 5",
+			"Formula 6": "Formel 6",
+			"Formula 7": "Formel 7",
+			"Formula 8": "Formel 8",
+			"Formula 9": "Formel 9",
+			"Formula 10": "Formel 10",
+			"Border 0": "Grenzwert 0",
+			"Border 1": "Grenzwert 1",
+			"Border 2": "Grenzwert 2",
+			"Border 3": "Grenzwert 3",
+			"Border 4": "Grenzwert 4",
+			"Border 5": "Grenzwert 5",
+			"Border 6": "Grenzwert 6",
+			"Border 7": "Grenzwert 7",
+			"Border 8": "Grenzwert 8",
+			"Border 9": "Grenzwert 9",
+			"Border 10": "Grenzwert 10",
+			"Value": "Wert",
+			"Calculate": "Berechne"
+		}
+	}
+}

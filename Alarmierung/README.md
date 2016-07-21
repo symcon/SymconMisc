@@ -47,7 +47,7 @@ Name         | Typ       | Beschreibung
 ------------ | --------- | ----------------
 Alert Target | Kategorie | Verlinkte Targets werden auf den maximalen Wert bzw. An (True) gesetzt, wenn ein Alarm ausgelöst wird.
 Sensors      | Kategorie | Verlinkte Variablen, welche den Alarm auslösen können.
-Active       | Boolean   | De-/Aktiviert die Alarmierung.
+Active       | Boolean   | De-/Aktiviert die Alarmierung. Wird die Alarmierung deaktiviert, so wird auch der ggf. vorhandene Alarm deaktiviert.
 Alert        | Boolean   | De-/Aktiviert den Alarm.
 
 ##### Profile:

@@ -140,6 +140,10 @@
 			
 			SetValue($this->GetIDForIdent("Active"), $Value);
 			
+			if(!$Value) {
+				$this->SetAlert(false);
+			}
+			
 		}
 
 		public function RequestAction($Ident, $Value) {

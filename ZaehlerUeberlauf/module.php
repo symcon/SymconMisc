@@ -43,7 +43,7 @@
 		* ZUL_Update($id);
 		*
 		*/
-		public function Update($OldValue, $Value)
+		public function Update(int $OldValue, int $Value)
 		{
 			
 			if (($Value - $OldValue) < 0) {

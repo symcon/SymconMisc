@@ -55,7 +55,7 @@
 
 		}
 		
-		public function TriggerAlert($SourceID, $SourceValue) {
+		public function TriggerAlert(int $SourceID, int $SourceValue) {
 			
 			//Only enable alarming if our module is active
 			if(!GetValue($this->GetIDForIdent("Active"))) {
@@ -90,7 +90,7 @@
 
 		}
 		
-		public function SetAlert(boolean $Status) {
+		public function SetAlert(bool $Status) {
 			
 			$targetsID = $this->CreateCategoryByIdent($this->InstanceID, "Targets", "Alert Target");
 			
@@ -136,7 +136,7 @@
 		}
 		
 
-		public function SetActive(boolean $Value) {
+		public function SetActive(bool $Value) {
 			
 			SetValue($this->GetIDForIdent("Active"), $Value);
 			

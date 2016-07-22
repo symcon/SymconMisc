@@ -39,7 +39,7 @@ class AnwesenheitsSimulation extends IPSModule
 
 	}
 
-	public function SetSimulation(boolean $SwitchOn){
+	public function SetSimulation(bool $SwitchOn){
 
 		if ($SwitchOn){
 			//When activating the simulation, fetch actual data for a day and activate timer for updating targets

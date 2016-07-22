@@ -73,13 +73,13 @@ class SzenenSteuerung extends IPSModule {
 		}
 	}
 
-	public function CallScene(integer $SceneNumber){
+	public function CallScene(int $SceneNumber){
 		
 		$this->CallValues("Scene".$SceneNumber);
 
 	}
 
-	public function SaveScene(integer $SceneNumber){
+	public function SaveScene(int $SceneNumber){
 		
 		$this->SaveValues("Scene".$SceneNumber);
 

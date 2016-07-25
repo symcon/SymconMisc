@@ -120,8 +120,8 @@
 		
 		private function ParseFloat($floatString) { 
 			$LocaleInfo = localeconv(); 
-			$floatString = str_replace(".", $LocaleInfo["mon_decimal_point"], $floatString);
-			$floatString = str_replace(",", $LocaleInfo["mon_decimal_point"], $floatString);
+			$floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
+			$floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
 			return floatval($floatString); 
 		}
 		

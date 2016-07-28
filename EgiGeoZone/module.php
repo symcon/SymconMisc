@@ -71,6 +71,7 @@
 				return;
 			}
 			
+			$this->sendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_GET['device']), "Device");
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), $this->ParseFloat($_GET['latitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), $this->ParseFloat($_GET['longitude']));

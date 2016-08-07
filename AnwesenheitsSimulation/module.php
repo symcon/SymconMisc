@@ -1,4 +1,6 @@
 <?
+
+	$resultLink = array();
 class AnwesenheitsSimulation extends IPSModule
 {
 
@@ -9,6 +11,7 @@ class AnwesenheitsSimulation extends IPSModule
 		//These lines are parsed on Symcon Startup or Instance creation
 		//You cannot use variables here. Just static values.
 		$this->RegisterPropertyInteger("RequiredSwitchCount", 4);
+		$this->RegisterPropertyInteger("PreviewName", "O");
 		$this->RegisterPropertyInteger("ArchiveControlID", IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}")[0]);
 
 		//Timer
@@ -80,13 +83,20 @@ class AnwesenheitsSimulation extends IPSModule
 		$targetIDs = IPS_GetChildrenIDs(IPS_GetObjectIDByIdent("Targets", $this->InstanceID));
 
 		$result = array();
+
+		$i = 0;
 		foreach($targetIDs as $targetID) {
 			//Only allow links
 			if (IPS_LinkExists($targetID)) {
 				if (IPS_VariableExists(IPS_GetLink($targetID)['TargetID']))
-				$result[] = IPS_GetLink($targetID)['TargetID'];
+				//$result[$i]['TargetID'] = IPS_GetLink($targetID)['TargetID'];
+				//$result[$i]['LinkID'] = $targetID; 
+				$result[$i]['TargetID'] = IPS_GetLink($targetID)['TargetID'];
+				$result[$i]['LinkID'] = $targetID;
+				$i++;
 			}
 		}
+		//print_r($result);
 		return $result;
 	}
 
@@ -99,9 +109,9 @@ class AnwesenheitsSimulation extends IPSModule
 
 		//Going through all linked variables
 		foreach($targetIDs as $targetID) {
-			if (AC_GetLoggingStatus($this->ReadPropertyInteger("ArchiveControlID"), $targetID)) {
+			if (AC_GetLoggingStatus($this->ReadPropertyInteger("ArchiveControlID"), $targetID['TargetID'])) {
 				//Fetch Data for all variables but only one day
-				$values = AC_GetLoggedValues($this->ReadPropertyInteger("ArchiveControlID"), $targetID, $dayStart - $dayDiff, $dayStart + (24 * 3600) - $dayDiff - 1, 0);
+				$values = AC_GetLoggedValues($this->ReadPropertyInteger("ArchiveControlID"), $targetID['TargetID'], $dayStart - $dayDiff, $dayStart + (24 * 3600) - $dayDiff - 1, 0);
 				if (sizeof($values) > 0){
 
 					//Transform UnixTimeStamp into human readable value
@@ -110,7 +120,7 @@ class AnwesenheitsSimulation extends IPSModule
 					}
 
 					//Reverse array to have the Timestamps ascending
-					$dayData[$targetID] = array_reverse($values);
+					$dayData[$targetID['TargetID']] = array_reverse($values);
 				}
 			}
 		}
@@ -156,7 +166,7 @@ class AnwesenheitsSimulation extends IPSModule
 	//Fetches the needed SimulationData for a whole day
 	public function UpdateData() {
 		$targetIDs = $this->GetTargets();
-
+		
 		//Tries to fetch data for a random but same weekday for the last 4 weeks
 		$weekDays = array(7, 14, 21, 28);
 		shuffle($weekDays);
@@ -241,7 +251,7 @@ class AnwesenheitsSimulation extends IPSModule
 		$this->UpdateView($targetIDs, $NextSimulationData);
 
 		foreach ($targetIDs as $targetID){
-
+			$targetID = $targetID['TargetID'];
 			$v = IPS_GetVariable($targetID);
 
 			if(!isset($NextSimulationData[$targetID])) {
@@ -285,7 +295,7 @@ class AnwesenheitsSimulation extends IPSModule
 	}
 
 	private function UpdateView($targetIDs, $nextSimulationData) {
-
+	
 		$html = "<table style='width: 100%; border-collapse: collapse;'>";
 		$html .= "<tr>";
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Aktor</td>";
@@ -296,8 +306,16 @@ class AnwesenheitsSimulation extends IPSModule
 		$html .= "</tr>";
 
 		foreach ($targetIDs as $targetID) {
+			$LinkID = $targetID['LinkID'];
+			$targetID = $targetID['TargetID'];
 			$html .= "<tr style='border-top: 1px solid rgba(255,255,255,0.10);'>";
-			$html .= "<td style='padding: 5px;'>".IPS_GetName(IPS_GetParent($targetID))."\\".IPS_GetName($targetID)."</td>";
+			if($this->ReadPropertyInteger("PreviewName") == 0)
+			{
+				$html .= "<td style='padding: 5px;'>".IPS_GetName($LinkID)."</td>";
+			} else {
+				$html .= "<td style='padding: 5px;'>".IPS_GetName(IPS_GetParent($targetID))."\\".IPS_GetName($targetID)."</td>";
+			}
+
 			if(isset($nextSimulationData[$targetID])) {
 				$html .= "<td style='padding: 5px;'>".(int)$nextSimulationData[$targetID]["currentValue"]."</td>";
 				$html .= "<td style='padding: 5px;'>".$nextSimulationData[$targetID]["currentTime"]."</td>";

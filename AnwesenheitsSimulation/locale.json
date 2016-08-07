@@ -2,7 +2,8 @@
 	"translations": {
 		"de": { 
 			"Minimum needed daily changes": "Minimale Anzahl an täglichen Schaltvorgängen",
-			"Count": "Anzahl"
+			"Count": "Anzahl",
+			"Show link or original name in preview" : "Link Bezeichnung oder Name aus Objektbaum in der Vorschau anzeigen"
 		}
 	}
 }

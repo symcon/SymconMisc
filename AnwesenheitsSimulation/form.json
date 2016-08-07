@@ -2,6 +2,13 @@
   "elements":
   [
 	{ "type": "Label", "label": "Minimum needed daily changes" },
-	{ "type": "NumberSpinner", "name": "RequiredSwitchCount", "caption": "Count" }
-  ]
+	{ "type": "NumberSpinner", "name": "RequiredSwitchCount", "caption": "Count" },
+	{ "type": "Label", "label": "Show link or original name in preview" },
+	{ "type": "Select", "name": "PreviewName", "caption": "Darstellung",
+    "options": [
+        { "label": "Link Bezeichnung anzeigen", "value": 0 },
+        { "label": "Name aus Objektbaum anzeigen", "value": 1 }
+	]
+	}
+	]
 }

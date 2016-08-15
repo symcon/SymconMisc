@@ -71,7 +71,15 @@
 				return;
 			}
 			
+			//Adding a missing '+' in front of the timezone to get a strtotime() convertable string
+			//Example:
+			//"2016-08-12T17:40:13 0000" => "2016-08-12T17:40:13 +0000"
+			if(strlen($_GET['date']) == 24){
+				$_GET['date'] = implode("+", str_split($test, 20));
+			}
+			
 			$this->sendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);
+			
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_GET['device']), "Device");
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), $this->ParseFloat($_GET['latitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), $this->ParseFloat($_GET['longitude']));

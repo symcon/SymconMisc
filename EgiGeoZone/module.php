@@ -75,7 +75,7 @@
 			//Example:
 			//"2016-08-12T17:40:13 0000" => "2016-08-12T17:40:13 +0000"
 			if(strlen($_GET['date']) == 24){
-				$_GET['date'] = implode("+", str_split($test, 20));
+				$_GET['date'] = implode("+", str_split($_GET['date'], 20));
 			}
 			
 			$this->sendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);

@@ -1,0 +1,14 @@
+{
+	"translations": {
+		"de": { 
+			"Time until not updatet objects will set off an alert. Its added to the last time an object is updatet.": "Zeit bis ein Objekt überfällig ist und den Alarm aktiviert. Die Zeit wird auf den Zeitpunkt der letzten Aktivität der verlinkten Objekte addiert.",
+			"Time base": "Zeit Basis",
+			"Seconds": "Sekunden",
+			"Minutes": "Minuten",
+			"Hours": "Stunden",
+			"Days": "Tage",
+			"Time value": "Zeitwert",
+			"Interval which checks the linked objects": "Intervall in dem die verlinkten Objekte geprüft werden"
+		}
+	}
+}

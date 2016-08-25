@@ -1,0 +1,17 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Time until not updatet objects will set off an alert. Its added to the last time an object is updatet." },
+	{ "type": "Select", "name": "TimeBase", "caption": "Time base",
+		"options": [
+			{ "label": "Seconds", "value": 0 },
+			{ "label": "Minutes", "value": 1 },
+			{ "label": "Hours", "value": 2 },
+			{ "label": "Days", "value": 3 }
+		]
+	},
+	{ "type": "NumberSpinner", "name": "TimeValue", "caption": "Time value" },
+	{ "type": "Label", "label": "Interval which checks the linked objects" },
+	{ "type": "IntervalBox", "name": "CheckTargetsInterval", "caption": "Seconds" }
+  ]
+}

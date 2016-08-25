@@ -29,6 +29,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Unwetterzentrale__ ([Dokumentation](Unwetterzentrale))  
 	Holt das aktuelle Regenradarbild von Wetteronline und wertet die Farbpixel der Regenmenge aus.
 
+- __Watchdog__ ([Dokumentation](Watchdog))  
+	Überwacht verlinkte Variablen und wirft einen Alarm wenn diese zu lange nicht aktualisiert wurden.
+
 - __WundergroundWeather__ ([Dokumentation](WundergroundWeather))  
 	Holt Wetterdaten (Aktuell/stündlich/12-stündlich/Unwetterwarnung) via API von www.wunderground.com
 

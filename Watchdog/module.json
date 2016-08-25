@@ -1,0 +1,14 @@
+{
+    "id": "{87F47896-4321-8756-94FD-9990BD8D9F54}",
+    "name": "Watchdog",
+    "type": 3,
+    "vendor": "",
+    "aliases": 
+    [
+        "Watchdog"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "WD"
+}

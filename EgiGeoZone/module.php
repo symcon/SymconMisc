@@ -78,7 +78,7 @@
 				$_GET['date'] = implode("+", str_split($_GET['date'], 20));
 			}
 			
-			$this->sendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);
+			$this->SendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);
 			
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_GET['device']), "Device");
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), $this->ParseFloat($_GET['latitude']));

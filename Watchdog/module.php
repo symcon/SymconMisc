@@ -36,6 +36,9 @@ class Watchdog extends IPSModule
 		//Never delete this line!
 		parent::ApplyChanges();
 		
+		if (GetValue($this->GetIDForIdent("Active"))) {
+			$this->SetTimerInterval("CheckTargetsTimer", $this->ReadPropertyInteger("CheckTargetsInterval") * 1000);
+		}
 	}
 
 	public function RequestAction($Ident, $Value) {

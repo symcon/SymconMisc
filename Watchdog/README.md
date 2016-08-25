@@ -20,6 +20,7 @@ Sind Variablen überfällig, wird ein Alarm gesetzt und eine Liste dieser im Web
 * Ein-/Ausschaltbarkeit via WebFront-Button oder Skript-Funktion.
 * Anzeige wann die verlinkten Variablen zuletzt überprüft wurden.
 * Einstellbare automatische Überprüfung.
+* Darstellung des Originalpfades, wenn der Link den gleichen Namen hat wie die Ursprungsvariable. Ansonsten Anzeige des Linknamens
 
 ### 2. Voraussetzungen
 
@@ -75,7 +76,7 @@ Beispiel:
 
 `array WD_GetAlertTargets(integer $InstanzID, boolean $SetActive);`  
 Die Funktion liefert ein Array mit den aktiven Alarmen der Watchdoginstanz mit der InstanzID $InstanzID.  
-Die Funktion liefert ein Array mit überfälligen Variablen. Es beinhaltet die ID als Key und den letzten Zeitpunkt des Updates als UnixTimestamp.
+Die Funktion liefert ein Array mit überfälligen Objekten. Es beinhaltet die LinkID, VariablenID und den letzten Zeitpunkt (UnixTimestamp) des Updates.
 
 Beispiel:  
 `WD_GetAlertTargets(12345);`

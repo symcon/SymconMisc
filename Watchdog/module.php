@@ -97,7 +97,7 @@ class Watchdog extends IPSModule
 			$v = IPS_GetVariable($linkedTargetID);
 			
 			if($v['VariableUpdated'] < $watchTimeBorder){
-				$alertTargets[$linkedTargetID] = $v['VariableUpdated'];
+				$alertTargets[] = array('LinkID' => $targetID, 'VariableID' => $linkedTargetID, 'LastUpdate' => $v['VariableUpdated']);
 			}
 		}
 		return $alertTargets;
@@ -151,15 +151,19 @@ class Watchdog extends IPSModule
 		$html .= "<td style='padding: 5px; font-weight: bold;'>Überfällig seit</td>";
 		$html .= "</tr>";
 		
-		foreach ($AlertTargets as $targetID => $updated) {
+		foreach ($AlertTargets as $alertTarget) {
 			
-			$name = IPS_GetName($targetID);
-			$timediff = time() - $updated;
+			$name = IPS_GetName($alertTarget['LinkID']);
+			if(IPS_GetName($alertTarget['VariableID']) == $name) {
+				$name = IPS_GetName(IPS_GetParent($alertTarget['VariableID']))."\\".IPS_GetName($alertTarget['VariableID']);
+			}
+			
+			$timediff = time() - $alertTarget['LastUpdate'];
 			$timestring = sprintf("%02d:%02d:%02d", (int)($timediff / 3600) , (int)($timediff / 60) % 60, ($timediff) % 60);
 			
 			$html .= "<tr style='border-top: 1px solid rgba(255,255,255,0.10);'>";
 			$html .= "<td style='padding: 5px;'>".$name."</td>";
-			$html .= "<td style='padding: 5px;'>".date("d.m.Y H:i:s", $updated)."</td>";
+			$html .= "<td style='padding: 5px;'>".date("d.m.Y H:i:s", $alertTarget['LastUpdate'])."</td>";
 			$html .= "<td style='padding: 5px;'>".$timestring." Stunden</td>";
 			$html .= "</tr>";
 		}

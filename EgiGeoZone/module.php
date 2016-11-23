@@ -15,25 +15,24 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 			
-			$sid = $this->RegisterScript("Hook", "Hook", "<? //Do not delete or modify.\ninclude(IPS_GetKernelDirEx().\"scripts/__ipsmodule.inc.php\");\ninclude(\"../modules/SymconMisc/EgiGeoZone/module.php\");\n(new EgiGeoZone(".$this->InstanceID."))->ProcessHookData();");
-			$this->RegisterHook("/hook/egigeozone", $sid);
+			$this->RegisterHook("/hook/egigeozone");
 		}
 		
-		private function RegisterHook($Hook, $TargetID) {
+		private function RegisterHook($WebHook) {
 			$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
 			if(sizeof($ids) > 0) {
 				$hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
 				$found = false;
 				foreach($hooks as $index => $hook) {
-					if($hook['Hook'] == "/hook/egigeozone") {
-						if($hook['TargetID'] == $TargetID)
+					if($hook['Hook'] == $WebHook) {
+						if($hook['TargetID'] == $this->InstanceID)
 							return;
-						$hooks[$index]['TargetID'] = $TargetID;
+						$hooks[$index]['TargetID'] = $this->InstanceID;
 						$found = true;
 					}
 				}
 				if(!$found) {
-					$hooks[] = Array("Hook" => "/hook/egigeozone", "TargetID" => $TargetID);
+					$hooks[] = Array("Hook" => $WebHook, "TargetID" => $this->InstanceID);
 				}
 				IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
 				IPS_ApplyChanges($ids[0]);
@@ -41,13 +40,9 @@
 		}
 	
 		/**
-		* This function will be available automatically after the module is imported with the module control.
-		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
-		*
-		* GEO_ProcessHookData($id);
-		*
+		* This function will be called by the hook control. Visibility should be protected!
 		*/
-		public function ProcessHookData() {
+		protected function ProcessHookData() {
 			if($_IPS['SENDER'] == "Execute") {
 				echo "This script cannot be used this way.";
 				return;
@@ -68,7 +63,7 @@
 			}
 			
 			if(!isset($_GET['device']) || !isset($_GET['id']) || !isset($_GET['name'])) {
-				IPS_LogMessage("EgiGeoZone", "Malformed data: ".print_r($_GET, true));
+				$this->SendDebug("EgiGeoZone", "Malformed data: ".print_r($_GET, true), 0);
 				return;
 			}
 			

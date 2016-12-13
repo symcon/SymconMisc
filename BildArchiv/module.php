@@ -86,7 +86,8 @@ class BildArchiv extends IPSModule {
 		$mID = IPS_CreateMedia(1);
 		IPS_SetName($mID, date("H:i:s d.m.Y"));
 		IPS_SetParent($mID, $CID);
-		IPS_SetMediaFile($mID, IPS_GetName($pID), False);
+		IPS_SetMediaCached($mID, true);
+		IPS_SetMediaFile($mID, "media/".$mID.".".pathinfo(IPS_GetMedia($pID)['MediaFile'])['extension'], False);
 		IPS_SetMediaContent($mID, IPS_GetMediaContent($pID));
 		IPS_SetPosition($mID, time());
 		

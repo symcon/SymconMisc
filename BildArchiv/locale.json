@@ -1,0 +1,12 @@
+{
+	"translations": {
+		"de": { 
+			"Image which should be copied.": "Bild welches kopiert werden soll",
+			"Image": "Bild",
+			"Maximum quantity of images stored": "Wieviele Bilder maximal gespeichert werden sollen",
+			"Quantity": "Anzahl",
+			"Which variable triggers the module to copy the selected image.": "Welche Variable löst ein Kopieren des Bildes aus",
+			"Triggervariable": "Auslösevariable"
+		}
+	}
+}

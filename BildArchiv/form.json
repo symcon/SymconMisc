@@ -1,0 +1,11 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Image which should be copied." },
+	{ "type": "SelectMedia", "name": "ImageID", "caption": "Image" },
+	{ "type": "Label", "label": "Maximum quantity of images stored" },
+	{ "type": "NumberSpinner", "name": "MaxQuantity", "caption": "Quantity" },
+	{ "type": "Label", "label": "Which variable triggers the module to copy the selected image." },
+	{ "type": "SelectVariable", "name": "TriggerVariableID", "caption": "Triggervariable" }
+  ]
+}

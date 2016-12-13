@@ -8,6 +8,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Anwesenheits-Simulation__ ([Dokumentation](AnwesenheitsSimulation))  
 	Simuliert die Anwesenheit von Personen im Haushalt.
 
+- __Bild-Archiv__ ([Dokumentation](BildArchiv))  
+	Kopiert bei Auslösung durch eine gewählte Variable ein Bild
+
 - __EgiGeoZone__ ([Dokumentation](EgiGeoZone))  
 	Empfängt Daten von der EgiGeoZone App für Google Android.
 
@@ -15,7 +18,7 @@ Folgende Module beinhaltet das SymconMisc Repository:
 	Rechnet Zählerwerte in einen Momentanverbrauch um.
 
 - __Fertig-Melder__ ([Dokumentation](FertigMelder))  
-	Meldet nach einer Totzeit, nachdem ein Gerät einen gewissen Verbrauch unterschritten hat
+	Meldet nach einer Totzeit, nachdem ein Gerät einen gewissen Verbrauch unterschritten hat.
 
 - __Geofency__ ([Dokumentation](Geofency))  
 	Empfängt Daten von der Geofency App für Apple iOS.

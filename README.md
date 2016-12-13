@@ -14,6 +14,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Energiezähler Strom__ ([Dokumentation](EnergiezaehlerStrom))  
 	Rechnet Zählerwerte in einen Momentanverbrauch um.
 
+- __Fertig-Melder__ ([Dokumentation](FertigMelder))  
+	Meldet nach einer Totzeit, nachdem ein Gerät einen gewissen Verbrauch unterschritten hat
+
 - __Geofency__ ([Dokumentation](Geofency))  
 	Empfängt Daten von der Geofency App für Apple iOS.
 

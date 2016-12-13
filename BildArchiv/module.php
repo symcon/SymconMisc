@@ -33,7 +33,7 @@ class BildArchiv extends IPSModule {
 			IPS_SetName($eID, "AddImage");
 			IPS_SetHidden($eID, true);
 			IPS_SetEventTriggerSubsequentExecution($eID, false);
-			IPS_SetEventScript($eID, 'BA_AddPictureToLibrary($_IPS[\'TARGET\']);');
+			IPS_SetEventScript($eID, 'BA_AddImage($_IPS[\'TARGET\']);');
 		}
 		
 		$triggerID = $this->ReadPropertyInteger("TriggerVariableID");

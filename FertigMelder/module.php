@@ -72,26 +72,28 @@ class FertigMelder extends IPSModule {
 			IPS_SetEventActive($eid, false);
 		}
 		
-		SetValue($this->GetIDForIdent("Active"), false);
-		SetValue($this->GetIDForIdent("Status"), 0);
+		$this->SetActive(GetValue($this->GetIDForIdent("Active")));
 		
 	}
 
 	public function SetActive($Active){
 		
-		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), $Active);
-		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), $Active);
-		
-		if ($Active) {
-			if (GetValue($this->ReadPropertyFloat("SourceID")) >= $this->ReadPropertyFloat("BorderValue")) {
-				SetValue($this->GetIDForIdent("Status"), 1);
+		if ($this->ReadPropertyInteger("SourceID") != 0) {
+			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), $Active);
+			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), $Active);
+			
+			if ($Active) {
+				if (GetValue($this->ReadPropertyInteger("SourceID")) >= $this->ReadPropertyFloat("BorderValue")) {
+					SetValue($this->GetIDForIdent("Status"), 1);
+				} else {
+					SetValue($this->GetIDForIdent("Status"), 0);
+				}
 			} else {
-				SetValue($this->GetIDForIdent("Status"), 2);
+				SetValue($this->GetIDForIdent("Status"), 0);
 			}
 		} else {
-			SetValue($this->GetIDForIdent("Status"), 0);
+			echo "Quellvariable nicht ausgewählt";
 		}
-		
 	}
 
 	public function CheckEvent($Eventtype){

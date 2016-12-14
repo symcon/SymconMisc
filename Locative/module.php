@@ -2,7 +2,7 @@
 
 	class Locative extends IPSModule {
 		
-		//This one need to be available on our OAuth client backend.
+		//This one needs to be available on our OAuth client backend.
 		//Please contact us to register for an identifier: https://www.symcon.de/kontakt/#OAuth
 		private $oauthIdentifer = "locative";
 		
@@ -54,7 +54,7 @@
 		
 		private function FetchBearerToken($code) {
 			
-			//Exchange our Authentication Code for a permanent Refresh Token and a temporary Access Token
+			//Exchange our Authentication Code for a permanent Baerer Token
 			$options = array(
 				'http' => array(
 					'header' => "Content-Type: application/x-www-form-urlencoded\r\n",

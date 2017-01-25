@@ -39,7 +39,7 @@
 			$duration = $this->ReadPropertyInteger("Duration");
 			
 			$this->SwitchVariable(true);
-			$this->SetTimerInterval("OffTimer", $duration * 5 * 1000);
+			$this->SetTimerInterval("OffTimer", $duration * 60 * 1000);
 		}
 		
 		public function Stop(){			

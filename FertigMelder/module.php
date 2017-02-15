@@ -72,31 +72,39 @@ class FertigMelder extends IPSModule {
 			IPS_SetEventActive($eid, false);
 		}
 		
-		$this->SetActive(GetValue($this->GetIDForIdent("Active")));
+		if ($sourceID != 0) {
+			$this->SetActive(GetValue($this->GetIDForIdent("Active")));
+		}
 		
 	}
 
-	public function SetActive($Active){
+	public function SetActive(bool $Active){
 		
-		if ($this->ReadPropertyInteger("SourceID") != 0) {
-			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), $Active);
-			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), $Active);
+		if ($this->ReadPropertyInteger("SourceID") == 0) {
+			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), false);
+			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), false);
+			SetValue($this->GetIDForIdent("Status"), 0);
+			echo "No variable selected";
+			return false;
+		}
+		
+		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), $Active);
+		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), $Active);
 			
-			if ($Active) {
-				if (GetValue($this->ReadPropertyInteger("SourceID")) >= $this->ReadPropertyFloat("BorderValue")) {
-					SetValue($this->GetIDForIdent("Status"), 1);
-				} else {
-					SetValue($this->GetIDForIdent("Status"), 0);
-				}
+		if ($Active) {
+			if (GetValue($this->ReadPropertyInteger("SourceID")) >= $this->ReadPropertyFloat("BorderValue")) {
+				SetValue($this->GetIDForIdent("Status"), 1);
 			} else {
 				SetValue($this->GetIDForIdent("Status"), 0);
 			}
 		} else {
-			echo "Quellvariable nicht ausgewählt";
+			SetValue($this->GetIDForIdent("Status"), 0);
 		}
+		
+		return true;
 	}
 
-	public function CheckEvent($Eventtype){
+	public function CheckEvent(String $Eventtype){
 		
 		switch ($Eventtype){
 			case "Up":
@@ -121,8 +129,11 @@ class FertigMelder extends IPSModule {
 		switch($Ident) {
 			case "Active":
 				//Neuen Wert in die Statusvariable schreiben
-				$this->SetActive($Value);
-				SetValue($this->GetIDForIdent($Ident), $Value);
+				if ($this->SetActive($Value)) {
+					SetValue($this->GetIDForIdent($Ident), $Value);
+				} else {
+					SetValue($this->GetIDForIdent($Ident), false);
+				}
 				break;
 			
 			default:

@@ -1,7 +1,7 @@
 <?
 class FertigMelder extends IPSModule {
 	
-	public function Create(){
+	public function Create() {
 		//Never delete this line!
 		parent::Create();
 		
@@ -14,7 +14,7 @@ class FertigMelder extends IPSModule {
 		//Timer
 		$this->RegisterTimer("CheckIfDoneTimer", 0, 'FM_CheckEvent($_IPS[\'TARGET\'], "Done");');
 		
-		if(!IPS_VariableProfileExists("FM.Status")) {
+		if (!IPS_VariableProfileExists("FM.Status")) {
 			IPS_CreateVariableProfile("FM.Status", 1);
 			IPS_SetVariableProfileValues("FM.Status", 0, 2, 1);
 			IPS_SetVariableProfileAssociation("FM.Status", 0, "Off", "Sleep", -1);
@@ -34,7 +34,7 @@ class FertigMelder extends IPSModule {
 		
 	}
 
-	public function ApplyChanges(){
+	public function ApplyChanges() {
 		//Never delete this line!
 		parent::ApplyChanges();
 		
@@ -50,7 +50,7 @@ class FertigMelder extends IPSModule {
 			IPS_SetEventTriggerSubsequentExecution($eid, false);
 			IPS_SetEventScript($eid, 'FM_CheckEvent($_IPS[\'TARGET\'], "Up");');
 		}
-		if ($sourceID != 0){
+		if ($sourceID != 0) {
 			IPS_SetEventTrigger($eid, 2, $sourceID); // Grenzwertunterschreitung
 			IPS_SetEventTriggerValue ($eid, $this->ReadPropertyFloat("BorderValue"));
 			IPS_SetEventActive($eid, false);
@@ -66,7 +66,7 @@ class FertigMelder extends IPSModule {
 			IPS_SetEventTriggerSubsequentExecution($eid, false);
 			IPS_SetEventScript($eid, 'FM_CheckEvent($_IPS[\'TARGET\'], "Down");');
 		}
-		if ($sourceID != 0){
+		if ($sourceID != 0) {
 			IPS_SetEventTrigger($eid, 3, $sourceID); // Grenzwertunterschreitung
 			IPS_SetEventTriggerValue ($eid, $this->ReadPropertyFloat("BorderValue"));
 			IPS_SetEventActive($eid, false);
@@ -78,19 +78,22 @@ class FertigMelder extends IPSModule {
 		
 	}
 
-	public function SetActive(bool $Active){
+	public function SetActive(bool $Active) {
 		
 		if ($this->ReadPropertyInteger("SourceID") == 0) {
 			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), false);
 			IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), false);
 			SetValue($this->GetIDForIdent("Status"), 0);
+			
+			//Modul Deaktivieren
+			SetValue($this->GetIDForIdent("Active"), false);
 			echo "No variable selected";
 			return false;
 		}
 		
 		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventUp", $this->InstanceID), $Active);
 		IPS_SetEventActive(@IPS_GetObjectIDByIdent("EventDown", $this->InstanceID), $Active);
-			
+		
 		if ($Active) {
 			if (GetValue($this->ReadPropertyInteger("SourceID")) >= $this->ReadPropertyFloat("BorderValue")) {
 				SetValue($this->GetIDForIdent("Status"), 1);
@@ -101,12 +104,14 @@ class FertigMelder extends IPSModule {
 			SetValue($this->GetIDForIdent("Status"), 0);
 		}
 		
+		//Modul aktivieren
+		SetValue($this->GetIDForIdent("Active"), $Active);
 		return true;
 	}
 
-	public function CheckEvent(String $Eventtype){
+	public function CheckEvent(String $Eventtype) {
 		
-		switch ($Eventtype){
+		switch ($Eventtype) {
 			case "Up":
 				$this->SetTimerInterval("CheckIfDoneTimer", 0);
 				SetValue($this->GetIDForIdent("Status"), 1);
@@ -126,14 +131,9 @@ class FertigMelder extends IPSModule {
 
 	public function RequestAction($Ident, $Value) {
 		
-		switch($Ident) {
+		switch ($Ident) {
 			case "Active":
-				//Neuen Wert in die Statusvariable schreiben
-				if ($this->SetActive($Value)) {
-					SetValue($this->GetIDForIdent($Ident), $Value);
-				} else {
-					SetValue($this->GetIDForIdent($Ident), false);
-				}
+				$this->SetActive($Value);
 				break;
 			
 			default:

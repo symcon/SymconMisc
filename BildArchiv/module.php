@@ -5,8 +5,7 @@ class BildArchiv extends IPSModule {
 		//Never delete this line!
 		parent::Create();
 		
-		//These lines are parsed on Symcon Startup or Instance creation
-		//You cannot use variables here. Just static values.
+		//Properties
 		$this->RegisterPropertyInteger("ImageID", 0);
 		$this->RegisterPropertyInteger("TriggerVariableID", 0);
 		$this->RegisterPropertyInteger("MaxQuantity", 10);

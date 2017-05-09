@@ -5,8 +5,7 @@ class SzenenSteuerung extends IPSModule {
 		//Never delete this line!
 		parent::Create();
 
-		//These lines are parsed on Symcon Startup or Instance creation
-		//You cannot use variables here. Just static values.
+		//Properties
 		$this->RegisterPropertyInteger("SceneCount", 3);
 		
 		if(!IPS_VariableProfileExists("SZS.SceneControl")){

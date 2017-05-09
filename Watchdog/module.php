@@ -6,8 +6,7 @@ class Watchdog extends IPSModule
 		//Never delete this line!
 		parent::Create();
 		
-		//These lines are parsed on Symcon Startup or Instance creation
-		//You cannot use variables here. Just static values.
+		//Properties
 		$this->RegisterPropertyInteger("TimeBase", 0);
 		$this->RegisterPropertyInteger("TimeValue", 60);
 		$this->RegisterPropertyInteger("CheckTargetsInterval", 60);

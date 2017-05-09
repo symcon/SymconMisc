@@ -6,6 +6,7 @@
 			//Never delete this line!
 			parent::Create();
 			
+			//Properties
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
 		}

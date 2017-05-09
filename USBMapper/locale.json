@@ -1,0 +1,9 @@
+{
+	"translations": {
+		"de": { 
+			"Devices": "Geräte",
+			"Set port": "Gesetzter Port",
+			"This module is only functional with Linux and Raspberry Pi": "Dieses Modul funktioniert nur unter Linux und Raspberry Pi"
+		}
+	}
+}

@@ -1,0 +1,42 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "This module is only functional with Linux and Raspberry Pi" },
+	{
+		"type": "List",
+		"name": "Devices",
+		"caption": "Devices",
+		"rowCount": 5,
+		"add": true,
+		"delete": true,
+		"sort": {
+			"column": "InstanceID",
+			"direction": "ascending"
+		},
+		"columns": [{
+			"label": "ID",
+			"name": "ID", 
+			"width": "60px",
+			"add": 0,
+			"edit": {
+				"type": "SelectInstance"
+			}
+		}, {
+			"label": "Name",
+			"name": "Name",
+			"width": "100",
+			"add": "Select device"
+		}, {
+			"label": "Set port",
+			"name": "PortID",
+			"width": "auto",
+			"add": "",
+			"edit": {
+				"type": "Select", "name": "PortName", "caption": "PortID",
+					"options": []
+			}
+		}],
+		"values": []
+	}
+  ]
+}

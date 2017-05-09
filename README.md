@@ -41,6 +41,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Unwetterzentrale__ ([Dokumentation](Unwetterzentrale))  
 	Holt das aktuelle Regenradarbild von Wetteronline und wertet die Farbpixel der Regenmenge aus.
 
+- __USB-Mapper__ ([Dokumentation](USBMapper))  
+	Setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
+
 - __Watchdog__ ([Dokumentation](Watchdog))  
 	Überwacht verlinkte Variablen und wirft einen Alarm wenn diese zu lange nicht aktualisiert wurden.
 

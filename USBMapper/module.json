@@ -1,0 +1,14 @@
+{
+    "id": "{1D7367A7-1337-7331-95FD-1479EF8D9177}",
+    "name": "USBMapper",
+    "type": 0,
+    "vendor": "Symcon GmbH",
+    "aliases": 
+    [
+        "USBMapper"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "USBM"
+}

@@ -14,7 +14,7 @@ Das Modul setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-P
 ### 1. Funktionsumfang
 
 * Das Modul mappt automatisch eingetragene SerialPorts auf den jeweiligen korrekten USB-Port.
-* Es können mehere SerialPorts in der Liste eingetragen werden.
+* Es können mehere Serial-Ports in der Liste eingetragen werden.
 * Es wird bei Start von IP-Symcon und jede Minute kontrolliert ob die SerialPorts korrekt konfiguriert sind.
 
 ### 2. Voraussetzungen

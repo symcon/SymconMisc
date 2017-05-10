@@ -119,8 +119,9 @@ class USBMapper extends IPSModule {
 		
 		$usbDevices = $this->GetUSBDevices();
 		
+		$selectUSB = array();
 		foreach ($usbDevices as $usbDevice) {
-			$selectUSB[] = array("label" => $usbDevice['product'], "value" => $usbDevice['id']);
+			$selectUSB[] = array("label" => "". substr($usbDevice['product'], 0, 16) . "(now: ". $usbDevice['device'] .")", "value" => $usbDevice['id']);
 		}
 		
 		$formdata->elements[1]->columns[2]->edit->options = $selectUSB;

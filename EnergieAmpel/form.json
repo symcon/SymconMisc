@@ -1,0 +1,131 @@
+{
+    "elements": [{
+        "type": "Label",
+        "label": "Expected Energy Consumption"
+    }, {
+        "type": "CheckBox",
+        "name": "PreviousYear",
+        "caption": "Compare against previous year instead of expected value"
+    }, {
+        "type": "NumberSpinner",
+        "name": "ExpectedConsumption",
+        "caption": "Expected kWh / year"
+    }, {
+        "type": "Label",
+        "label": "Starting Month for the calculation"
+    }, {
+        "type": "Select",
+        "name": "Startmonth",
+        "caption": "Starting Month",
+        "options": [{
+            "label": "January",
+            "value": 1
+        }, {
+            "label": "February",
+            "value": 2
+        }, {
+            "label": "March",
+            "value": 3
+        }, {
+            "label": "April",
+            "value": 4
+        }, {
+            "label": "May",
+            "value": 5
+        }, {
+            "label": "June",
+            "value": 6
+        }, {
+            "label": "July",
+            "value": 7
+        }, {
+            "label": "August",
+            "value": 8
+        }, {
+            "label": "September",
+            "value": 9
+        }, {
+            "label": "October",
+            "value": 10
+        }, {
+            "label": "November",
+            "value": 11
+        }, {
+            "label": "December",
+            "value": 12
+        }]
+    }, {
+        "type": "Label",
+        "label": "Consumption"
+    }, {
+        "type": "SelectVariable",
+        "name": "ConsumptionVariableID",
+        "caption": "Variable"
+    }, {
+        "type": "NumberSpinner",
+        "name": "PriceConsume",
+        "caption": "Cent / kWh",
+        "digits": 2
+    }, {
+        "type": "List",
+        "name": "ConsumptionPerMonth",
+        "caption": "Monthly consumption",
+        "rowCount": 12,
+        "columns": [{
+            "label": "Month",
+            "name": "month",
+            "width": "180px"
+        }, {
+            "label": "Consumption (in % of year)",
+            "name": "consumption",
+            "width": "200px",
+            "edit": {
+                "type": "NumberSpinner"
+            }
+        }],
+        "values": [{
+            "month": "January"
+        }, {
+            "month": "February"
+        }, {
+            "month": "March"
+        }, {
+            "month": "April"
+        }, {
+            "month": "May"
+        }, {
+            "month": "June"
+        }, {
+            "month": "July"
+        }, {
+            "month": "August"
+        }, {
+            "month": "September"
+        }, {
+            "month": "October"
+        }, {
+            "month": "November"
+        }, {
+            "month": "December"
+        }]
+    },{
+        "type": "Label",
+        "label": "Production"
+    }, {
+        "type": "SelectVariable",
+        "name": "ProductionVariableID",
+        "caption": "Variable"
+    }, {
+        "type": "NumberSpinner",
+        "name": "PriceProduce",
+        "caption": "Cent / kWh",
+        "digits": 2
+    }],
+    "status": [
+        {"code":102, "icon": "active", "caption": "Energy Lights are active and working"},
+        {"code":201, "icon": "error", "caption": "Comparing against the previous year is not possible when the consumption variable is not set"},
+        {"code":202, "icon": "error", "caption": "The sum of monthly consumption is less than 100%"},
+        {"code":203, "icon": "error", "caption": "The sum of monthly consumption is more than 100%"},
+        {"code":204, "icon": "error", "caption": "Every monthly value needs to be at least 0"}
+    ]
+}

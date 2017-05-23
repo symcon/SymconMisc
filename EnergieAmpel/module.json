@@ -1,0 +1,14 @@
+{
+    "id": "{FCEEEEA7-3947-457D-95FD-9182738D5565}",
+    "name": "EnergieAmpel",
+    "type": 3,
+    "vendor": "Symcon GmbH",
+    "aliases": 
+    [
+        "EnergieAmpel"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "EA"
+}

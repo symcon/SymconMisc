@@ -1,0 +1,14 @@
+{
+    "id": "{9D5546FA-CDB2-49BB-9B1D-F40F21E8219B}",
+    "name": "Treppenhauslicht",
+    "type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"Treppenhauslicht"
+	],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "THL"
+}

@@ -1,0 +1,14 @@
+{
+    "id": "{AB3467A7-CD43-442D-95FD-BCDBCF8D9A67}",
+    "name": "FertigMelder",
+    "type": 3,
+    "vendor": "Symcon GmbH",
+    "aliases": 
+    [
+        "FertigMelder"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "FM"
+}

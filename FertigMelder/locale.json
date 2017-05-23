@@ -1,0 +1,12 @@
+{
+	"translations": {
+		"de": { 
+			"Sourcevariable which is compared with the Bordervalue.": "Quellvariable, welche verglichen werden soll",
+			"Source": "Quelle",
+			"Bordervalue which forces a reaction.": "Grenzwert bei dessen Unterschreitung reagiert werden soll.",
+			"Bordervalue": "Grenzwert",
+			"Elapsing-Time til 'Done'-Message": "Ablaufzeit bis 'Fertigmeldung'",
+			"Seconds": "Sekunden"
+		}
+	}
+}

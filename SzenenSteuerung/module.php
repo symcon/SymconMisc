@@ -5,8 +5,7 @@ class SzenenSteuerung extends IPSModule {
 		//Never delete this line!
 		parent::Create();
 
-		//These lines are parsed on Symcon Startup or Instance creation
-		//You cannot use variables here. Just static values.
+		//Properties
 		$this->RegisterPropertyInteger("SceneCount", 3);
 		
 		if(!IPS_VariableProfileExists("SZS.SceneControl")){
@@ -113,10 +112,14 @@ class SzenenSteuerung extends IPSModule {
 					$o = IPS_GetObject($id);
 					$v = IPS_GetVariable($id);
 
-					if($v['VariableCustomAction'] != "")
+					if($v['VariableCustomAction'] > 0)
 						$actionID = $v['VariableCustomAction'];
 					else
 						$actionID = $v['VariableAction'];
+					
+					//Skip this device if we do not have a proper id
+					if($actionID < 10000)
+						continue;
 					
 					if(IPS_InstanceExists($actionID)) {
 						IPS_RequestAction($actionID, $o['ObjectIdent'], $value);

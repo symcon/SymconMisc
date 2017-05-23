@@ -1,0 +1,14 @@
+{
+    "id": "{FC4367A7-3847-442D-95FD-ABCDEF8D9F65}",
+    "name": "BildArchiv",
+    "type": 3,
+    "vendor": "Symcon GmbH",
+    "aliases": 
+    [
+        "BildArchiv"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "BA"
+}

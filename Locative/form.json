@@ -1,0 +1,10 @@
+{
+	"elements":
+	[
+		{ "name": "Token", "type": "ValidationTextBox", "caption": "Token" }
+	],
+	"actions":
+	[
+		{ "type": "Button", "label": "Register", "onClick": "echo LOCA_Register($id);" }
+	]
+}

@@ -1,0 +1,11 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Sourcevariable which is compared with the Bordervalue." },
+	{ "type": "SelectVariable", "name": "SourceID", "caption": "Source" },
+	{ "type": "Label", "label": "Bordervalue which forces a reaction." },
+	{ "type": "NumberSpinner", "name": "BorderValue", "caption": "Bordervalue", "digits": 2},
+	{ "type": "Label", "label": "Elapsing-Time til 'Done'-Message" },
+	{ "type": "IntervalBox", "name": "Period", "caption": "Seconds" }
+  ]
+}

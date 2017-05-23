@@ -1,0 +1,14 @@
+{
+	"id": "{6D4CF0F0-1956-4496-80D9-2C67ABBED770}",
+	"name": "Locative",
+	"type": 0,
+	"vendor": "",
+	"aliases": 
+	[
+		"Locative"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "LOCA"
+}

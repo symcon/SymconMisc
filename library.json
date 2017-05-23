@@ -5,5 +5,9 @@
 	"url": "www.ip-symcon.de",
 	"version": "1.0",
 	"build": 0,
-	"date": 0
+	"date": 0,
+	"compatibility": {
+		"kernel": "4.2",
+		"date": 0
+	}
 }

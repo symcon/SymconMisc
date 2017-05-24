@@ -1,0 +1,14 @@
+{
+    "elements":
+    [
+        { "type": "SelectVariable", "name": "InputTriggerID", "caption": "Input Sensor" },
+        { "type": "Select", "name": "Duration", "caption": "Duration", "options": [
+            { "label": "1 minute", "value": 1 },
+            { "label": "5 minutes", "value": 5 },
+            { "label": "10 minutes", "value": 10 }
+        ]},
+        { "type": "SelectVariable", "name": "OutputID", "caption": "Output Variable" }
+
+ 
+    ]
+}

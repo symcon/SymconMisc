@@ -1,4 +1,4 @@
-# Treppenhauslicht
+# Treppenhauslichtsteuerung
 Nachdem ein Auslöser aktiviert wird, geht das Licht im Treppenhaus an. Wird das Auslöser wiederholt aktiviert bleibt das Licht an. Erst wenn für eine vorgegebene Zeit keine weitere Auslösung stattfindet wird das Licht ausgeschaltet.
 
 
@@ -42,7 +42,9 @@ Auswahl "Ausgabevariable" | Auswahl der Variablen, welche das Licht darstellt
 
 ##### Statusvariablen
 
-Es werden keine zusätzlichen Statusvariablen hinzugefügt.
+Name                       | Typ     | Beschreibung
+-------------------------- | ------- | ---------------------------
+Treppenhaussteuerung aktiv | Boolean | Aktiviert oder deaktiviert die Treppenhaussteuerung. Wurde das Treppenhauslicht durch die Steuerung eingeschaltet und die Variable wird deaktiviert, so wird der aktuelle Steuervorgang noch zu Ende geführt. Allerdings wird der Timer bei erneutem Auslösen des Eingabesensors nicht zurückgesetzt. Das Treppenhauslicht wird also trotz deaktivierter Variable nach Ablauf des Timers ausgeschaltet.
 
 ##### Profile:
 

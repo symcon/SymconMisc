@@ -44,7 +44,7 @@ Auswahl "Ausgabevariable" | Auswahl der Variablen, welche das Licht darstellt
 
 Name                       | Typ     | Beschreibung
 -------------------------- | ------- | ---------------------------
-Treppenhaussteuerung aktiv | Boolean | Aktiviert oder deaktiviert die Treppenhaussteuerung. Wurde das Treppenhauslicht durch die Steuerung eingeschaltet und die Variable wird deaktiviert, so wird der aktuelle Steuervorgang noch zu Ende geführt. Allerdings wird der Timer bei erneutem Auslösen des Eingabesensors nicht zurückgesetzt. Das Treppenhauslicht wird also trotz deaktivierter Variable nach Ablauf des Timers ausgeschaltet.
+Treppenhaussteuerung aktiv | Boolean | Die Variable gibt an, ob die Treppenhaussteuerung aktiviert ist
 
 ##### Profile:
 
@@ -67,3 +67,9 @@ Deaktiviert das Licht im Treppenhaus und den Timer.
 
 Beispiel:
 `THL_Stop(12345);`
+
+`boolean THL_SetActive(integer $InstanzID, boolean $Wert);`
+Aktiviert oder deaktiviert die Treppenhauslichtsteuerung. Wurde das Treppenhauslicht durch die Steuerung eingeschaltet und die Steuerung wird deaktiviert, so wird der aktuelle Steuervorgang noch zu Ende geführt. Allerdings wird der Timer bei erneutem Auslösen des Eingabesensors nicht zurückgesetzt. Das Treppenhauslicht wird also trotz deaktivierter Steuerung nach Ablauf des Timers ausgeschaltet.
+
+Beispiel:
+`THL_SetActive(12345, true);`

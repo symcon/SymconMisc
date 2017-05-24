@@ -40,12 +40,16 @@
 
             switch($Ident) {
                 case "Active":
-                    SetValue($this->GetIDForIdent("Active"), $Value);
+                    $this->SetActive($Value);
                     break;
                 default:
                     throw new Exception("Invalid ident");
             }
 
+        }
+        
+        public function SetActive($Value) {
+            SetValue($this->GetIDForIdent("Active"), $Value);
         }
         
         public function Start(){

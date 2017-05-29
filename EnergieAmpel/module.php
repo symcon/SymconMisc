@@ -110,7 +110,9 @@ class EnergieAmpel extends IPSModule {
         }
         $prefix = ($scope == 0) ? "Year" : (($scope == 1) ? "Month" : "Week");
         
-        SetValue($this->GetIDForIdent($prefix . "Tendency"), intval($this->GetTendency($scope)));
+        if (!IsBeginningOfScope($scope)){
+            SetValue($this->GetIDForIdent($prefix . "Tendency"), intval($this->GetTendency($scope)));
+        }
         SetValue($this->GetIDForIdent($prefix . "Production"), $this->GetAggregated($this->ReadPropertyInteger("ProductionVariableID"), $scope));
         SetValue($this->GetIDForIdent($prefix . "ProductionPrice"), GetValue($this->GetIDForIdent($prefix . "Production")) * $this->ReadPropertyFloat("PriceProduce") * 0.01);
         SetValue($this->GetIDForIdent($prefix . "Consumption"), $this->GetAggregated($this->ReadPropertyInteger("ConsumptionVariableID"), $scope));
@@ -251,6 +253,26 @@ class EnergieAmpel extends IPSModule {
     
     private function UpdateTimer(){
         $this->SetTimerInterval("UpdateTimer", 60 * 60 * 1000 - intval(date("i",time())) * 60 * 1000 - intval(date("s", time())) * 1000);
+    }
+    
+    private function IsBeginningOfScope($scope){ //scope: 0->year, 1->month, 2->week
+        //If it's not 0:00, we cannot be at the beginning of any scope
+        if (date("H:i", time()) != "00:00"){
+            return false;
+        }
+        
+        //If yearly, check if the current date is the start date
+        if (scope == 0){
+            return (date("j-n", GetValue($this->GetIDForIdent("StartDate"))) == date("j-n", time()));
+        } 
+        //If it's a month scope, we need to be at the beginning of a month
+        else if ($scope == 1){
+            return (date("j", time()) == "1");
+        }
+        //If it's a weekly scope, the beginning is on monday
+        else if ($scope == 2) (
+            return (date("w", time) == "1");
+        }
     }
 }
 

@@ -110,7 +110,7 @@ class EnergieAmpel extends IPSModule {
         }
         $prefix = ($scope == 0) ? "Year" : (($scope == 1) ? "Month" : "Week");
         
-        if (!IsBeginningOfScope($scope)){
+        if (!$this->IsBeginningOfScope($scope)){
             SetValue($this->GetIDForIdent($prefix . "Tendency"), intval($this->GetTendency($scope)));
         }
         SetValue($this->GetIDForIdent($prefix . "Production"), $this->GetAggregated($this->ReadPropertyInteger("ProductionVariableID"), $scope));

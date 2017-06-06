@@ -270,8 +270,8 @@ class EnergieAmpel extends IPSModule {
             return (date("j", time()) == "1");
         }
         //If it's a weekly scope, the beginning is on monday
-        else if ($scope == 2) (
-            return (date("w", time) == "1");
+        else if ($scope == 2) {
+            return (date("w", time()) == "1");
         }
     }
 }

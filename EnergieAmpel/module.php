@@ -110,8 +110,9 @@ class EnergieAmpel extends IPSModule {
         }
         $prefix = ($scope == 0) ? "Year" : (($scope == 1) ? "Month" : "Week");
         
-        if (!$this->IsBeginningOfScope($scope)){
-            SetValue($this->GetIDForIdent($prefix . "Tendency"), intval($this->GetTendency($scope)));
+        $tendency = $this->GetTendency($scope);
+        if ($tendency != -1){
+            SetValue($this->GetIDForIdent($prefix . "Tendency"), $tendency);
         }
         SetValue($this->GetIDForIdent($prefix . "Production"), $this->GetAggregated($this->ReadPropertyInteger("ProductionVariableID"), $scope));
         SetValue($this->GetIDForIdent($prefix . "ProductionPrice"), GetValue($this->GetIDForIdent($prefix . "Production")) * $this->ReadPropertyFloat("PriceProduce") * 0.01);
@@ -121,6 +122,8 @@ class EnergieAmpel extends IPSModule {
     }
     
     private function GetTendency($scope) { //scope: 0->year, 1->month, 2->week
+        
+        $noData = true;
         
         $startMonth = intval(date("n", GetValue($this->GetIDForIdent("StartDate"))));
         $currentMonth = intval(date("n", time()));
@@ -148,6 +151,7 @@ class EnergieAmpel extends IPSModule {
             for ($offset = 0; $offset <= $maxOffset; $offset++){
                 $month = ($startMonth + $offset - 1) % 12 + 1; //startMonth + offset
                 $totalPlanned += ($expectedConsumption * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$month-1]->consumption * 0.01);
+                $noData = false;
             }
         }
         if (($scope == 0) || ($scope == 1)){
@@ -156,6 +160,9 @@ class EnergieAmpel extends IPSModule {
             $secondsCurrentMonthUntilNow = (intval(date("j", time())) - 1) * 60*60*24 + intval(date("G", time())) * 60 * 60 + intval(date("i",time())) * 60 + intval(date("s", time()));
             $totalPlanned += (json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$currentMonth-1]->consumption * $expectedConsumption * 0.01) * 
                         $secondsCurrentMonthUntilNow / $secondsCurrentMonthTotal;
+            if (secondsCurrentMonthUntilNow > 0){
+                $noData = false;
+            }
         }
         if ($scope == 2){
             //Split current week into current and previous month
@@ -164,6 +171,7 @@ class EnergieAmpel extends IPSModule {
             if ($daysThisMonth > intval(date("d", time()))){
                 $daysPreviousMonth = $daysThisMonth - intval(date("d", time()));
                 $daysThisMonth -= $daysPreviousMonth;
+                $noData = false;
             }
             //Previous month 
             //No need to worry about days of month only considering current year as days of month are only affected by year in February (and then the current March is in the same year)
@@ -171,9 +179,16 @@ class EnergieAmpel extends IPSModule {
             //Current month
             $secondsCurrentWeekThisMonth = ($daysThisMonth - 1) * (60 * 60 * 24) + intval(date("G", time())) * 60 * 60 + intval(date("i",time())) * 60 + intval(date("s", time()));
             $totalPlanned += (($expectedConsumption * $secondsCurrentWeekThisMonth * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$currentMonth-1]->consumption * 0.01) / (intval(date("t", mktime(0,0,0, $currentMonth, 1, intval(date("Y", time()))))) * 60 * 60 * 24)); 
+            if ($secondsCurrentWeekThisMonth > 0){
+                $noData = false;
+            }
         }
                         
         $totalActual = $this->GetAggregated($this->ReadPropertyInteger("ConsumptionVariableID"), $scope);
+        
+        if ($noData){
+            return -1;
+        }
         
         if ($totalPlanned == 0) {
             if ($totalActual == 0){
@@ -255,6 +270,7 @@ class EnergieAmpel extends IPSModule {
         $this->SetTimerInterval("UpdateTimer", 60 * 60 * 1000 - intval(date("i",time())) * 60 * 1000 - intval(date("s", time())) * 1000);
     }
     
+    //TODO: We may not need this any more, but keep it for the time being as we already needed a lot of restructuring and may need more
     private function IsBeginningOfScope($scope){ //scope: 0->year, 1->month, 2->week
         //If it's not 0:00, we cannot be at the beginning of any scope
         if (date("H:i", time()) != "00:00"){

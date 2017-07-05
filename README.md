@@ -14,6 +14,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __EgiGeoZone__ ([Dokumentation](EgiGeoZone))  
 	Empfängt Daten von der EgiGeoZone App für Google Android.
 
+- __Energie-Ampel__ ([Dokumentation](EnergieAmpel))  
+	Das Modul analysiert den Verbrauch und die Produktion von Energie.
+
 - __Energiezähler Strom__ ([Dokumentation](EnergiezaehlerStrom))  
 	Rechnet Zählerwerte in einen Momentanverbrauch um.
 

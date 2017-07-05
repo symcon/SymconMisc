@@ -36,30 +36,29 @@ class EnergieAmpel extends IPSModule {
             IPS_SetVariableProfileAssociation("Tendency.EA", 120, "%d", "", 0xFF0000);
         }
         
-        $this->RegisterVariableInteger("WeekTendency", "Woche: Tendenz", "Tendency.EA");
-        $this->RegisterVariableFloat("WeekProduction", "Woche: Erzeugung", "~Electricity");
-        $this->RegisterVariableFloat("WeekProductionPrice", "Woche: Erzeugung (Ertrag)", "Euro.EA");
-        $this->RegisterVariableFloat("WeekConsumption", "Woche: Verbrauch", "~Electricity");
-        $this->RegisterVariableFloat("WeekConsumptionPrice", "Woche: Verbrauch(Kosten)", "Euro.EA");
-        $this->RegisterVariableFloat("WeekTotal", "Woche: Gesamt", "Euro.EA");
+        $this->RegisterVariableInteger("WeekTendency", $this->Translate("Week: Tendency"), "Tendency.EA", 10);
+        $this->RegisterVariableFloat("WeekProduction", $this->Translate("Week: Production"), "~Electricity", 20);
+        $this->RegisterVariableFloat("WeekProductionPrice", $this->Translate("Week: Production (Price)"), "Euro.EA", 30);
+        $this->RegisterVariableFloat("WeekConsumption", $this->Translate("Week: Consumption"), "~Electricity", 40);
+        $this->RegisterVariableFloat("WeekConsumptionPrice", $this->Translate("Week: Consumption (Price)"), "Euro.EA", 50);
+        $this->RegisterVariableFloat("WeekTotal", $this->Translate("Week: Total"), "Euro.EA", 60);
         
-        $this->RegisterVariableInteger("MonthTendency", "Monat: Tendenz", "Tendency.EA");
-        $this->RegisterVariableFloat("MonthProduction", "Monat: Erzeugung", "~Electricity");
-        $this->RegisterVariableFloat("MonthProductionPrice", "Monat: Erzeugung (Ertrag)", "Euro.EA");
-        $this->RegisterVariableFloat("MonthConsumption", "Monat: Verbrauch", "~Electricity");
-        $this->RegisterVariableFloat("MonthConsumptionPrice", "Monat: Verbrauch(Kosten)", "Euro.EA");
-        $this->RegisterVariableFloat("MonthTotal", "Monat: Gesamt", "Euro.EA");
+        $this->RegisterVariableInteger("MonthTendency", $this->Translate("Month: Tendency"), "Tendency.EA", 70);
+        $this->RegisterVariableFloat("MonthProduction", $this->Translate("Month: Production"), "~Electricity", 80);
+        $this->RegisterVariableFloat("MonthProductionPrice", $this->Translate("Month: Production (Price)"), "Euro.EA", 90);
+        $this->RegisterVariableFloat("MonthConsumption", $this->Translate("Month: Consumption"), "~Electricity", 100);
+        $this->RegisterVariableFloat("MonthConsumptionPrice", $this->Translate("Month: Consumption (Price)"), "Euro.EA", 110);
+        $this->RegisterVariableFloat("MonthTotal", $this->Translate("Month: Total"), "Euro.EA", 120);
         
-        $this->RegisterVariableInteger("YearTendency", "Jahr: Tendenz", "Tendency.EA");
-        $this->RegisterVariableFloat("YearProduction", "Jahr: Erzeugung", "~Electricity");
-        $this->RegisterVariableFloat("YearProductionPrice", "Jahr: Erzeugung (Ertrag)", "Euro.EA");
-        $this->RegisterVariableFloat("YearConsumption", "Jahr: Verbrauch", "~Electricity");
-        $this->RegisterVariableFloat("YearConsumptionPrice", "Jahr: Verbrauch(Kosten)", "Euro.EA");
-        $this->RegisterVariableFloat("YearTotal", "Jahr: Gesamt", "Euro.EA");
+        $this->RegisterVariableInteger("YearTendency", $this->Translate("Year: Tendency"), "Tendency.EA", 130);
+        $this->RegisterVariableFloat("YearProduction", $this->Translate("Year: Production"), "~Electricity", 140);
+        $this->RegisterVariableFloat("YearProductionPrice", $this->Translate("Year: Production (Price)"), "Euro.EA", 150);
+        $this->RegisterVariableFloat("YearConsumption", $this->Translate("Year: Consumption"), "~Electricity", 160);
+        $this->RegisterVariableFloat("YearConsumptionPrice", $this->Translate("Year: Consumption (Price)"), "Euro.EA", 170);
+        $this->RegisterVariableFloat("YearTotal", $this->Translate("Year: Total"), "Euro.EA", 180);
         
-        $this->RegisterVariableInteger("StartDate", "Startdatum", "~UnixTimestamp");
-        
-        $this->RegisterTimer("UpdateTimer", 0, "EA_UpdateAll(\$_IPS['TARGET']);"); //Update at next full hour
+        //Update at next full hour
+        $this->RegisterTimer("UpdateTimer", 0, "EA_UpdateAll(\$_IPS['TARGET']);"); 
         
     }
 
@@ -72,8 +71,6 @@ class EnergieAmpel extends IPSModule {
     public function ApplyChanges(){
         //Never delete this line!
         parent::ApplyChanges();
-        
-        SetValue($this->GetIDForIdent("StartDate"), mktime(0, 0, 0, $this->ReadPropertyInteger("Startmonth"), 1, (intval(date("n", time())) >= $this->ReadPropertyInteger("Startmonth")) ? intval(date("Y", time())) : intval(date("Y", time())) - 1));
                     
         $this->SetStatus($this->ComputeState());
         
@@ -125,7 +122,7 @@ class EnergieAmpel extends IPSModule {
         
         $noData = true;
         
-        $startMonth = intval(date("n", GetValue($this->GetIDForIdent("StartDate"))));
+        $startMonth = $this->GetStartDate();
         $currentMonth = intval(date("n", time()));
         $previousMonth = ((10 + $currentMonth) % 12) + 1;
         $maxOffset = $previousMonth - $startMonth;
@@ -138,7 +135,7 @@ class EnergieAmpel extends IPSModule {
             $expectedConsumption = 0;
             if ($this->ReadPropertyInteger("ConsumptionVariableID") != 0){
                 $startDatePrevious = mktime(0, 0, 0, $this->ReadPropertyInteger("Startmonth"), 1, (intval(date("n", time())) >= $this->ReadPropertyInteger("Startmonth")) ? intval(date("Y", time())) - 1 : intval(date("Y", time())) - 2);
-                $values = AC_GetAggregatedValues($this->ReadPropertyInteger("ArchiveControlID") ,$this->ReadPropertyInteger("ConsumptionVariableID"), 3, $startDatePrevious, GetValue($this->GetIDForIdent("StartDate")), 0);
+                $values = AC_GetAggregatedValues($this->ReadPropertyInteger("ArchiveControlID"), $this->ReadPropertyInteger("ConsumptionVariableID"), 3, $startDatePrevious, $this->GetStartDate(), 0);
                 foreach ($values as $value){
                     $expectedConsumption += $value["Avg"];
                 }
@@ -160,7 +157,7 @@ class EnergieAmpel extends IPSModule {
             $secondsCurrentMonthUntilNow = (intval(date("j", time())) - 1) * 60*60*24 + intval(date("G", time())) * 60 * 60 + intval(date("i",time())) * 60 + intval(date("s", time()));
             $totalPlanned += (json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$currentMonth-1]->consumption * $expectedConsumption * 0.01) * 
                         $secondsCurrentMonthUntilNow / $secondsCurrentMonthTotal;
-            if (secondsCurrentMonthUntilNow > 0){
+            if ($secondsCurrentMonthUntilNow > 0){
                 $noData = false;
             }
         }
@@ -207,7 +204,7 @@ class EnergieAmpel extends IPSModule {
         }
         if ($scope == 0){
             $total = 0.0;
-            $values = AC_GetAggregatedValues($this->ReadPropertyInteger("ArchiveControlID") , $variable, 3, GetValue($this->GetIDForIdent("StartDate")), time(), 0);
+            $values = AC_GetAggregatedValues($this->ReadPropertyInteger("ArchiveControlID") , $variable, 3, $this->GetStartDate(), time(), 0);
             foreach($values as $value) {
                 $total += $value["Avg"];
             }
@@ -270,25 +267,12 @@ class EnergieAmpel extends IPSModule {
         $this->SetTimerInterval("UpdateTimer", 60 * 60 * 1000 - intval(date("i",time())) * 60 * 1000 - intval(date("s", time())) * 1000);
     }
     
-    //TODO: We may not need this any more, but keep it for the time being as we already needed a lot of restructuring and may need more
-    private function IsBeginningOfScope($scope){ //scope: 0->year, 1->month, 2->week
-        //If it's not 0:00, we cannot be at the beginning of any scope
-        if (date("H:i", time()) != "00:00"){
-            return false;
+    private function GetStartDate(){
+        $startYear = intval(date("Y", time()));
+        if (intval(date("n", time())) < $this->ReadPropertyInteger("Startmonth")) {
+            $startYear = intval(date("Y", time())) - 1;
         }
-        
-        //If yearly, check if the current date is the start date
-        if (scope == 0){
-            return (date("j-n", GetValue($this->GetIDForIdent("StartDate"))) == date("j-n", time()));
-        } 
-        //If it's a month scope, we need to be at the beginning of a month
-        else if ($scope == 1){
-            return (date("j", time()) == "1");
-        }
-        //If it's a weekly scope, the beginning is on monday
-        else if ($scope == 2) {
-            return (date("w", time()) == "1");
-        }
+        return mktime(0, 0, 0, $this->ReadPropertyInteger("Startmonth"), 1, $startYear);
     }
 }
 

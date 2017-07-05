@@ -29,7 +29,25 @@
             "Comparing against the previous year is not possible when the consumption variable is not set": "Ein Vergleich zum vorigen Jahr ist nicht möglich wenn keine Variable für den Verbrauch gesetzt ist",
             "The sum of monthly consumption is less than 100%": "Die Summe des Verbrauchs pro Monat ergibt weniger als 100%",
             "The sum of monthly consumption is more than 100%": "Die Summe des Verbrauchs pro Monat ergibt mehr als 100%",
-            "Every monthly value needs to be at least 0": "Jeder monatliche Wert muss größer als 0 sein"
+            "Every monthly value needs to be at least 0": "Jeder monatliche Wert muss größer als 0 sein",
+            "Week: Tendency": "Woche: Tendenz",
+            "Week: Production": "Woche: Erzeugung",
+            "Week: Production (Price)": "Woche: Erzeugung (Ertrag)",
+            "Week: Consumption": "Woche: Verbrauch",
+            "Week: Consumption (Price)": "Woche: Verbrauch(Kosten)",
+            "Week: Total": "Woche: Gesamt",
+            "Month: Tendency": "Monat: Tendenz",
+            "Month: Production": "Monat: Erzeugung",
+            "Month: Production (Price)": "Monat: Erzeugung (Ertrag)",
+            "Month: Consumption": "Monat: Verbrauch",
+            "Month: Consumption (Price)": "Monat: Verbrauch(Kosten)",
+            "Month: Total": "Monat: Gesamt",
+            "Year: Tendency": "Jahr: Tendenz",
+            "Year: Production": "Jahr: Erzeugung",
+            "Year: Production (Price)": "Jahr: Erzeugung (Ertrag)",
+            "Year: Consumption": "Jahr: Verbrauch",
+            "Year: Consumption (Price)": "Jahr: Verbrauch(Kosten)",
+            "Year: Total": "Jahr: Gesamt"
         }
     }
 }

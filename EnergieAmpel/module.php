@@ -122,13 +122,18 @@ class EnergieAmpel extends IPSModule {
         
         $noData = true;
         
-        $startMonth = $this->GetStartDate();
+        $startMonth = intval(date("n", $this->GetStartDate()));
         $currentMonth = intval(date("n", time()));
         $previousMonth = ((10 + $currentMonth) % 12) + 1;
         $maxOffset = $previousMonth - $startMonth;
         if ($maxOffset < 0){
             $maxOffset = $maxOffset + 12;
         }
+        
+        $this->SendDebug("startMonth = " . $startMonth, "", 0);
+        $this->SendDebug("currentMonth = " . $currentMonth, "", 0);
+        $this->SendDebug("previousMonth = " . $previousMonth, "", 0);
+        $this->SendDebug("maxOffset = " . $maxOffset, "", 0);
         
         $expectedConsumption = $this->ReadPropertyInteger("ExpectedConsumption");
         if ($this->ReadPropertyBoolean("PreviousYear")){
@@ -142,12 +147,18 @@ class EnergieAmpel extends IPSModule {
             }
         }
         
+        $this->SendDebug("expectedConsumption = " . $expectedConsumption, "", 0);
         $totalPlanned = 0.0;
         if ($scope == 0){
             //Previous months
             for ($offset = 0; $offset <= $maxOffset; $offset++){
                 $month = ($startMonth + $offset - 1) % 12 + 1; //startMonth + offset
-                $totalPlanned += ($expectedConsumption * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$month-1]->consumption * 0.01);
+                $consumptionMonth = ($expectedConsumption * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$month-1]->consumption * 0.01);
+        
+                $this->SendDebug("month = " . $month, "", 0);
+                $this->SendDebug("consumptionMonth = " . $consumptionMonth, "", 0);
+        
+                $totalPlanned += $consumptionMonth;
                 $noData = false;
             }
         }
@@ -180,8 +191,11 @@ class EnergieAmpel extends IPSModule {
                 $noData = false;
             }
         }
-                        
         $totalActual = $this->GetAggregated($this->ReadPropertyInteger("ConsumptionVariableID"), $scope);
+        
+        $this->SendDebug("scope = " . $scope, "", 0);
+        $this->SendDebug("totalActual = " . $totalActual, "", 0);
+        $this->SendDebug("totalPlanned = " . $totalPlanned, "", 0);
         
         if ($noData){
             return -1;

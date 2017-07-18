@@ -32,10 +32,9 @@ Das Modul analysiert den Verbrauch und die Produktion von Energie. Die Rohdaten 
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'Energie-Ampel'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
+- Unter "Instanz hinzufügen" ist das 'Energie-Ampel'-Modul unter dem Hersteller '(Sonstiges)' aufgeführt.  
 
-__Konfigurationsseite__:  
-
+__Konfigurationsseite__:
 ___Erwarteter Energieverbrauch___:
 
 Name                  | Beschreibung
@@ -75,7 +74,7 @@ Für die Zeitintervalle Jahr, Monat und Woche werden jeweils eine eigene Menge a
 Name               | Typ      | Beschreibung
 ------------------ | -------- | ----------------
 Tendenz            | Variable | Die Tendenz des aktuellen Verbrauchs. Bei 100% wird innerhalb des laufenden Zeitintervalls genau die anvisierte Menge an Energie verbraucht
-Verbrauch          | Variable | Der Energieverbrauch innerhalb des laufenden Zeitintervalls
+Verbauch           | Ereignis | Der Energieverbrauch innerhalb des laufenden Zeitintervalls
 Verbrauch (Ertrag) | Variable | Die Kosten für den Energieverbrauch des laufenden Zeitintervalls
 Erzeugung          | Variable | Die erzeugte Energie innerhalb des laufenden Zeitintervalls
 Erzeugung (Ertrag) | Variable | Der Gewinn für die erzeugte Energie Energie innerhalb des laufenden Zeitintervalls
@@ -95,21 +94,21 @@ Tendency.EA | Integer
 ### 7. PHP-Befehlsreferenz
 
 `boolean EA_UpdateAll(integer $InstanzID);`  
-Aktualisiert alle Statusvariablen  
+Aktualisiert alle Statusvariablen
 Beispiel:  
 `EA_UpdateAll(12345);`
 
 `boolean EA_UpdateWeek(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des wöchentlichen Zeitintervalls  
+Aktualisiert die Statusvariablen des wöchentlichen Zeitintervalls
 Beispiel:  
 `EA_UpdateWeek(12345);`
 
 `boolean EA_UpdateMonth(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des monatlichen Zeitintervalls  
+Aktualisiert die Statusvariablen des monatlichen Zeitintervalls
 Beispiel:  
 `EA_UpdateMonth(12345);`
 
 `boolean EA_UpdateYear(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des jährlichen Zeitintervalls  
+Aktualisiert die Statusvariablen des jährlichen Zeitintervalls
 Beispiel:  
 `EA_UpdateYear(12345);`

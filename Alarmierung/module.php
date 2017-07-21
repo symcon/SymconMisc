@@ -1,4 +1,6 @@
 <?
+define("IPS_BASE", 10000);
+define("VM_UPDATE", IPS_BASE + 603);
 
 	class Alarmierung extends IPSModule {
 		
@@ -6,55 +8,42 @@
 		{
 			//Never delete this line!
 			parent::Create();
-			
+
+			$this->RegisterPropertyString("Sensors", "[]");
+			$this->RegisterPropertyString("Targets", "[]");
+
 		}
 
 		public function ApplyChanges() {
 			//Never delete this line!
 			parent::ApplyChanges();
-			
-			$this->CreateCategoryByIdent($this->InstanceID, "Sensors", "Sensors");
-			$this->CreateCategoryByIdent($this->InstanceID, "Targets", "Alert Target");
-			
-			$this->CreateVariableByIdent($this->InstanceID, "Active", "Active", 0, "~Switch");
+			$this->RegisterVariableBoolean("Active", $this->Translate("Active"), "~Switch", 0 );
 			$this->EnableAction("Active");
-			$this->CreateVariableByIdent($this->InstanceID, "Alert", "Alert", 0, "~Alert");
+			$this->RegisterVariableBoolean("Alert", $this->Translate("Alert"), "~Alert", 0);
 			$this->EnableAction("Alert");
+
+			$sensors = json_decode($this->ReadPropertyString("Sensors"));
+			foreach ($sensors as $sensor) {
+				$this->RegisterMessage($sensor->ID, VM_UPDATE);	
+			}
+			
 			
 		}
 
-		/**
-		* This function will be available automatically after the module is imported with the module control.
-		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
-		*
-		* ARM_UpdateEvents($id);
-		*
-		*/
-		public function UpdateEvents() {
+		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
 			
-			$sensorsID = $this->CreateCategoryByIdent($this->InstanceID, "Sensors", "Sensors");
+			$this->SendDebug("MessageSink", "SenderID: ". $SenderID .", Message: ". $Message , 0);
 			
-			//We want to listen for all changes on all sensorsID
-			foreach(IPS_GetChildrenIDs($sensorsID) as $sensorID) {
-				//only allow links
-				if(IPS_LinkExists($sensorID)) {
-					if(@IPS_GetObjectIDByIdent("Sensor".$sensorID, $this->InstanceID) === false) {
-						$linkVariableID = IPS_GetLink($sensorID)['TargetID'];
-						if(IPS_VariableExists($linkVariableID)) {
-							$eid = IPS_CreateEvent(0 /* Trigger */);
-							IPS_SetParent($eid, $this->InstanceID);
-							IPS_SetName($eid, "Trigger for #".$linkVariableID);
-							IPS_SetIdent($eid, "Sensor".$sensorID);
-							IPS_SetEventTrigger($eid, 0, $linkVariableID);
-							IPS_SetEventScript($eid, "ARM_TriggerAlert(\$_IPS['TARGET'], \$_IPS['VARIABLE'], \$_IPS['VALUE']);");
-							IPS_SetEventActive($eid, true);
-						}
-					}
+			$sensors = json_decode($this->ReadPropertyString("Sensors"));
+			foreach ($sensors as $sensor) {
+				if($sensor->ID == $SenderID) {
+					$this->TriggerAlert($sensor->ID, GetValue($sensor->ID));
+					return;
 				}
 			}
-
+			
 		}
-		
+
 		public function TriggerAlert(int $SourceID, int $SourceValue) {
 			
 			//Only enable alarming if our module is active
@@ -91,41 +80,40 @@
 		}
 		
 		public function SetAlert(bool $Status) {
-			
-			$targetsID = $this->CreateCategoryByIdent($this->InstanceID, "Targets", "Alert Target");
+
+			$targets = json_decode($this->ReadPropertyString("Targets"));
 			
 			//Lets notify all target devices
-			foreach(IPS_GetChildrenIDs($targetsID) as $targetID) {
+			foreach($targets as $targetID) {
 				//only allow links
-				if (IPS_LinkExists($targetID)) {
-					$linkVariableID = IPS_GetLink($targetID)['TargetID'];
-					if (IPS_VariableExists($linkVariableID)) {
-						$o = IPS_GetObject($linkVariableID);
-						$v = IPS_GetVariable($linkVariableID);
+				if (IPS_VariableExists($targetID->ID)) {
+					$o = IPS_GetObject($targetID->ID);
+					$v = IPS_GetVariable($targetID->ID);
 
-						$actionID = $this->GetProfileAction($v);
-						$profileName = $this->GetProfileName($v);
+					$actionID = $this->GetProfileAction($v);
+					$profileName = $this->GetProfileName($v);
 
-						//If we somehow do not have a profile take care that we do not fail immediately
-						if($profileName != "") {
-							//If we are enabling analog devices we want to switch to the maximum value (e.g. 100%)
-							if ($Status) {
-								$actionValue = IPS_GetVariableProfile($profileName)['MaxValue'];
-							} else {
-								$actionValue = 0;
-							}
-							//Reduce to boolean if required
-							if($v['VariableType'] == 0) {
-								$actionValue = $actionValue > 0;
-							}
+					//If we somehow do not have a profile take care that we do not fail immediately
+					if ($profileName != "") {
+						//If we are enabling analog devices we want to switch to the maximum value (e.g. 100%)
+						if ($Status) {
+							$actionValue = IPS_GetVariableProfile($profileName)['MaxValue'];
 						} else {
-							$actionValue = $Status;
+							$actionValue = 0;
 						}
+						//Reduce to boolean if required
+						if ($v['VariableType'] == 0) {
+							$actionValue = $actionValue > 0;
+						}
+					} else {
+						$actionValue = $Status;
+					}
 
-						if(IPS_InstanceExists($actionID)) {
-							IPS_RequestAction($actionID, $o['ObjectIdent'], $actionValue);
-						} else if(IPS_ScriptExists($actionID)) {
-							echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $linkVariableID, "VALUE" => $actionValue));
+					if (IPS_InstanceExists($actionID)) {
+						IPS_RequestAction($actionID, $o['ObjectIdent'], $actionValue);
+					} else {
+						if (IPS_ScriptExists($actionID)) {
+							echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $targetID->ID, "VALUE" => $actionValue));
 						}
 					}
 				}
@@ -133,6 +121,36 @@
 			
 			SetValue($this->GetIDForIdent("Alert"), $Status);
 		
+		}
+		
+		public function ConvertToNewVersion(){
+
+			if (@IPS_GetObjectIDByIdent("Sensors", $this->InstanceID) !== false) {
+				IPS_SetProperty($this->InstanceID, "Sensors", json_encode($this->convertLinksToTargetIDArray("Sensors")));
+			}
+			
+			if (@IPS_GetObjectIDByIdent("Targets", $this->InstanceID) !== false) {
+				IPS_SetProperty($this->InstanceID, "Targets", json_encode($this->convertLinksToTargetIDArray("Targets")));
+			}
+			
+			IPS_ApplyChanges($this->InstanceID);
+
+			echo $this->Translate("Converting successful! Please reopen this configuration page. If everything is correct, all events and categories of this instance can be deleted");
+			
+		}
+		
+		private function convertLinksToTargetIDArray($CategoryIdent) {
+
+			$linkArray = array();
+			$linkIDs = IPS_GetChildrenIDs(@IPS_GetObjectIDByIdent($CategoryIdent, $this->InstanceID));
+			foreach ($linkIDs as $linkID) {
+				if (IPS_LinkExists($linkID)){
+					$linkArray[] = array("ID" => IPS_GetLink($linkID)['TargetID']);
+				}
+			}
+			
+			return $linkArray;
+			
 		}
 		
 
@@ -161,35 +179,35 @@
 		
 		}
 
-		private function GetProfileName($variable) {
+		private function GetProfileName($Variable) {
 			
-			if($variable['VariableCustomProfile'] != "")
-				return $variable['VariableCustomProfile'];
+			if($Variable['VariableCustomProfile'] != "")
+				return $Variable['VariableCustomProfile'];
 			else
-				return $variable['VariableProfile'];
+				return $Variable['VariableProfile'];
 		}
 
-		private function GetProfileAction($variable) {
+		private function GetProfileAction($Variable) {
 			
-			if($variable['VariableCustomAction'] != "")
-				return $variable['VariableCustomAction'];
+			if($Variable['VariableCustomAction'] != "")
+				return $Variable['VariableCustomAction'];
 			else
-				return $variable['VariableAction'];
+				return $Variable['VariableAction'];
 		}
-		
-		private function CreateCategoryByIdent($id, $ident, $name) {
+
+		private function GetActionForVariable($Variable) {
 			
-			 $cid = @IPS_GetObjectIDByIdent($ident, $id);
-			 if($cid === false)
-			 {
-				 $cid = IPS_CreateCategory();
-				 IPS_SetParent($cid, $id);
-				 IPS_SetName($cid, $name);
-				 IPS_SetIdent($cid, $ident);
-			 }
-			 return $cid;
+			$v = IPS_GetVariable($Variable);
+
+			if ($v['VariableCustomAction'] > 0) {
+				return $v['VariableCustomAction'];
+			} else {
+				return $v['VariableAction'];
+			}
+			
 		}
 		
+
 		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {
 			
 			 $vid = @IPS_GetObjectIDByIdent($ident, $id);
@@ -205,6 +223,82 @@
 			 return $vid;
 		}
 
-	}
+		public function GetConfigurationForm() {
+			
+			if ($this->ReadPropertyString("Sensors") == "[]" && $this->ReadPropertyString("Targets") == "[]") {
+				$sensorsID = @IPS_GetObjectIDByIdent("Sensors", $this->InstanceID);
+				$targetsID = @IPS_GetObjectIDByIdent("Targets", $this->InstanceID);
+				if ($sensorsID !== false || $targetsID !== false) {
+					if (IPS_CategoryExists($sensorsID) || IPS_CategoryExists($targetsID)) {
+						if (IPS_HasChildren($sensorsID) || IPS_HasChildren($targetsID)) {
+							$formconvert = array();
+							$formconvert['elements'][] = array("type" => "Button", "label" => $this->Translate("Convert"), "onClick" => "ARM_ConvertToNewVersion(\$id)");
+							return json_encode($formconvert);
+						}
+					}
+				}
+			}
+			
+			
+			$formdata = json_decode(file_get_contents(__DIR__ . "/form.json"));
 
+			//Annotate existing elements
+			$sensors = json_decode($this->ReadPropertyString("Sensors"));
+			foreach($sensors as $sensor) {
+				//We only need to add annotations. Remaining data is merged from persistance automatically.
+				//Order is determinted by the order of array elements
+				if(IPS_ObjectExists($sensor->ID) && $sensor->ID !== 0) {
+					$status = "OK";
+					$rowColor = "";
+					if (!IPS_VariableExists($sensor->ID)) {
+						$status = $this->Translate("Not a variable");
+						$rowColor = "#FFC0C0";
+					}				
+						
+					$formdata->elements[1]->values[] = Array(
+						"Name" => IPS_GetName($sensor->ID),
+						"Status" => $status,
+					);
+					
+				} else {
+					$formdata->elements[1]->values[] = Array(
+						"Name" => $this->Translate("Not found!"),
+						"rowColor" => "#FFC0C0",
+					);
+				}
+			}
+
+			//Annotate existing elements
+			$targets = json_decode($this->ReadPropertyString("Targets"));
+			foreach($targets as $target) {
+				//We only need to add annotations. Remaining data is merged from persistance automatically.
+				//Order is determinted by the order of array elements
+				if(IPS_ObjectExists($target->ID) && $target->ID !== 0) {
+					$status = "OK";
+					$rowColor = "";
+					if (!IPS_VariableExists($target->ID)) {
+						$status = $this->Translate("Not a variable");
+						$rowColor = "#FFC0C0";
+					} else if ($this->GetActionForVariable($target->ID) <= 10000){
+						$status = $this->Translate("No action set");
+						$rowColor = "#FFC0C0";
+					}
+
+					$formdata->elements[3]->values[] = Array(
+						"Name" => IPS_GetName($target->ID),
+						"Status" => $status,
+						"rowColor" => $rowColor,
+					);
+				} else {
+					$formdata->elements[3]->values[] = Array(
+						"Name" => $this->Translate("Not found!"),
+						"rowColor" => "#FFC0C0",
+					);
+				}
+			}
+
+			return json_encode($formdata);
+		}
+		
+	}
 ?>

@@ -1,7 +1,15 @@
 {
 	"translations": {
-		"de": { 
-			"Press Update after adding/removing any sensor links": "Updaten nach dem Hinzufügen/Löschen von Sensoren Links"
+		"de": {
+			"Converting successful! Please reopen this configuration page. If everything is correct, all events and categories of this instance can be deleted" : "Konvertierung erfolgreich! Bitte diese Konfigurationsseite neu öffnen. Wenn alles korrekt ist können die Kategorien und Ereignisse unterhalb der Instanz gelöscht werden.",
+			"Active" : "Aktiv",
+			"Alert" : "Alarm",
+			"Convert" : "Konvertieren",
+			"Add/Delete sensor variables, which activate the alarm" : "Hinzufügen/Löschen von Sensorvariablen, welche den Alarm auslösen",
+			"Add/Delete target variables, which react on the alarm" : "Hinzufügen/Löschen von Zielvariablen, welche bei Alarm geschaltet werden",
+			"Sensorvariables" : "Sensorvariablen",
+			"Targetvariables" : "Zielvariablen",
+			"Not found!" : "Nicht gefunden!"
 		}
 	}
 }

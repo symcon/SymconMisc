@@ -1,12 +1,12 @@
 {
     "id": "{9D5546FA-CDB2-49BB-9B1D-F40F21E8219B}",
-    "name": "Treppenhauslicht",
+    "name": "Treppenhauslichtsteuerung",
     "type": 3,
-	"vendor": "",
-	"aliases": 
-	[
-		"Treppenhauslicht"
-	],
+    "vendor": "",
+    "aliases": 
+    [
+        "Treppenhauslichtsteuerung"
+    ],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],

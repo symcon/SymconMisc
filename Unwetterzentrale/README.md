@@ -63,8 +63,8 @@ Ebenfalls ist auf dem Radarbild der ausgewertete Karreeausschnitt eingezeichnet.
 
 ### 7. PHP-Befehlsreferenz
 
-`boolean UWZ_RequestInfo()(integer $InstanzID);`  
+`boolean UWZ_RequestInfo(integer $InstanzID);`  
 Berechnet die Variable Regenwert des Unwetterzentralemoduls mit der InstanzID $InstanzID.  
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
-`UWZ_RequestInfo()(12345);`
+`UWZ_RequestInfo(12345);`

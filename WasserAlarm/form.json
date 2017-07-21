@@ -1,0 +1,9 @@
+{
+  "elements":
+  [
+	{ "type": "Label", "label": "Countervalue which should be used" },
+	{ "type": "SelectVariable", "name": "CounterID", "caption": "Countervariable" },
+	{ "type": "Label", "label": "Update Flow Timer Intervall" },
+	{ "type": "IntervalBox", "name": "Interval", "caption": "Minutes" }
+  ]
+}

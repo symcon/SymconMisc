@@ -1,0 +1,24 @@
+{
+	"translations": {
+		"de": {
+			"Countervalue which should be used" : "Zählerwert welcher ausgelesen werden soll.",
+			"Countervariable" : "Zählervariable",
+			"Update Flow Timer Intervall" : "Update Durchfluss-Timer Intervall",
+			"Minutes" : "Minuten", 
+			"No activity" : "Keine Aktivität",
+			"Everything fine" : "Alles im grünen Bereich",
+			"Normal activity" : "Normale Aktivität",
+			"High activity" : "Erhöhte Aktivität",
+			"Abnormal activity" : "Unnormale Aktivität",
+			"Pre-Alarm" : "Vor-Alarm",
+			"Alarm triggered" : "Alarm ausgelöst",
+			"Alertlevel Counter (every minute)" : "Alarmlevel Zähler (minütlich)",
+			"Old countervalue" : "Alter Zählerwert",
+			"Bordlervalue counteralert" : "Grenzwert AlarmZähler",
+			"Alertstatus flow" : "Alarmstatus Durchfluss",
+			"Old flowvalue" : "Alter Durchflusswert",
+			"Bordervalue flow" : "Grenzwert Durchfluss",
+			"Invalid Ident" : "Unzulässiger Ident"
+		}
+	}
+}

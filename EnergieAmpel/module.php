@@ -130,10 +130,10 @@ class EnergieAmpel extends IPSModule {
             $maxOffset = $maxOffset + 12;
         }
         
-        $this->SendDebug("startMonth = " . $startMonth, "", 0);
-        $this->SendDebug("currentMonth = " . $currentMonth, "", 0);
-        $this->SendDebug("previousMonth = " . $previousMonth, "", 0);
-        $this->SendDebug("maxOffset = " . $maxOffset, "", 0);
+        //$this->SendDebug("startMonth = " . $startMonth, "", 0);
+        //$this->SendDebug("currentMonth = " . $currentMonth, "", 0);
+        //$this->SendDebug("previousMonth = " . $previousMonth, "", 0);
+        //$this->SendDebug("maxOffset = " . $maxOffset, "", 0);
         
         $expectedConsumption = $this->ReadPropertyInteger("ExpectedConsumption");
         if ($this->ReadPropertyBoolean("PreviousYear")){
@@ -147,18 +147,18 @@ class EnergieAmpel extends IPSModule {
             }
         }
         
-        $this->SendDebug("expectedConsumption = " . $expectedConsumption, "", 0);
+        //$this->SendDebug("expectedConsumption = " . $expectedConsumption, "", 0);
         $totalPlanned = 0.0;
         if ($scope == 0){
             //Previous months
             for ($offset = 0; $offset <= $maxOffset; $offset++){
                 $month = ($startMonth + $offset - 1) % 12 + 1; //startMonth + offset
-                $consumptionMonth = ($expectedConsumption * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$month-1]->consumption * 0.01);
+                $plannedConsumptionMonth = ($expectedConsumption * json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$month-1]->consumption * 0.01);
         
-                $this->SendDebug("month = " . $month, "", 0);
-                $this->SendDebug("consumptionMonth = " . $consumptionMonth, "", 0);
+                //$this->SendDebug("month = " . $month, "", 0);
+                //$this->SendDebug("plannedConsumptionMonth = " . $plannedConsumptionMonth, "", 0);
         
-                $totalPlanned += $consumptionMonth;
+                $totalPlanned += $plannedConsumptionMonth;
                 $noData = false;
             }
         }
@@ -166,8 +166,14 @@ class EnergieAmpel extends IPSModule {
             //Current month
             $secondsCurrentMonthTotal = 60*60*24*intval(date("t", time()));  //We do not consider daylight saving time here
             $secondsCurrentMonthUntilNow = (intval(date("j", time())) - 1) * 60*60*24 + intval(date("G", time())) * 60 * 60 + intval(date("i",time())) * 60 + intval(date("s", time()));
-            $totalPlanned += (json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$currentMonth-1]->consumption * $expectedConsumption * 0.01) * 
+            
+            $plannedConsumptionCurrentMonth = (json_decode($this->ReadPropertyString("ConsumptionPerMonth"))[$currentMonth-1]->consumption * $expectedConsumption * 0.01) * 
                         $secondsCurrentMonthUntilNow / $secondsCurrentMonthTotal;
+            
+            //$this->SendDebug("currentMonth = " . $currentMonth, "", 0);
+            //$this->SendDebug("plannedConsumptionCurrentMonth = " . $plannedConsumptionCurrentMonth, "", 0);
+                
+            $totalPlanned += $plannedConsumptionCurrentMonth;
             if ($secondsCurrentMonthUntilNow > 0){
                 $noData = false;
             }
@@ -196,6 +202,7 @@ class EnergieAmpel extends IPSModule {
         $this->SendDebug("scope = " . $scope, "", 0);
         $this->SendDebug("totalActual = " . $totalActual, "", 0);
         $this->SendDebug("totalPlanned = " . $totalPlanned, "", 0);
+        $this->SendDebug("Unrounded tendency = " . $totalActual/$totalPlanned, "", 0);
         
         if ($noData){
             return -1;

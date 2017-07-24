@@ -35,7 +35,7 @@ class WasserAlarm extends IPSModule {
 			IPS_SetVariableProfileValues("WAA.BorderValue", 0, 250, 0.5);
 		}
 		
-		$this->RegisterVariableInteger("CounterAlertStatus", $this->Translate("Alertlevel Counter (every minute)"), "WAA.AlertStates");
+		$this->RegisterVariableInteger("CounterAlertStatus", $this->Translate("Alertlevel Counter (every minute)"), "WAA.AlertLevel");
 		$this->RegisterVariableFloat("CounterValueOld", $this->Translate("Old countervalue"), "");
 		$this->RegisterVariableFloat("CountAlertBorder", $this->Translate("Bordlervalue counteralert"), "WAA.BorderValue");
 		$this->EnableAction("CountAlertBorder");

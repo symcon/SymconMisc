@@ -1,9 +1,11 @@
 {
   "elements":
   [
-	{ "type": "Label", "label": "Countervalue which should be used" },
-	{ "type": "SelectVariable", "name": "CounterID", "caption": "Countervariable" },
-	{ "type": "Label", "label": "Update Flow Timer Intervall" },
-	{ "type": "IntervalBox", "name": "Interval", "caption": "Minutes" }
+	{ "type": "Label", "label": "Metervalue which should be used" },
+	{ "type": "SelectVariable", "name": "MeterID", "caption": "Metervariable" }, 
+	{ "type": "Label", "label": "Leak timer interval" },
+	{ "type": "IntervalBox", "name": "LeakInterval", "caption": "Minutes" },
+	{ "type": "Label", "label": "Pipe burst timer interval" },
+	{ "type": "IntervalBox", "name": "PipeBurstInterval", "caption": "Minutes" }
   ]
 }

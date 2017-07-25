@@ -1,9 +1,10 @@
 {
 	"translations": {
 		"de": {
-			"Countervalue which should be used" : "Zählerwert welcher ausgelesen werden soll.",
-			"Countervariable" : "Zählervariable",
-			"Update Flow Timer Intervall" : "Update Durchfluss-Timer Intervall",
+			"Metervalue which should be used" : "Zählerwert welcher ausgelesen werden soll.",
+			"Metervariable" : "Zählervariable",
+			"Leak timer interval" : "Leckage Timer Intervall",
+			"Pipe burst timer interval" : "Rohrburch Timer Intervall",
 			"Minutes" : "Minuten", 
 			"No activity" : "Keine Aktivität",
 			"Everything fine" : "Alles im grünen Bereich",
@@ -12,12 +13,10 @@
 			"Abnormal activity" : "Unnormale Aktivität",
 			"Pre-Alarm" : "Vor-Alarm",
 			"Alarm triggered" : "Alarm ausgelöst",
-			"Alertlevel Counter (every minute)" : "Alarmlevel Zähler (minütlich)",
-			"Old countervalue" : "Alter Zählerwert",
-			"Bordlervalue counteralert" : "Grenzwert AlarmZähler",
-			"Alertstatus flow" : "Alarmstatus Durchfluss",
-			"Old flowvalue" : "Alter Durchflusswert",
-			"Bordervalue flow" : "Grenzwert Durchfluss",
+			"Leak" : "Leckage",
+			"Leak threshold" : "Leckage Grenzwert",
+			"Pipe burst" : "Rohrbruch",
+			"Pipe burst threshold" : "Rohrburch Grenzwert",
 			"Invalid Ident" : "Unzulässiger Ident"
 		}
 	}

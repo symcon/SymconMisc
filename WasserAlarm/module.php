@@ -66,10 +66,10 @@ class WasserAlarm extends IPSModule {
 			$MeterValue = GetValue($this->ReadPropertyInteger("MeterID"));
 			$this->SetBuffer("LeakBuffer", $MeterValue);
 			$this->SetBuffer("PipeBurstBuffer", $MeterValue);
+			$this->SetTimerInterval("UpdateLeak", $this->ReadPropertyInteger("LeakInterval") * 60 * 1000);
+			$this->SetTimerInterval("UpdatePipeBurst", $this->ReadPropertyInteger("PipeBurstInterval") * 60 * 1000);
 		}
 		
-		$this->SetTimerInterval("UpdateLeak", $this->ReadPropertyInteger("LeakInterval") * 60 * 1000);
-		$this->SetTimerInterval("UpdatePipeBurst", $this->ReadPropertyInteger("PipeBurstInterval") * 60 * 1000);
 	}
 
 	public function CheckAlert(String $ThresholdName, String $BufferName) {

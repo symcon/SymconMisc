@@ -43,7 +43,7 @@ class WasserAlarm extends IPSModule {
 		
 		//Define some default value
 		if(GetValue($leakThresholdVariableID) == 0) {
-			SetValue($leakThresholdVariableID, 150)
+			SetValue($leakThresholdVariableID, 150);
 		}
 		
 		$this->RegisterVariableBoolean("PipeBurst", $this->Translate("Pipe burst"), "~Alert");

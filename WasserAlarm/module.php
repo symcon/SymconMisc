@@ -9,7 +9,7 @@ class WasserAlarm extends IPSModule {
 		//You cannot use variables here. Just static values.
 		$this->RegisterPropertyInteger("MeterID", 0);
 		$this->RegisterPropertyInteger("LeakInterval", 1);
-		$this->RegisterPropertyInteger("PipeBurstInterval", 15);
+		$this->RegisterPropertyInteger("PipeBurstInterval", 5);
 		
 		//Timer
 		$this->RegisterTimer("UpdateLeak", 0, 'WAA_CheckAlert($_IPS[\'TARGET\'], "LeakThreshold", "LeakBuffer");');
@@ -38,8 +38,13 @@ class WasserAlarm extends IPSModule {
 		}
 		
 		$this->RegisterVariableInteger("Leak", $this->Translate("Leak"), "WAA.LeakLevel");
-		$this->RegisterVariableFloat("LeakThreshold", $this->Translate("Leak threshold"), "WAA.ThresholdValue");
+		$leakThresholdVariableID = $this->RegisterVariableFloat("LeakThreshold", $this->Translate("Leak threshold"), "WAA.ThresholdValue");
 		$this->EnableAction("LeakThreshold");
+		
+		//Define some default value
+		if(GetValue($leakThresholdVariableID) == 0) {
+			SetValue($leakThresholdVariableID, 150)
+		}
 		
 		$this->RegisterVariableBoolean("PipeBurst", $this->Translate("Pipe burst"), "~Alert");
 		$this->RegisterVariableFloat("PipeBurstThreshold", $this->Translate("Pipe burst threshold"), "WAA.ThresholdValue");

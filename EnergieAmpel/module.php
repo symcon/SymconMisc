@@ -248,7 +248,7 @@ class EnergieAmpel extends IPSModule {
                     $yearBeginningOfWeek = $yearBeginningOfWeek - 1;
                 }
                 $monthBeginningOfWeek = ($monthBeginningOfWeek + 10) % 12 + 1;
-                $dayBeforeSevenDays += intval(date("t", mktime(0, 0, 0, $monthBeginningOfWeek, 1, $yearBeginningOfWeek)));
+                $dayBeforeSevenDays = intval(date("t", mktime(0, 0, 0, $monthBeginningOfWeek, 1, $yearBeginningOfWeek)));
             }
             $values = AC_GetAggregatedValues($this->ReadPropertyInteger("ArchiveControlID") , $variable, 2, mktime(0, 0, 0, $monthBeginningOfWeek, $dayBeginningOfWeek, $yearBeginningOfWeek), time(), 0);
             if (count($values) > 0){

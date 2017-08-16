@@ -1,6 +1,10 @@
 <?
-define("IPS_BASE", 10000);
-define("IPS_KERNELSTARTED", IPS_BASE + 1);
+if (!defined('IPS_BASE')) {
+	define("IPS_BASE", 10000);
+}
+if (!defined('IPS_KERNELSTARTED')) {
+	define("IPS_KERNELSTARTED", IPS_BASE + 1);
+}
 
 class USBMapper extends IPSModule {
 	

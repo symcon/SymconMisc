@@ -64,7 +64,7 @@
 			);
 			$context = stream_context_create($opts);
 
-			$content = file_get_contents("http://www.wetteronline.de/regenradar", false, $context);
+			$content = file_get_contents("https://www.wetteronline.de/regenradar", false, $context);
 			if(preg_match("/wmapsextract\/vermarktung\/global2maps\/(.*?)&/", $content, $url) != 1) {
 				echo "URL matching failed";
 				return;
@@ -75,7 +75,7 @@
 			$url = str_replace("_DL", "_".$area, $url);
 			$url = str_replace("/DL/", "/".$area."/", $url);
 			
-			$remoteImage = "http://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".$url;
+			$remoteImage = "https://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".$url;
 			$data = @file_get_contents($remoteImage, false, $context);
 
 			$this->SendDebug($http_response_header[0], $remoteImage, 0);

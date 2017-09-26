@@ -6,7 +6,8 @@
             "1 minute" : "1 Minute",
             "5 minutes" : "5 Minuten",
             "10 minutes" : "10 Minuten",
-            "Output Variable" : "Ausgabevariable"
+            "Output Variable" : "Ausgabevariable",
+            "The output variable of the Treppenhauslichtsteuerung has no variable action. Please choose a variable with a variable action or add a variable action to the output variable." : "Die Ausgabevariable der Treppenhauslichtsteuerung hat keine Variablenaktion. Bitte wählen Sie eine Variable mit Variablenaktion oder fügen Sie der Ausgabevariablen eine Variablenaktion hinzu."
         }
     }
 }

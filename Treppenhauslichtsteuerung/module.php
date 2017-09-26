@@ -32,6 +32,10 @@
                 IPS_SetEventScript($eid, "THL_Start(\$_IPS['TARGET']);");
             }
 
+            if (($outputID != 0) && ($this->GetProfileAction($outputID) < 10000)) {
+                echo $this->Translate("The output variable of the Treppenhauslichtsteuerung has no variable action. Please choose a variable with a variable action or add a variable action to the output variable.");
+            }
+
             IPS_SetEventActive($eid, !(($triggerID == 0) || ($outputID == 0)));
             IPS_SetEventTrigger($eid, 4, $triggerID);
         }
@@ -77,6 +81,7 @@
 
             //Quit if actionID is not a valid target
             if($actionID < 10000){
+                echo $this->Translate("The output variable of the Treppenhauslichtsteuerung has no variable action. Please choose a variable with a variable action or add a variable action to the output variable.");
                 return;
             }
 

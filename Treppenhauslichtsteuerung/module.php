@@ -71,7 +71,7 @@
             $this->SetTimerInterval("OffTimer", 0);
         }
 
-        private function SwitchVariable(boolean $Value){
+        private function SwitchVariable(bool $Value){
             $outputID = $this->ReadPropertyInteger("OutputID");
 
             $object = IPS_GetObject($outputID);

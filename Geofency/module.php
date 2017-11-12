@@ -14,32 +14,146 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 			
-			$sid = $this->RegisterScript("Hook", "Hook", "<? //Do not delete or modify.\ninclude(IPS_GetKernelDirEx().\"scripts/__ipsmodule.inc.php\");\ninclude(\"../modules/SymconMisc/Geofency/module.php\");\n(new Geofency(".$this->InstanceID."))->ProcessHookData();");
-			$this->RegisterHook("/hook/geofency", $sid);
+			$ipsversion = $this->GetIPSVersion();
+            if($ipsversion == 0)
+            {
+                //prüfen ob Script existent
+                $SkriptID = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
+                if ($SkriptID === false)
+                {
+                    $ID = $this->RegisterScript("Hook", "Geofency Webhook", $this->CreateWebHookScript(), 20);
+                    IPS_SetHidden($ID, true);
+                    $this->RegisterHookOLD('/hook/geofency', $ID);
+                }
+                else
+                {
+                    $this->SendDebug("Geofency", "Webhookscript mit ".$SkriptID." gefunden",0);
+                }
+            }
+            else
+            {
+                $SkriptID = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
+                if ($SkriptID > 0)
+                {
+                    $this->UnregisterHook("/hook/geofency");
+                    $this->UnregisterScript("Hook");
+                }
+                $this->RegisterHook("/hook/geofency");
+            }
+
+
 		}
-		
-		private function RegisterHook($Hook, $TargetID) {
-			$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
-			if(sizeof($ids) > 0) {
-				$hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
-				$found = false;
-				foreach($hooks as $index => $hook) {
-					if($hook['Hook'] == "/hook/geofency") {
-						if($hook['TargetID'] == $TargetID)
-							return;
-						$hooks[$index]['TargetID'] = $TargetID;
-						$found = true;
-					}
-				}
-				if(!$found) {
-					$hooks[] = Array("Hook" => "/hook/geofency", "TargetID" => $TargetID);
-				}
-				IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
-				IPS_ApplyChanges($ids[0]);
-			}
-		}
-	
-		/**
+
+        private function RegisterHookOLD($WebHook, $TargetID)
+        {
+            $ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
+            if (sizeof($ids) > 0)
+            {
+                $hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
+                $found = false;
+                foreach ($hooks as $index => $hook)
+                {
+                    if ($hook['Hook'] == $WebHook)
+                    {
+                        if ($hook['TargetID'] == $TargetID)
+                            return;
+                        $hooks[$index]['TargetID'] = $TargetID;
+                        $found = true;
+                    }
+                }
+                if (!$found)
+                {
+                    $hooks[] = Array("Hook" => $WebHook, "TargetID" => $TargetID);
+                }
+                IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
+                IPS_ApplyChanges($ids[0]);
+            }
+        }
+
+        private function RegisterHook($WebHook)
+        {
+            $ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
+            if(sizeof($ids) > 0)
+            {
+                $hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
+                $found = false;
+                foreach($hooks as $index => $hook)
+                {
+                    if($hook['Hook'] == $WebHook)
+                    {
+                        if($hook['TargetID'] == $this->InstanceID)
+                            return;
+                        $hooks[$index]['TargetID'] = $this->InstanceID;
+                        $found = true;
+                    }
+                }
+                if(!$found)
+                {
+                    $hooks[] = Array("Hook" => $WebHook, "TargetID" => $this->InstanceID);
+                }
+                IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
+                IPS_ApplyChanges($ids[0]);
+            }
+        }
+
+        /**
+         * Löscht einen WebHook, wenn vorhanden.
+         *
+         * @access private
+         * @param string $WebHook URI des WebHook.
+         */
+        protected function UnregisterHook($WebHook)
+        {
+            $ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
+            if (sizeof($ids) > 0)
+            {
+                $hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
+                $found = false;
+                foreach ($hooks as $index => $hook)
+                {
+                    if ($hook['Hook'] == $WebHook)
+                    {
+                        $found = $index;
+                        break;
+                    }
+                }
+                if ($found !== false)
+                {
+                    array_splice($hooks, $index, 1);
+                    IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
+                    IPS_ApplyChanges($ids[0]);
+                }
+            }
+        }
+
+        /**
+         * Löscht eine Script, sofern vorhanden.
+         *
+         * @access private
+         * @param int $Ident Ident der Variable.
+         */
+        protected function UnregisterScript($Ident)
+        {
+            $sid = @IPS_GetObjectIDByIdent($Ident, $this->InstanceID);
+            if ($sid === false)
+                return;
+            if (!IPS_ScriptExists($sid))
+                return; //bail out
+            IPS_DeleteScript($sid, true);
+        }
+
+        private function CreateWebHookScript()
+        {
+            $Script = '<?
+//Do not delete or modify.
+include(IPS_GetKernelDirEx().\"scripts/__ipsmodule.inc.php\");
+include(\"../modules/SymconMisc/Geofency/module.php\");
+(new Geofency(".$this->InstanceID."))->ProcessHookData();");	
+?>';
+            return $Script;
+        }
+
+        /**
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
 		*
@@ -78,7 +192,7 @@
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), $this->ParseFloat($_POST['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_POST['date'])));
 			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_POST['id']), utf8_decode($_POST['name']), 0, "~Presence"), intval($_POST['entry']) > 0);
-            if(!isset($_POST['currentLatitude']) && !isset($_POST['currentLongitude']))
+            if(isset($_POST['currentLatitude']) && isset($_POST['currentLongitude']))
             {
                 $this->SendDebug("GeoFency", "Current Latitude: ".print_r($_POST["currentLatitude"], true)." Current Longitude: ".print_r($_POST["currentLongitude"], true), 0);
                 SetValue($this->CreateVariableByIdent($deviceID, "currentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
@@ -131,7 +245,27 @@
 			$floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
 			return floatval($floatString); 
 		}
-		
+
+        protected function GetIPSVersion ()
+        {
+            $ipsversion = IPS_GetKernelVersion ( );
+            $ipsversion = explode( ".", $ipsversion);
+            // $ipsmajor = intval($ipsversion[0]);
+            $ipsminor = intval($ipsversion[1]);
+            if($ipsminor < 10) // 4.0
+            {
+                $ipsversion = 0;
+            }
+			elseif ($ipsminor >= 10 && $ipsminor < 20) // 4.1
+            {
+                $ipsversion = 1;
+            }
+            else   // > 4.2
+            {
+                $ipsversion = 2;
+            }
+            return $ipsversion;
+        }
 	}
 
 ?>

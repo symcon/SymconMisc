@@ -99,7 +99,7 @@
                 $this->SendDebug("GeoFency", "Current Latitude: ".print_r($_POST["currentLatitude"], true)." Current Longitude: ".print_r($_POST["currentLongitude"], true), 0);
                 SetValue($this->CreateVariableByIdent($deviceID, "currentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "currentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "direction ", "Eintrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "direction", "Eintrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "orientation", "Himmelsrichtung", 1, "Geofency.Orientation"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "distance", "Distanz", 2, "Geofency.Distance.m"), $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
             }

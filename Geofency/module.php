@@ -23,15 +23,15 @@
                 Array(90, "O",  "", -1),
                 Array(112, "OSO",  "", -1),
                 Array(135, "SO",  "", -1),
-                Array(157, "SSO",  "HollowDoubleArrowRight", -1),
-                Array(180, "S",  "HollowDoubleArrowRight", -1),
-                Array(202, "SSW",  "HollowDoubleArrowRight", -1),
-                Array(225, "SW",  "HollowDoubleArrowRight", -1),
-                Array(247, "WSW",  "HollowDoubleArrowRight", -1),
-                Array(270, "W",  "HollowDoubleArrowRight", -1),
-                Array(292, "WNW",  "HollowDoubleArrowRight", -1),
-				Array(315, "NW",  "HollowDoubleArrowRight", -1),
-				Array(337, "NNW",  "HollowDoubleArrowRight", -1)
+                Array(157, "SSO",  "", -1),
+                Array(180, "S",  "", -1),
+                Array(202, "SSW",  "", -1),
+                Array(225, "SW",  "", -1),
+                Array(247, "WSW",  "", -1),
+                Array(270, "W",  "", -1),
+                Array(292, "WNW",  "", -1),
+				Array(315, "NW",  "", -1),
+				Array(337, "NNW",  "", -1)
             );
             $this->RegisterProfile("Geofency.Distance.m", "Distance", "", " m", 0, 0, 0, 2, 2);
 			$this->RegisterProfileAss("Geofency.Orientation", "WindDirection", "", "", 0, 360, 1, 0, $orientationass, 1);

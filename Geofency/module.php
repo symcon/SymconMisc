@@ -60,9 +60,9 @@
 		}
 	
 		/**
-		* This function will be called by the hook control. Visibility should be protected!
+		* This function will be called by the hook control. Visibility should be protected! // Error if protected or two functions needed one pblic for the hook script und one protected for newer versions
 		*/
-		protected function ProcessHookData() {
+		public function ProcessHookData() {
 			if($_IPS['SENDER'] == "Execute") {
 				echo "This script cannot be used this way.";
 				return;

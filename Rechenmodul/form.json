@@ -2,7 +2,7 @@
     "elements": [{
         "type": "Select",
         "name": "Calculation",
-        "label": "Calculation",
+        "caption": "Calculation",
         "options": [
             { "label": "Everything", "value": 0 },
             { "label": "Sum", "value": 1 },

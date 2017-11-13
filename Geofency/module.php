@@ -13,7 +13,13 @@
 		public function ApplyChanges() {
 			//Never delete this line!
 			parent::ApplyChanges();
-			
+
+            $script = $this->UnregisterScript("Hook");
+            if($script)
+			{
+                $this->UnregisterHook("/hook/geofency");
+			}
+
 			$this->RegisterHook("/hook/geofency");
             $orientationass = Array(
                 Array(0, "N",  "", -1),
@@ -58,11 +64,58 @@
 				IPS_ApplyChanges($ids[0]);
 			}
 		}
-	
-		/**
-		* This function will be called by the hook control. Visibility should be protected! // Error if protected or two functions needed one pblic for the hook script und one protected for newer versions
+
+        /**
+         * Löscht eine Script, sofern vorhanden.
+         *
+         * @access private
+         * @param int $Ident Ident der Variable.
+         */
+        protected function UnregisterScript($Ident)
+        {
+            $sid = @IPS_GetObjectIDByIdent($Ident, $this->InstanceID);
+            if ($sid === false)
+                return false;
+            if (!IPS_ScriptExists($sid))
+                return false; //bail out
+            IPS_DeleteScript($sid, true);
+            return true;
+        }
+
+        /**
+         * Löscht einen WebHook, wenn vorhanden.
+         *
+         * @access private
+         * @param string $WebHook URI des WebHook.
+         */
+        protected function UnregisterHook($WebHook)
+        {
+            $ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
+            if (sizeof($ids) > 0)
+            {
+                $hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
+                $found = false;
+                foreach ($hooks as $index => $hook)
+                {
+                    if ($hook['Hook'] == $WebHook)
+                    {
+                        $found = $index;
+                        break;
+                    }
+                }
+                if ($found !== false)
+                {
+                    array_splice($hooks, $index, 1);
+                    IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
+                    IPS_ApplyChanges($ids[0]);
+                }
+            }
+        }
+
+        /**
+		* This function will be called by the hook control. Visibility should be protected!
 		*/
-		public function ProcessHookData() {
+		protected function ProcessHookData() {
 			if($_IPS['SENDER'] == "Execute") {
 				echo "This script cannot be used this way.";
 				return;

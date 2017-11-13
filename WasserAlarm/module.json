@@ -1,0 +1,14 @@
+{
+    "id": "{98F467A7-CD43-442D-95FD-AAA0CE8D9F65}",
+    "name": "WasserAlarm",
+    "type": 3,
+    "vendor": "Symcon GmbH",
+    "aliases": 
+    [
+        "WasserAlarm"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "WAA"
+}

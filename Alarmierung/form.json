@@ -1,7 +1,71 @@
 {
 	"elements":
 	[
-		{ "type": "Label", "label": "Press Update after adding/removing any sensor links" },
-		{ "type": "Button", "label": "Update", "onClick": "ARM_UpdateEvents($id);" }
+      { "type": "Label", "label": "Add/Delete sensor variables, which activate the alarm" },
+      {
+        "type": "List",
+        "name": "Sensors",
+        "caption": "Sensorvariables",
+        "add": true,
+        "delete": true,
+        "sort": {
+          "column": "ID",
+          "direction": "ascending"
+        },
+        "columns": [{
+          "name" : "ID",
+          "label" : "ID",
+          "width" : "60px",
+          "add": 0,
+          "edit": {
+            "type": "SelectVariable"
+          }
+        }, {
+          "name" : "Name",
+          "label" : "Name",
+          "width" : "auto",
+          "add": "Select variable"
+        }, {
+          "name" : "Status",
+          "label" : "Status",
+          "width" : "120",
+          "add": ""
+        }],
+        "values": [
+        ]
+      },
+      { "type": "Label", "label": "Add/Delete target variables, which react on the alarm" },
+      {
+        "type": "List",
+        "name": "Targets",
+        "caption": "Targetvariables",
+        "add": true,
+        "delete": true,
+        "sort": {
+          "column": "ID",
+          "direction": "ascending"
+        },
+        "columns": [{
+          "name" : "ID",
+          "label" : "ID",
+          "width" : "60px",
+          "add": 0,
+          "edit": {
+            "type": "SelectVariable"
+          }
+        }, {
+          "name" : "Name",
+          "label" : "Name",
+          "width" : "auto",
+          "add": "Select variable"
+        }, {
+          "name" : "Status",
+          "label" : "Status",
+          "width" : "120",
+          "add": ""
+        }],
+        "values": [
+        ]
+      }
 	]
 }

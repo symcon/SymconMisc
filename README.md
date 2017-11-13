@@ -44,6 +44,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __USB-Mapper__ ([Dokumentation](USBMapper))  
 	Setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
 
+- __Wasser-Alarm__ ([Dokumentation](WasserAlarm))  
+	Überwacht eine Zähler-Variable auf unnatürlichen Wasserverbrauch (Leck/Bruch).
+
 - __Watchdog__ ([Dokumentation](Watchdog))  
 	Überwacht verlinkte Variablen und wirft einen Alarm wenn diese zu lange nicht aktualisiert wurden.
 

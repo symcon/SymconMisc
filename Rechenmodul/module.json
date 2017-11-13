@@ -1,0 +1,14 @@
+{
+    "id": "{A7B0B43B-BEB0-4452-B55E-CD8A9A56B052}",
+    "name": "Rechenmodul",
+    "type": 3,
+    "vendor": "",
+    "aliases": 
+    [
+        "Rechen-Modul"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "RM"
+}

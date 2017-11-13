@@ -129,7 +129,7 @@
             $floatString = str_replace($LocaleInfo['decimal_point'] , '.', $floatString);
             return floatval($floatString);
         }
-        		
+
 		//Replaces all unallowed Chars of a String with "_"
 		//Allowed Chars: "a..z", "A..Z", "_", "0..9"
 		private function ReduceToAllowedIdent($String) {

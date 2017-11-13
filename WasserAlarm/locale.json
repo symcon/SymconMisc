@@ -1,0 +1,23 @@
+{
+	"translations": {
+		"de": {
+			"Metervalue which should be used" : "Zählerwert welcher ausgelesen werden soll.",
+			"Metervariable" : "Zählervariable",
+			"Leak timer interval" : "Leckage Timer Intervall",
+			"Pipe burst timer interval" : "Rohrburch Timer Intervall",
+			"Minutes" : "Minuten", 
+			"No activity" : "Keine Aktivität",
+			"Everything fine" : "Alles im grünen Bereich",
+			"Normal activity" : "Normale Aktivität",
+			"High activity" : "Erhöhte Aktivität",
+			"Abnormal activity" : "Unnormale Aktivität",
+			"Pre-Alarm" : "Vor-Alarm",
+			"Alarm triggered" : "Alarm ausgelöst",
+			"Leak" : "Leckage",
+			"Leak threshold" : "Leckage Grenzwert",
+			"Pipe burst" : "Rohrbruch",
+			"Pipe burst threshold" : "Rohrburch Grenzwert",
+			"Invalid Ident" : "Unzulässiger Ident"
+		}
+	}
+}

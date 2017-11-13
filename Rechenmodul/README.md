@@ -1,5 +1,5 @@
-# Energie-Ampel
-Das Modul analysiert den Verbrauch und die Produktion von Energie. Die Rohdaten werden vom Modul aufbereitet und bieten dem Benutzer verschiedene Übersichten.
+# Rechen-Modul
+Dieses Modul kann verschiedene Hilfsberechnungen auf einer Menge von Variablen durchführen, beispielsweise die Summe oder den Durchschnitt.
 
 ### Inhaltverzeichnis
 
@@ -13,13 +13,14 @@ Das Modul analysiert den Verbrauch und die Produktion von Energie. Die Rohdaten 
 
 ### 1. Funktionsumfang
 
-* Diverse Übersichten bezogen auf 
-  * die aktuelle Woche
-  * den aktuellen Monat
-  * das aktuelle Jahr
-* Ausgabe von Kosten und Ertrag für Energie
-* Bestimmung einer Tendenz des Energieverbrauchs im Vergleich zum Vorjahr oder Wunschwert
-  * Geplanter Verbrauch kann individuell auf die Monate eines Jahres verteilt werden
+* Berechnungen verschiedener Werte basierend auf einer Gruppe von Variablen:
+  * Summe
+  * Minimum
+  * Maximum
+  * Durchschnitt
+  * Anzahl der Variablen
+* Ausgabe der berechneten Werte in Variablen
+* Aktualisierung der Werte sobald sich eine der Variablen ändert
 
 ### 2. Voraussetzungen
 
@@ -32,60 +33,46 @@ Das Modul analysiert den Verbrauch und die Produktion von Energie. Die Rohdaten 
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'Energie-Ampel'-Modul unter dem Hersteller '(Sonstiges)' aufgeführt.  
+- Unter "Instanz hinzufügen" ist das 'Rechen-Modul' unter dem Hersteller '(Sonstiges)' aufgeführt.  
 
 __Konfigurationsseite__:
-___Erwarteter Energieverbrauch___:
-
-Name                  | Beschreibung
---------------------- | ---------------------------------
-Vergleich mit Vorjahr | Ist die Checkbox aktiviert so wird die Tendenz auf Basis des Verbrauches im Vorjahr bestimmt, ansonsten auf Basis der angegebenen geplanten kWh / Jahr
-Geplante kWh / Jahr   | Geplanter Jahresverbrauch für die Bestimmung der Tendenz falls 'Vergleich mit Vorjahr' nicht aktiviert ist
-
-___Startmonat für die Berechnung___:
 
 Name       | Beschreibung
 ---------- | ---------------------------------
-Startmonat | Der Startmonat für die jährliche Auswertung. Die Berechnung aller Ausgaben der jährlichen Auswertung erfolgen auf Basis der Daten, welche seit dem letzten Startmonat gesammelt wurden
+Berechnung | Auswahl der durchgeführten Berechnung(en)
+Variablen  | VariablenIDs der Variablen auf denen die Berechnung(en) durchgeführt werden; Für alle Berechnungen außer _Anzahl_ müssen alle Variablen vom Typ Float oder Integer sein
 
-___Verbrauch___:
+___Mögliche Berechnungen___:
 
-Name              | Beschreibung
------------------ | ---------------------------------
-Variable          | Variable in welcher der Verbrauch in kWh geloggt wird
-Cent / kWh        | Energiepreis für den Energiebezug zur Berechnung der Kosten
-Verbrauch / Monat | Verteilung des geplanten Energieverbrauchs im Laufe des Jahres. Für jeden Monat wird der prozentuale Anteil des Energieverbrauchs angegeben
-
-___Erzeugung___:
-
-Name       | Beschreibung
----------- | ---------------------------------
-Variable   | Variable in welcher die erzeugte Energie in kWh geloggt wird
-Cent / kWh | Energiepreis für den Energieverkauf zur Berechnung des Gewinns
+Name         | Beschreibung
+------------ | ---------------------------------
+Alles        | Alle in dieser Tabelle vorgestellten Berechnungen werden durchgeführt
+Summe        | Die Summe aller ausgewählten Variablen wird in der Statusvariablen _Summe_ gespeichert
+Minimum      | Der minimale Wert der ausgewählten Variablen wird in der Statusvariablen _Minimum_ gespeichert
+Maximum      | Der maximale Wert der ausgewählten Variablen wird in der Statusvariablen _Maximum_ gespeichert
+Durchschnitt | Der Durchschnitt der ausgewählten Variablen wird in der Statusvariablen _Durchschnitt_ gespeichert
+Anzahl       | Die Anzahl der ausgewählten Variablen wird in der Statusvariablen _Anzahl_ gespeichert
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Statusvariablen werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
 
 ##### Statusvariablen
 
-Für die Zeitintervalle Jahr, Monat und Woche werden jeweils eine eigene Menge an Variablen erstellt, welche durch einen Prefix ihre Zugehörigkeit zeigen. Die Variablen für Woche und Monat beschreiben den Verlauf seit Beginn des letzten Beginns eines entsprechenden Zeitintervalls, also seit dem letzten Montag oder seit dem ersten Tag des aktuellen Monats. Die Variablen für das jährliche Intervall beschreiben den Verlauf seit dem ersten Tages des letzten angegebenen Startmonats. Die Variablen werden automatisch stündlich aktualisiert.
+Für jede Berechnung wird eine dazugehörige Statusvariable angelegt. Zusätzlich wird für jede ausgewählte Variable ein Ereignis erstellt, welches bei Änderung der Variablen die Berechnung erneut durchführt. 
 
-Name               | Typ      | Beschreibung
------------------- | -------- | ----------------
-Tendenz            | Variable | Die Tendenz des aktuellen Verbrauchs. Bei 100% wird innerhalb des laufenden Zeitintervalls genau die anvisierte Menge an Energie verbraucht
-Verbauch           | Ereignis | Der Energieverbrauch innerhalb des laufenden Zeitintervalls
-Verbrauch (Ertrag) | Variable | Die Kosten für den Energieverbrauch des laufenden Zeitintervalls
-Erzeugung          | Variable | Die erzeugte Energie innerhalb des laufenden Zeitintervalls
-Erzeugung (Ertrag) | Variable | Der Gewinn für die erzeugte Energie Energie innerhalb des laufenden Zeitintervalls
-Gesamt             | Variable | Die Differenz zwischen den Erträgen für Verbrauch und Erzeugung
+Name         | Typ        | Beschreibung
+------------ | ---------- | ----------------
+Summe        | Variable   | Die Summe aller ausgewählten Variablen
+Minimum      | Variable   | Der minimale Wert der ausgewählten Variablen
+Maximum      | Variable   | Der maximale Wert der ausgewählten Variablen
+Durchschnitt | Variable   | Der Durchschnitt der ausgewählten Variablen
+Anzahl       | Variable   | Die Anzahl der ausgewählten Variablen
+Unbenannt    | Ereignisse | Ereignisse für jede Variable, welche bei Änderung der Variablen die Berechnung aktualisieren
 
 ##### Profile:
 
-Name        | Typ
------------ | -------
-Euro.EA     | Float
-Tendency.EA | Integer
+Es werden keine zusätzlichen Profile hinzugefügt.
 
 ### 6. WebFront
 
@@ -93,22 +80,7 @@ Tendency.EA | Integer
 
 ### 7. PHP-Befehlsreferenz
 
-`boolean EA_UpdateAll(integer $InstanzID);`  
-Aktualisiert alle Statusvariablen
+`boolean RM_Update(integer $InstanzID);`  
+Aktualisiert die berechneten Werte
 Beispiel:  
-`EA_UpdateAll(12345);`
-
-`boolean EA_UpdateWeek(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des wöchentlichen Zeitintervalls
-Beispiel:  
-`EA_UpdateWeek(12345);`
-
-`boolean EA_UpdateMonth(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des monatlichen Zeitintervalls
-Beispiel:  
-`EA_UpdateMonth(12345);`
-
-`boolean EA_UpdateYear(integer $InstanzID);`  
-Aktualisiert die Statusvariablen des jährlichen Zeitintervalls
-Beispiel:  
-`EA_UpdateYear(12345);`
+`RM_Update(12345);`

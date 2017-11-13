@@ -1,6 +1,7 @@
 # Alarmierung
 Das Modul löst einen Alarm aus, wenn eine der Sensorenvariablen aktiv wird.
 Dabei werden Zielvariablen bei einem Alarm auf den maximalen Wert bzw. An (True) gesetzt.
+Ein einmal geschalteter Alarm wird nicht automatisch deaktiviert, dieser muss manuell zurückgesetzt werden.
 
 ### Inhaltverzeichnis
 
@@ -14,13 +15,13 @@ Dabei werden Zielvariablen bei einem Alarm auf den maximalen Wert bzw. An (True)
 
 ### 1. Funktionsumfang
 
-* Schalten von verlinkten Aktoren/Variablen.
-* Auswahl von verlinkten Sensoren, welche einen Alarm auslösen können.
+* Konfiguration von Sensor- und Zielvariablen via ListenAuswahl, welche den Alarm auslösen oder bei einem Alarm geschaltet werden.
 * Ein-/Ausschaltbarkeit via WebFront-Button oder Skript-Funktion.
+* Konvertierungsfunktion für alte Versionen des Alarmierungsmoduls
 
 ### 2. Voraussetzungen
 
-- IP-Symcon ab Version 4.x
+- IP-Symcon ab Version 4.2
 
 ### 3. Software-Installation
 
@@ -33,9 +34,11 @@ Dabei werden Zielvariablen bei einem Alarm auf den maximalen Wert bzw. An (True)
 
 __Konfigurationsseite__:
 
-Name                    | Beschreibung
------------------------ | ---------------------------------
-Button "Aktualisierung" | Neueinlesen aller Sensoren und erstellen der benötigten Ereignisse.
+Name                   | Beschreibung
+---------------------- | ---------------------------------
+Button "Konvertierung" | (Wird nur angezeigt, wenn die Listen leer und alte Links vorhanden sind) Wenn eine alte Version des Moduls erkannt wurde, können die alten Links in die neuen Listen via Knopfdruck eingepflegt werden. Ist dies Erfolgreich erscheint ein Meldungsfenster.
+Sensorvariablen        | Diese Liste beinhaltet die Variablen, welche bei Aktualisierung einen Alarm auslösen.
+Zielvariablen          | Diese Liste beinhaltet die Variablen, welche bei Alarm geschaltet werden. Diese müssen eine Standardaktion oder Aktionsskript beinhalten.
 
 ### 5. Statusvariablen und Profile
 
@@ -45,8 +48,6 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 Name         | Typ       | Beschreibung
 ------------ | --------- | ----------------
-Alert Target | Kategorie | Verlinkte Targets werden auf den maximalen Wert bzw. An (True) gesetzt, wenn ein Alarm ausgelöst wird.
-Sensors      | Kategorie | Verlinkte Variablen, welche den Alarm auslösen können.
 Active       | Boolean   | De-/Aktiviert die Alarmierung. Wird die Alarmierung deaktiviert, so wird auch der ggf. vorhandene Alarm deaktiviert.
 Alert        | Boolean   | De-/Aktiviert den Alarm.
 
@@ -61,12 +62,6 @@ Es wird zusätzlich angezeigt, ob ein Alarm vorliegt oder nicht.
 Der Alarm kann auch manuell de-/aktiviert werden.
 
 ### 7. PHP-Befehlsreferenz
-
-`boolean ARM_UpdateEvents(integer $InstanzID);`  
-Aktualisiert die Sensorenereignisse des Alarmierungsmodul mit der InstanzID $InstanzID.  
-Die Funktion liefert keinerlei Rückgabewert.  
-Beispiel:  
-`ARM_UpdateEvents(12345);`
 
 `boolean ARM_SetActive(integer $InstanzID, boolean $Value);`
 Schaltet das Alarmierungsmodul mit der InstanzID $InstanzID  auf den Wert $Value (true = An; false = Aus).  

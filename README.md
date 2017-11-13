@@ -25,7 +25,10 @@ Folgende Module beinhaltet das SymconMisc Repository:
 
 - __Locative__ ([Dokumentation](Locative))  
 	Abfrage von Daten über die Locative API.
-	
+
+- __Rechen-Modul__ ([Dokumentation](Rechenmodul))  
+    Berechnung verschiedener Hilfswerte auf Basis einer Gruppe von Variablen, z.B. Summer oder Durchschnitt.
+
 - __Szenen-Steuerung__ ([Dokumentation](SzenenSteuerung))  
 	Speichert den Zustand einer belieben Anzahl an Aktoren und macht diese via WebFront/PHP-Funktion abrufbar.
 
@@ -43,6 +46,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 
 - __USB-Mapper__ ([Dokumentation](USBMapper))  
 	Setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
+
+- __Wasser-Alarm__ ([Dokumentation](WasserAlarm))  
+	Überwacht eine Zähler-Variable auf unnatürlichen Wasserverbrauch (Leck/Bruch).
 
 - __Watchdog__ ([Dokumentation](Watchdog))  
 	Überwacht verlinkte Variablen und wirft einen Alarm wenn diese zu lange nicht aktualisiert wurden.

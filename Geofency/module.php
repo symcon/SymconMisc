@@ -13,7 +13,7 @@
 		public function ApplyChanges() {
 			//Never delete this line!
 			parent::ApplyChanges();
-            
+
 			$this->RegisterHook("/hook/geofency");
             $orientationass = Array(
                 Array(0, "N",  "", -1),
@@ -210,10 +210,11 @@
             return $angle;
         }
 
-        private function ParseFloat($floatString) {
+        private function ParseFloat($floatString)
+        {
             $LocaleInfo = localeconv();
-            $floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
-            $floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
+            $floatString = str_replace($LocaleInfo['thousands_sep'] , '', $floatString);
+            $floatString = str_replace($LocaleInfo['decimal_point'] , '.', $floatString);
             return floatval($floatString);
         }
 

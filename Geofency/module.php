@@ -99,24 +99,24 @@
                 $this->SendDebug("GeoFency", "Current Latitude: ".print_r($_POST["currentLatitude"], true)." Current Longitude: ".print_r($_POST["currentLongitude"], true), 0);
                 SetValue($this->CreateVariableByIdent($deviceID, "currentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "currentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "direction", "Eintrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "direction", "Ein-/Austrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "orientation", "Himmelsrichtung", 1, "Geofency.Orientation"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($this->CreateVariableByIdent($deviceID, "distance", "Distanz", 2, "Geofency.Distance.m"), $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
             }
             else
             {
-                $objidlat = @$this->GetIDForIdent("currentLatitude");
+                $objidlat = @IPS_GetObjectIDByIdent("currentLatitude", $deviceID);
                 if($objidlat)
                 {
-                    SetValue($this->GetIDForIdent("currentLatitude"), 0);
+                    SetValueFloat($objidlat, 0);
                 }
-                $objidlong = @$this->GetIDForIdent("currentLongitude");
+                $objidlong = @IPS_GetObjectIDByIdent("currentLongitude", $deviceID);
                 if($objidlong)
                 {
-                    SetValue($this->GetIDForIdent("currentLongitude"), 0);
-                    SetValue($this->GetIDForIdent("direction"), 0);
-                    SetValue($this->GetIDForIdent("orientation"), 0);
-                    SetValue($this->GetIDForIdent("distance"), 0);
+                    SetValueFloat($objidlong, 0);
+                    SetValueInteger(IPS_GetObjectIDByIdent("direction", $deviceID), 0);
+                    SetValueInteger(IPS_GetObjectIDByIdent("orientation", $deviceID), 0);
+                    SetValueFloat(IPS_GetObjectIDByIdent("distance", $deviceID), 0);
                 }
             }
 		}

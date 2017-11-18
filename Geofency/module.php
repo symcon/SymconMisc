@@ -223,9 +223,11 @@
             if(!IPS_VariableProfileExists($Name))
             {
             	IPS_CreateVariableProfile($Name, $Vartype);
-            } else {
+            }
+            else
+            {
                 $profile = IPS_GetVariableProfile($Name);
-                if($profile['ProfileType'] != 2)
+                if($profile['ProfileType'] != $Vartype)
                     throw new Exception("Variable profile type does not match for profile ".$Name);
             }
 
@@ -238,14 +240,16 @@
 
         protected function RegisterProfileAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations, $Vartype)
         {
-            if ( sizeof($Associations) === 0 ){
+            if ( sizeof($Associations) === 0 )
+            {
                 $MinValue = 0;
                 $MaxValue = 0;
             }
 
             $this->RegisterProfile($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Vartype);
 
-            foreach($Associations as $Association) {
+            foreach($Associations as $Association)
+            {
                 IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
             }
         }

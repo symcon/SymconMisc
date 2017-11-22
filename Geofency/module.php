@@ -8,13 +8,6 @@
 			
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
-		}
-	
-		public function ApplyChanges() {
-			//Never delete this line!
-			parent::ApplyChanges();
-            
-			$this->RegisterHook("/hook/geofency");
             $orientationass = Array(
                 Array(0, "N",  "", -1),
                 Array(22, "NNO",  "", -1),
@@ -30,11 +23,20 @@
                 Array(247, "WSW",  "", -1),
                 Array(270, "W",  "", -1),
                 Array(292, "WNW",  "", -1),
-				Array(315, "NW",  "", -1),
-				Array(337, "NNW",  "", -1)
+                Array(315, "NW",  "", -1),
+                Array(337, "NNW",  "", -1)
             );
             $this->RegisterProfile("Geofency.Distance.m", "Distance", "", " m", 0, 0, 0, 2, 2);
-			$this->RegisterProfileAss("Geofency.Orientation", "WindDirection", "", "", 0, 360, 1, 0, $orientationass, 1);
+            $this->RegisterProfileAssociation("Geofency.Orientation", "WindDirection", "", "", 0, 360, 1, 0, $orientationass, 1);
+
+        }
+	
+		public function ApplyChanges()
+        {
+			//Never delete this line!
+			parent::ApplyChanges();
+            
+			$this->RegisterHook("/hook/geofency");
 
 		}
 		
@@ -97,11 +99,11 @@
             if(isset($_POST['currentLatitude']) && isset($_POST['currentLongitude']))
             {
                 $this->SendDebug("GeoFency", "Current Latitude: ".print_r($_POST["currentLatitude"], true)." Current Longitude: ".print_r($_POST["currentLongitude"], true), 0);
-                SetValue($this->CreateVariableByIdent($deviceID, "currentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "currentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "direction", "Ein-/Austrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "orientation", "Himmelsrichtung", 1, "Geofency.Orientation"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "distance", "Distanz", 2, "Geofency.Distance.m"), $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
+                SetValue($this->CreateVariableByIdent($deviceID, "CurrentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "CurrentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Direction", "Ein-/Austrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Orientation", "Himmelsrichtung", 1, "Geofency.Orientation"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Distance", "Distanz", 2, "Geofency.Distance.m"), $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
             }
             else
             {
@@ -238,7 +240,7 @@
 
         }
 
-        protected function RegisterProfileAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations, $Vartype)
+        protected function RegisterProfileAssociation($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations, $Vartype)
         {
             if ( sizeof($Associations) === 0 )
             {

@@ -123,10 +123,10 @@
 			 return $iid;
 		}
 
-    	private function ParseFloat($floatString){
+        private function ParseFloat($floatString) {
             $LocaleInfo = localeconv();
-            $floatString = str_replace($LocaleInfo['thousands_sep'] , '', $floatString);
-            $floatString = str_replace($LocaleInfo['decimal_point'] , '.', $floatString);
+            $floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
+            $floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
             return floatval($floatString);
         }
 

@@ -8,13 +8,36 @@
 			
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
-		}
+            $orientationass = Array(
+                Array(0, "N",  "", -1),
+                Array(22, "NNO",  "", -1),
+                Array(45, "NO",  "", -1),
+                Array(67, "ONO",  "", -1),
+                Array(90, "O",  "", -1),
+                Array(112, "OSO",  "", -1),
+                Array(135, "SO",  "", -1),
+                Array(157, "SSO",  "", -1),
+                Array(180, "S",  "", -1),
+                Array(202, "SSW",  "", -1),
+                Array(225, "SW",  "", -1),
+                Array(247, "WSW",  "", -1),
+                Array(270, "W",  "", -1),
+                Array(292, "WNW",  "", -1),
+                Array(315, "NW",  "", -1),
+                Array(337, "NNW",  "", -1)
+            );
+            $this->RegisterProfile("Geofency.Distance.m", "Distance", "", " m", 0, 0, 0, 2, 2);
+            $this->RegisterProfileAssociation("Geofency.Orientation", "WindDirection", "", "", 0, 360, 1, 0, $orientationass, 1);
+
+        }
 	
-		public function ApplyChanges() {
+		public function ApplyChanges()
+        {
 			//Never delete this line!
 			parent::ApplyChanges();
-			
+            
 			$this->RegisterHook("/hook/geofency");
+
 		}
 		
 		private function RegisterHook($WebHook) {
@@ -37,8 +60,8 @@
 				IPS_ApplyChanges($ids[0]);
 			}
 		}
-	
-		/**
+
+        /**
 		* This function will be called by the hook control. Visibility should be protected!
 		*/
 		protected function ProcessHookData() {
@@ -76,8 +99,27 @@
             if(isset($_POST['currentLatitude']) && isset($_POST['currentLongitude']))
             {
                 $this->SendDebug("GeoFency", "Current Latitude: ".print_r($_POST["currentLatitude"], true)." Current Longitude: ".print_r($_POST["currentLongitude"], true), 0);
-                SetValue($this->CreateVariableByIdent($deviceID, "currentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
-                SetValue($this->CreateVariableByIdent($deviceID, "currentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "CurrentLatitude", "current Latitude", 2), $this->ParseFloat($_POST['currentLatitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "CurrentLongitude", "current Longitude", 2), $this->ParseFloat($_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Direction", "Ein-/Austrittswinkel", 1, "~WindDirection"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Orientation", "Himmelsrichtung", 1, "Geofency.Orientation"), $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
+                SetValue($this->CreateVariableByIdent($deviceID, "Distance", "Distanz", 2, "Geofency.Distance.m"), $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
+            }
+            else
+            {
+                $objidlat = @IPS_GetObjectIDByIdent("currentLatitude", $deviceID);
+                if($objidlat)
+                {
+                    SetValueFloat($objidlat, 0);
+                }
+                $objidlong = @IPS_GetObjectIDByIdent("currentLongitude", $deviceID);
+                if($objidlong)
+                {
+                    SetValueFloat($objidlong, 0);
+                    SetValueInteger(IPS_GetObjectIDByIdent("direction", $deviceID), 0);
+                    SetValueInteger(IPS_GetObjectIDByIdent("orientation", $deviceID), 0);
+                    SetValueFloat(IPS_GetObjectIDByIdent("distance", $deviceID), 0);
+                }
             }
 		}
 		
@@ -119,13 +161,100 @@
 			 }
 			 return $iid;
 		}
-		
-		private function ParseFloat($floatString) { 
-			$LocaleInfo = localeconv(); 
-			$floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
-			$floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
-			return floatval($floatString); 
-		}
+
+        protected function GetDistanceToCenter($center_latitude, $center_longitude, $current_latitude, $current_longitude, $unit)
+        {
+            $theta = $center_longitude - $current_longitude;
+            $distance = sin(deg2rad($center_latitude)) * sin(deg2rad($current_latitude)) +  cos(deg2rad($center_latitude)) * cos(deg2rad($current_latitude)) * cos(deg2rad($theta));
+            $distance = acos($distance);
+            $distance = rad2deg($distance);
+            $miles = $distance * 60 * 1.1515;
+            $unit = strtoupper($unit);
+
+            if ($unit == "KM") // Kilometer
+            {
+                $distance = round(($miles * 1.609344), 2);
+            }
+            else if ($unit == "NM") // Nautic Mile NM
+            {
+                $distance = round(($miles * 0.8684), 2);
+            }
+            else if ($unit == "M") // Meter m
+            {
+                $distance = round(($miles * 1.609344 * 1000), 2);
+            }
+            else
+            {
+                $distance = round($miles, 2);
+            }
+            return $distance;
+        }
+
+        protected function GetDirectionToCenter($center_latitude, $center_longitude, $current_latitude, $current_longitude)
+        {
+            //difference in longitudinal coordinates
+            $dLon = deg2rad($current_longitude) - deg2rad($center_longitude); // Δlon = abs( lonA - lonB )
+
+            //difference in the phi of latitudinal coordinates
+            $dPhi = log(tan(deg2rad($current_latitude) / 2 + pi() / 4) / tan(deg2rad($center_latitude) / 2 + pi() / 4)); // Δφ = ln( tan( latB / 2 + π / 4 ) / tan( latA / 2 + π / 4) )
+
+            //we need to recalculate $dLon if it is greater than pi
+            if(abs($dLon) > pi()) {
+                if($dLon > 0) {
+                    $dLon = (2 * pi() - $dLon) * -1;
+                }
+                else {
+                    $dLon = 2 * pi() + $dLon;
+                }
+            }
+            //return the angle, normalized
+            $angle = (rad2deg(atan2($dLon, $dPhi)) + 360) % 360; // tragen :  θ = atan2( Δlon ,  Δφ )
+            return $angle;
+        }
+
+        private function ParseFloat($floatString) {
+            $LocaleInfo = localeconv();
+            $floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
+            $floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
+            return floatval($floatString);
+        }
+
+        protected function RegisterProfile($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Vartype)
+        {
+
+            if(!IPS_VariableProfileExists($Name))
+            {
+            	IPS_CreateVariableProfile($Name, $Vartype);
+            }
+            else
+            {
+                $profile = IPS_GetVariableProfile($Name);
+                if($profile['ProfileType'] != $Vartype)
+                    throw new Exception("Variable profile type does not match for profile ".$Name);
+            }
+
+            IPS_SetVariableProfileIcon($Name, $Icon);
+            IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+            IPS_SetVariableProfileDigits($Name, $Digits); //  Nachkommastellen
+            IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+
+        }
+
+        protected function RegisterProfileAssociation($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations, $Vartype)
+        {
+            if ( sizeof($Associations) === 0 )
+            {
+                $MinValue = 0;
+                $MaxValue = 0;
+            }
+
+            $this->RegisterProfile($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Vartype);
+
+            foreach($Associations as $Association)
+            {
+                IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+            }
+        }
 		
 	}
 

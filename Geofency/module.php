@@ -1,32 +1,29 @@
 <?
 
-	class Geofency extends IPSModule {
-		
+	include __DIR__ . "/../libs/WebHookModule.php";
+
+	class Geofency extends WebHookModule {
+
+        public function __construct($InstanceID) {
+
+            parent::__construct($InstanceID, "geofency");
+
+        }
+
 		public function Create() {
+
 			//Never delete this line!
 			parent::Create();
 			
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
 
-			//Wwe need to call the RegisterHook function on Kernel READY
-			$this->RegisterMessage(0, 10100 /* IPS_KERNELMESSAGE */);
 		}
 
-        public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
-			if($Data[0] == 10103 /* KR_READY */) {
-                $this->RegisterHook("/hook/geofency");
-			}
-        }
-
 		public function ApplyChanges() {
+
 			//Never delete this line!
 			parent::ApplyChanges();
-
-			//Only call this in READY state. On startup the WebHook instance might not be available yet
-			if(IPS_GetKernelRunlevel() == 10103 /* KR_READY */) {
-                $this->RegisterHook("/hook/geofency");
-            }
 
 			//Cleanup old hook script
 			$id = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
@@ -35,37 +32,15 @@
 			}
 
 		}
-		
-		private function RegisterHook($WebHook) {
-			$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}");
-			if(sizeof($ids) > 0) {
-				$hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true);
-				$found = false;
-				foreach($hooks as $index => $hook) {
-					if($hook['Hook'] == $WebHook) {
-						if($hook['TargetID'] == $this->InstanceID)
-							return;
-						$hooks[$index]['TargetID'] = $this->InstanceID;
-						$found = true;
-					}
-				}
-				if(!$found) {
-					$hooks[] = Array("Hook" => $WebHook, "TargetID" => $this->InstanceID);
-				}
-				IPS_SetProperty($ids[0], "Hooks", json_encode($hooks));
-				IPS_ApplyChanges($ids[0]);
-			}
-		}
 	
 		/**
 		* This function will be called by the hook control. Visibility should be protected!
 		*/
 		protected function ProcessHookData() {
-			if($_IPS['SENDER'] == "Execute") {
-				echo "This script cannot be used this way.";
-				return;
-			}
-			
+
+            //Never delete this line!
+			parent::ProcessHookData();
+
 			if((IPS_GetProperty($this->InstanceID, "Username") != "") || (IPS_GetProperty($this->InstanceID, "Password") != "")) {
 				if(!isset($_SERVER['PHP_AUTH_USER']))
 					$_SERVER['PHP_AUTH_USER'] = "";
@@ -84,8 +59,6 @@
 				$this->SendDebug("Geofency", "Malformed data: ".print_r($_POST, true), 0);
 				return;
 			}
-			
-			$this->SendDebug("GeoFency", "Array POST: ".print_r($_POST, true), 0);
 
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_POST['device']), "Device");
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), floatval($_POST['latitude']));
@@ -102,17 +75,6 @@
 		
 		private function ReduceGUIDToIdent($guid) {
 			return str_replace(Array("{", "-", "}"), "", $guid);
-		}
-		
-		private function CreateCategoryByIdent($id, $ident, $name) {
-			 $cid = @IPS_GetObjectIDByIdent($ident, $id);
-			 if($cid === false) {
-				 $cid = IPS_CreateCategory();
-				 IPS_SetParent($cid, $id);
-				 IPS_SetName($cid, $name);
-				 IPS_SetIdent($cid, $ident);
-			 }
-			 return $cid;
 		}
 		
 		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {

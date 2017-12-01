@@ -77,8 +77,8 @@
 			$this->SendDebug("EgiGeoZone", "Array GET: ".print_r($_GET, true), 0);
 			
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_GET['device']), "Device");
-			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), $this->ParseFloat($_GET['latitude']));
-			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), $this->ParseFloat($_GET['longitude']));
+			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), floatval($_GET['latitude']));
+			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), floatval($_GET['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_GET['date'])));
 			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceToAllowedIdent($_GET['name']), utf8_decode($_GET['name']), 0, "~Presence"), intval($_GET['entry']) > 0);
 			
@@ -121,13 +121,6 @@
 				 IPS_SetIdent($iid, $ident);
 			 }
 			 return $iid;
-		}
-		
-		private function ParseFloat($floatString) { 
-			$LocaleInfo = localeconv(); 
-			$floatString = str_replace(".", $LocaleInfo["decimal_point"], $floatString);
-			$floatString = str_replace(",", $LocaleInfo["decimal_point"], $floatString);
-			return floatval($floatString); 
 		}
 		
 		//Replaces all unallowed Chars of a String with "_"

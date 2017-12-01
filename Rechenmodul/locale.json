@@ -1,0 +1,15 @@
+{
+    "translations": {
+        "de": {
+            "Calculation": "Berechnung",
+            "Everything": "Alles",
+            "Sum": "Summe",
+            "Minimum": "Minimum",
+            "Maximum": "Maximum",
+            "Average": "Durchschnitt",
+            "Count": "Anzahl",
+            "Variables": "Variablen",
+            "VariableID": "VariablenID"
+        }
+    }
+}

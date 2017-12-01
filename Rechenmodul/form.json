@@ -1,0 +1,31 @@
+{
+    "elements": [{
+        "type": "Select",
+        "name": "Calculation",
+        "caption": "Calculation",
+        "options": [
+            { "label": "Everything", "value": 0 },
+            { "label": "Sum", "value": 1 },
+            { "label": "Minimum", "value": 2 },
+            { "label": "Maximum", "value": 3 },
+            { "label": "Average", "value": 4 },
+            { "label": "Count", "value": 5 }
+        ]
+    }, {
+        "type": "List",
+        "name": "Variables",
+        "caption": "Variables",
+        "add": true,
+        "delete": true,
+        "columns": [{
+            "label": "VariableID",
+            "name": "ID",
+            "width": "auto",
+            "add": 0,
+            "edit": {
+                "type": "SelectVariable"
+            }
+        }],
+        "values": []
+    }]
+}

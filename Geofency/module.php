@@ -8,13 +8,32 @@
 			
 			$this->RegisterPropertyString("Username", "");
 			$this->RegisterPropertyString("Password", "");
+
+			//Wwe need to call the RegisterHook function on Kernel READY
+			$this->RegisterMessage(0, 10100 /* IPS_KERNELMESSAGE */);
 		}
-	
+
+        public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
+			if($Data[0] == 10103 /* KR_READY */) {
+                $this->RegisterHook("/hook/geofency");
+			}
+        }
+
 		public function ApplyChanges() {
 			//Never delete this line!
 			parent::ApplyChanges();
-			
-			$this->RegisterHook("/hook/geofency");
+
+			//Only call this in READY state. On startup the WebHook instance might not be available yet
+			if(IPS_GetKernelRunlevel() == 10103 /* KR_READY */) {
+                $this->RegisterHook("/hook/geofency");
+            }
+
+			//Cleanup old hook script
+			$id = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
+			if($id > 0) {
+				IPS_DeleteScript($id, true);
+			}
+
 		}
 		
 		private function RegisterHook($WebHook) {

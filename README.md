@@ -23,9 +23,6 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Geofency__ ([Dokumentation](Geofency))  
 	Empfängt Daten von der Geofency App für Apple iOS.
 
-- __Locative__ ([Dokumentation](Locative))  
-	Abfrage von Daten über die Locative API.
-
 - __Rechen-Modul__ ([Dokumentation](Rechenmodul))  
     Berechnung verschiedener Hilfswerte auf Basis einer Gruppe von Variablen, z.B. Summer oder Durchschnitt.
 

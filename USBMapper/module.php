@@ -51,12 +51,14 @@ class USBMapper extends IPSModule {
 			foreach ($usbDevices as $usbDevice){
 				
 				if ($device['PortID'] == $usbDevice['id']) {
-					
-					$devicePortArray = explode("/", IPS_GetProperty($device['ID'], "Port"));
-					$devicePort = array_pop($devicePortArray);
-					if ($devicePort != $usbDevice['device']) {
-						IPS_SetProperty($device['ID'], "Port", "/dev/". $usbDevice['device'] ."");
-						IPS_ApplyChanges($device['ID']);
+					// Check if its a serial port
+					if (IPS_GetInstance($device['ID'])['ModuleInfo']['ModuleID'] == "{6DC3D946-0D31-450F-A8C6-C42DB8D7D4F1}") {
+						$devicePortArray = explode("/", IPS_GetProperty($device['ID'], "Port"));
+						$devicePort = array_pop($devicePortArray);
+						if ($devicePort != $usbDevice['device']) {
+							IPS_SetProperty($device['ID'], "Port", "/dev/". $usbDevice['device'] ."");
+							IPS_ApplyChanges($device['ID']);
+						}
 					}
 				}
 			}
@@ -65,6 +67,10 @@ class USBMapper extends IPSModule {
 	}
 	
 	private function GetUSBDevices() {
+		
+		if (!stristr(PHP_OS, "linux")) {
+			return Array();
+		}
 		
 		$serial_devs = Array();
 		$devs = scandir("/sys/class/tty/"); 
@@ -137,12 +143,22 @@ class USBMapper extends IPSModule {
 				//We only need to add annotations. Remaining data is merged from persistance automatically.
 				//Order is determinted by the order of array elements
 				if(IPS_ObjectExists($device->ID) && $device->ID !== 0) {
+					
+					// Check if the selected device is a serial port
+					$rowColor = "";
+					if (!IPS_GetInstance($device->ID)['ModuleInfo']['ModuleID'] == "{6DC3D946-0D31-450F-A8C6-C42DB8D7D4F1}") {
+						$rowColor = "#FFFF00";
+					}
+					
 					$formdata->elements[1]->values[] = Array(
 						"Name" => IPS_GetName($device->ID),
+						"rowColor" => $rowColor,
+						
 					);
 				} else {
 					$formdata->elements[1]->values[] = Array(
 						"Name" => "Not found!",
+						"rowColor" => "#FF0000",
 					);
 				}
 			}

@@ -104,8 +104,8 @@ class WundergroundWeather extends IPSModule {
 			for ($i = 1; $i <= 6; $i++) {
 				$this->MaintainVariable("StormWarning".$i."Text", "Unwetter ".$i." Beschreibung", 3, "~TextBox", 3000+$i, $i <= $keep);
 				$this->MaintainVariable("StormWarning".$i."Date", "Unwetter ".$i." Datum", 1, "~UnixTimestamp", 3050+$i, $i <= $keep);
-				$this->MaintainVariable("StormWarning".$i."Name", "Unwetter ".$i." Name", 3, "~String", 3100+$i, $i <= $keep);
-				$this->MaintainVariable("StormWarning".$i."Type", "Unwetter ".$i." Typ", 3, "~String", 3150+$i, $i <= $keep);
+				$this->MaintainVariable("StormWarning".$i."Name", "Unwetter ".$i." Name", 3, "", 3100+$i, $i <= $keep);
+				$this->MaintainVariable("StormWarning".$i."Type", "Unwetter ".$i." Typ", 3, "", 3150+$i, $i <= $keep);
 			}
 
 			//Instanz ist aktiv

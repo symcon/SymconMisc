@@ -3,6 +3,7 @@
   [
 	{ "type": "ValidationTextBox", "name": "Location", "caption": "Location" },
 	{ "type": "ValidationTextBox", "name": "Country", "caption": "Country" },
+	{ "type": "ValidationTextBox", "name": "PWSID", "caption": "PWS-ID" },
 	{ "type": "Label", "label": "API Key from https://www.wunderground.com/" },
 	{ "type": "ValidationTextBox", "name": "APIKey", "caption": "API Key" },
 	{ "type": "Label", "label": "Which Weatherdata should be fetched" },

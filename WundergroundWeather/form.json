@@ -3,6 +3,7 @@
   [
 	{ "type": "ValidationTextBox", "name": "Location", "caption": "Location" },
 	{ "type": "ValidationTextBox", "name": "Country", "caption": "Country" },
+	{ "type": "Label", "label": "ID of a \"Personal-Weatherstation\" from https://www.wunderground.com. The specification is optional and will be used instead of the location" },
 	{ "type": "ValidationTextBox", "name": "PWSID", "caption": "PWS-ID" },
 	{ "type": "Label", "label": "API Key from https://www.wunderground.com/" },
 	{ "type": "ValidationTextBox", "name": "APIKey", "caption": "API Key" },

@@ -3,6 +3,8 @@
 		"de": { 
 			"Location": "Standort",
 			"Country": "Land",
+			"ID of a \"Personal-Weatherstation\" from https://www.wunderground.com. The specification is optional and will be used instead of the location" :
+				"ID einer \"Personal-Weatherstation\" von https://www.wunderground.com. Die Angabe ist optional, wird dann anstelle des Standortes verwendet",
 			"API Key from https://www.wunderground.com/": "API Key von https://www.wunderground.com/",
 			"Which Weatherdata should be fetched": "Welche Wetterdaten sollen abgefragt werden?",
 			"Fetch actual data": "Aktuelles Wetter abfragen",

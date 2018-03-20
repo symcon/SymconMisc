@@ -38,6 +38,7 @@ Name                              | Beschreibung
 --------------------------------- | ---------------------------------
 Standort                          | Standort, von dem die Daten entnommen werden sollen. Ob ein Standort verfügbar ist, kann auf der www.wunderground.com Seite ausprobiert werden. Sollte ein Standort nicht vorhanden sein, sollte ein nächstgelegener größerer Ort gewählt werden.
 Land                              | Hier muss das Land eingetragen werden.
+PWS-ID                            | ID der 'Personal Weatherstation' Hiermit kann man eine spezifische Wetterstation abfragen
 API Key                           | Wunderground API-Key. Kann auf der Wunderground Homepage nach Registrierung angefordert werden. "More"->"Weather API for Developers".
 Aktuelle Daten abfragen           | Aktiviert die Abfrage der aktuellen Wetterdaten.
 Stündliche Vorhersage             | Aktiviert die Abfrage der stündlichen Vorhersage.

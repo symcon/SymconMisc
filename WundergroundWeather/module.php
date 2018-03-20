@@ -8,6 +8,7 @@ class WundergroundWeather extends IPSModule {
 
 		$this->RegisterPropertyString("Location", "Lübeck");
 		$this->RegisterPropertyString("Country", "Germany");
+		$this->RegisterPropertyString("PWSID", "");
 		$this->RegisterPropertyString("APIKey", "");
 		$this->RegisterPropertyBoolean("FetchNow", true);
 		$this->RegisterPropertyBoolean("FetchHourly", true);
@@ -227,10 +228,17 @@ class WundergroundWeather extends IPSModule {
 
 		$location = $this->WithoutSpecialChars($this->ReadPropertyString("Location"));  // Location
 		$country = $this->WithoutSpecialChars($this->ReadPropertyString("Country"));  // Country
+		$pwsid = $this->WithoutSpecialChars($this->ReadPropertyString("PWSID"));  // Personal Weather-Station
 		$APIkey = $this->ReadPropertyString("APIKey");  // API Key Wunderground
 
-		$this->SendDebug("WGW Requested URL", "http://api.wunderground.com/api/".$APIkey.$URLString.$country."/".$location.".json", 0);
-		$content = file_get_contents("http://api.wunderground.com/api/".$APIkey.$URLString.$country."/".$location.".json");  //Json Daten öffnen
+		$url = "http://api.wunderground.com/api/".$APIkey.$URLString;
+		if ($pwsid != "")
+			$url .= "pws:".$pwsid;
+		else
+			$url .= $country."/".$location;
+		$url .= ".json";
+		$this->SendDebug("WGW Requested URL", $url, 0);
+		$content = file_get_contents($url);  //Json Daten öffnen
 
 		if ($content === false) {
 			throw new Exception("Die Wunderground-API konnte nicht abgefragt werden!");

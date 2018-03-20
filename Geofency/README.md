@@ -83,8 +83,13 @@ Die Variablen werden anhand der Geräte ID und beim erstmaligen senden innerhalb
 Name                    | Typ             | Beschreibung
 ----------------------- | --------------- | ----------------
 Gerätename              | Instanz (Dummy) | Dient als "Kategorie" in der sich alle überwachten Standorte, sowie der Zeitstempel und Längen-/Breitengrad befinden. Wird pro Gerät erstellt.
-Latitude                | Float           | Breitengrad der letzten Aktivität.
-Longitude               | Float           | Längengrad der letzten Aktivität.
+Latitude                | Float           | Breitengrad (Mitte des Geofences) der letzten Aktivität
+Longitude               | Float           | Längengrad (Mitte des Geofences) der letzten Aktivität
+CurrentLatitude         | Float           | Proximity-Koordinaten, also die aktuellen Koordinaten bei Ein- oder Austritt (äusserer Umkreis des Geofences), falls „Aktuelle Position senden“ in der App beim Webhook gewählt wurde
+CurrentLongitude        | Float           | Proximity-Koordinaten, also die aktuellen Koordinaten bei Ein- oder Austritt (äusserer Umkreis des Geofences), falls „Aktuelle Position senden“ in der App beim Webhook gewählt wurde
+Direction               | Integer         | Azimutwinkel (Richtung in Grad) des aktuellen Ein-/Austrittspunktes bezogen auf die Mitte des Geofence-Kreises, falls „Aktuelle Position senden“ in der App beim Webhook gewählt wurde
+Distance                | Float           | Abstand (in Meter) des aktuellen Ein-/Austrittspunktes bezogen auf die Mitte des Geofence-Kreises, falls „Aktuelle Position senden“ in der App beim Webhook gewählt wurde
+Orientation             | Float           | Himmelsrichtung (als Name) des aktuellen Ein-/Austrittspunktes bezogen auf die Mitte des Geofence-Kreises, falls „Aktuelle Position senden“ in der App beim Webhook gewählt wurde
 Timestamp               | Integer         | UnixTimestamp der letzten Aktivität.
 Beispielstandort (Büro) | Boolean         | Present oder Absent. Information wird von Gefency geliefert.
 aktuelle Longitude      | Float           | Aktueller Breitengrad

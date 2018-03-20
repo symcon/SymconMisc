@@ -2,22 +2,22 @@
 
 	include __DIR__ . "/../libs/WebHookModule.php";
 
-	class Geofency extends WebHookModule {
+	class Geofency extends WebHookModule
+    {
 
-        public function __construct($InstanceID) {
-
+        public function __construct($InstanceID)
+        {
             parent::__construct($InstanceID, "geofency");
-
         }
 
-		public function Create() {
+		public function Create()
+        {
 
-			//Never delete this line!
-			parent::Create();
-			
-			$this->RegisterPropertyString("Username", "");
-			$this->RegisterPropertyString("Password", "");
+            //Never delete this line!
+            parent::Create();
 
+            $this->RegisterPropertyString("Username", "");
+            $this->RegisterPropertyString("Password", "");
             $this->RegisterProfile("Geofency.Distance.m", "Distance", "", " m", 0, 0, 0, 2, 2);
             $this->RegisterProfileAssociation("Geofency.Orientation", "WindDirection", "", "", 0, 360, 1, 0, Array(
                 Array(0, "N",  "", -1),
@@ -38,35 +38,32 @@
                 Array(337, "NNW",  "", -1)
             ), 1);
 
-		}
-
-		public function ApplyChanges() {
-
-			//Never delete this line!
-			parent::ApplyChanges();
-
-			//Cleanup old hook script
-			$id = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
-			if($id > 0) {
-				IPS_DeleteScript($id, true);
-			}
-
-		}
+        }
 	
-		/**
+		public function ApplyChanges()
+        {
+            //Never delete this line!
+            parent::ApplyChanges();
+            //Cleanup old hook script
+            $id = @IPS_GetObjectIDByIdent("Hook", $this->InstanceID);
+            if($id > 0) {
+                IPS_DeleteScript($id, true);
+            }
+		}
+
+        /**
 		* This function will be called by the hook control. Visibility should be protected!
 		*/
-		protected function ProcessHookData() {
-
+		protected function ProcessHookData()
+        {
             //Never delete this line!
 			parent::ProcessHookData();
-
 			if((IPS_GetProperty($this->InstanceID, "Username") != "") || (IPS_GetProperty($this->InstanceID, "Password") != "")) {
 				if(!isset($_SERVER['PHP_AUTH_USER']))
 					$_SERVER['PHP_AUTH_USER'] = "";
 				if(!isset($_SERVER['PHP_AUTH_PW']))
 					$_SERVER['PHP_AUTH_PW'] = "";
-					
+
 				if(($_SERVER['PHP_AUTH_USER'] != IPS_GetProperty($this->InstanceID, "Username")) || ($_SERVER['PHP_AUTH_PW'] != IPS_GetProperty($this->InstanceID, "Password"))) {
 					header('WWW-Authenticate: Basic Realm="Geofency WebHook"');
 					header('HTTP/1.0 401 Unauthorized');
@@ -74,24 +71,21 @@
 					return;
 				}
 			}
-			
+
 			if(!isset($_POST['device']) || !isset($_POST['id']) || !isset($_POST['name'])) {
 				$this->SendDebug("Geofency", "Malformed data: ".print_r($_POST, true), 0);
 				return;
 			}
-
 			$deviceID = $this->CreateInstanceByIdent($this->InstanceID, $this->ReduceGUIDToIdent($_POST['device']), "Device");
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), floatval($_POST['latitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), floatval($_POST['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_POST['date'])));
 			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_POST['id']), utf8_decode($_POST['name']), 0, "~Presence"), intval($_POST['entry']) > 0);
-
             $currentLatitudeID = $this->CreateVariableByIdent($deviceID, "CurrentLatitude", "Current Latitude", 2);
             $currentLongitude = $this->CreateVariableByIdent($deviceID, "CurrentLongitude", "Current Longitude", 2);
             $directionID = $this->CreateVariableByIdent($deviceID, "Direction", "Direction", 1, "~WindDirection");
 			$orientationID = $this->CreateVariableByIdent($deviceID, "Orientation", "Orientation", 1, "Geofency.Orientation");
             $distanceID = $this->CreateVariableByIdent($deviceID, "Distance", "Distance", 2, "Geofency.Distance.m");
-
 			if(isset($_POST['currentLatitude']) && $_POST['currentLatitude'] > 0 && isset($_POST['currentLongitude']) && $_POST['currentLongitude'] > 0)
             {
                 SetValue($currentLatitudeID, floatval($_POST['currentLatitude']));
@@ -99,21 +93,23 @@
                 SetValue($directionID, $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($orientationID, $this->GetDirectionToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude']));
                 SetValue($distanceID, $this->GetDistanceToCenter($_POST['latitude'], $_POST['longitude'], $_POST['currentLatitude'], $_POST['currentLongitude'], "m"));
-            } else {
+            }
+            else
+            {
                 SetValue($currentLatitudeID, 0);
                 SetValue($currentLongitude, 0);
                 SetValue($directionID, 0);
                 SetValue($orientationID, 0);
                 SetValue($distanceID, 0);
             }
-
 		}
 		
 		private function ReduceGUIDToIdent($guid) {
 			return str_replace(Array("{", "-", "}"), "", $guid);
 		}
 		
-		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {
+		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "")
+		{
 			 $vid = @IPS_GetObjectIDByIdent($ident, $id);
 			 if($vid === false) {
 				 $vid = IPS_CreateVariable($type);
@@ -126,7 +122,8 @@
 			 return $vid;
 		}
 		
-		private function CreateInstanceByIdent($id, $ident, $name, $moduleid = "{485D0419-BE97-4548-AA9C-C083EB82E61E}") {
+		private function CreateInstanceByIdent($id, $ident, $name, $moduleid = "{485D0419-BE97-4548-AA9C-C083EB82E61E}")
+		{
 			 $iid = @IPS_GetObjectIDByIdent($ident, $id);
 			 if($iid === false) {
 				 $iid = IPS_CreateInstance($moduleid);
@@ -139,7 +136,6 @@
 
         protected function RegisterProfile($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Vartype)
         {
-
             if(!IPS_VariableProfileExists($Name))
             {
                 IPS_CreateVariableProfile($Name, $Vartype);
@@ -150,30 +146,24 @@
                 if($profile['ProfileType'] != $Vartype)
                     throw new Exception("Variable profile type does not match for profile " . $Name);
             }
-
             IPS_SetVariableProfileIcon($Name, $Icon);
             IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
             IPS_SetVariableProfileDigits($Name, $Digits);
             IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-
         }
 
         protected function RegisterProfileAssociation($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations, $VarType)
         {
-
             if ( sizeof($Associations) === 0 )
             {
                 $MinValue = 0;
                 $MaxValue = 0;
             }
-
             $this->RegisterProfile($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $VarType);
-
             foreach($Associations as $Association)
             {
                 IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
             }
-
         }
 
         protected function GetDistanceToCenter($center_latitude, $center_longitude, $current_latitude, $current_longitude, $unit)
@@ -222,7 +212,6 @@
             $angle = (rad2deg(atan2($dLon, $dPhi)) + 360) % 360; // tragen :  θ = atan2( Δlon ,  Δφ )
             return $angle;
         }
-		
 	}
 
 ?>

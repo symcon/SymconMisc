@@ -119,6 +119,14 @@ class WundergroundWeather extends IPSModule {
 
 	}
 
+	public function FixupInvalidValue($Value) {
+		if(is_numeric($Value)) {
+			return floatval($Value);
+		} else {
+			return 0;
+		}
+	}
+
 	public function UpdateWeatherData() {
 
 		if ($this->ReadPropertyBoolean("FetchNow")) {
@@ -128,23 +136,19 @@ class WundergroundWeather extends IPSModule {
 			$this->SendDebug("WGW Now", print_r($WeatherNow, true), 0);
 
 			//Wetterdaten in Variable speichern
-			SetValue($this->GetIDForIdent("NowTemp"), $WeatherNow->current_observation->temp_c);
-			SetValue($this->GetIDForIdent("NowTempFeel"), $WeatherNow->current_observation->feelslike_c);
-			SetValue($this->GetIDForIdent("NowTempDewpoint"), $WeatherNow->current_observation->dewpoint_c);
-			SetValue($this->GetIDForIdent("NowHumidity"), substr($WeatherNow->current_observation->relative_humidity, 0, -1));
-			SetValue($this->GetIDForIdent("NowPressure"), $WeatherNow->current_observation->pressure_mb);
-			SetValue($this->GetIDForIdent("NowWindDeg"), $WeatherNow->current_observation->wind_degrees);
-			SetValue($this->GetIDForIdent("NowWindspeed"), $WeatherNow->current_observation->wind_kph);
-			SetValue($this->GetIDForIdent("NowWindgust"), $WeatherNow->current_observation->wind_gust_kph);
-			SetValue($this->GetIDForIdent("NowRain"), $WeatherNow->current_observation->precip_1hr_metric);
-			SetValue($this->GetIDForIdent("NowRainToday"), $WeatherNow->current_observation->precip_today_metric);
-			if ($WeatherNow->current_observation->solarradiation === "--") {
-				SetValue($this->GetIDForIdent("NowSolar"), 0);
-			} else {
-				SetValue($this->GetIDForIdent("NowSolar"), $WeatherNow->current_observation->solarradiation);
-			}
-			SetValue($this->GetIDForIdent("NowVisibility"), $WeatherNow->current_observation->visibility_km);
-			SetValue($this->GetIDForIdent("NowUV"), $WeatherNow->current_observation->UV);
+			SetValue($this->GetIDForIdent("NowTemp"), $this->FixupInvalidValue($WeatherNow->current_observation->temp_c));
+			SetValue($this->GetIDForIdent("NowTempFeel"), $this->FixupInvalidValue($WeatherNow->current_observation->feelslike_c));
+			SetValue($this->GetIDForIdent("NowTempDewpoint"), $this->FixupInvalidValue($WeatherNow->current_observation->dewpoint_c));
+			SetValue($this->GetIDForIdent("NowHumidity"), $this->FixupInvalidValue(substr($WeatherNow->current_observation->relative_humidity, 0, -1)));
+			SetValue($this->GetIDForIdent("NowPressure"), $this->FixupInvalidValue($WeatherNow->current_observation->pressure_mb));
+			SetValue($this->GetIDForIdent("NowWindDeg"), $this->FixupInvalidValue($WeatherNow->current_observation->wind_degrees));
+			SetValue($this->GetIDForIdent("NowWindspeed"), $this->FixupInvalidValue($WeatherNow->current_observation->wind_kph));
+			SetValue($this->GetIDForIdent("NowWindgust"), $this->FixupInvalidValue($WeatherNow->current_observation->wind_gust_kph));
+			SetValue($this->GetIDForIdent("NowRain"), $this->FixupInvalidValue($WeatherNow->current_observation->precip_1hr_metric));
+			SetValue($this->GetIDForIdent("NowRainToday"), $this->FixupInvalidValue($WeatherNow->current_observation->precip_today_metric));
+			SetValue($this->GetIDForIdent("NowSolar"), $this->FixupInvalidValue($WeatherNow->current_observation->solarradiation));
+			SetValue($this->GetIDForIdent("NowVisibility"), $this->FixupInvalidValue($WeatherNow->current_observation->visibility_km));
+			SetValue($this->GetIDForIdent("NowUV"), $this->FixupInvalidValue($WeatherNow->current_observation->UV));
 		}
 
 		//Stündliche Vorhersagen
@@ -154,13 +158,13 @@ class WundergroundWeather extends IPSModule {
 			$this->SendDebug("WGW Hourly", print_r($WeatherNextHours, true), 0);
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHourlyHoursCount"); $i++) {
-				SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->temp->metric);
-				SetValue($this->GetIDForIdent("HourlySky".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->sky);
+				SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->temp->metric));
+				SetValue($this->GetIDForIdent("HourlySky".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->sky));
 				SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->condition);
-				SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->humidity);
-				SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->wspd->metric);
-				SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->mslp->metric);
-				SetValue($this->GetIDForIdent("HourlyRain".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->qpf->metric);
+				SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->humidity));
+				SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->wspd->metric));
+				SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->mslp->metric));
+				SetValue($this->GetIDForIdent("HourlyRain".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->qpf->metric));
 			}
 		}
 
@@ -171,8 +175,8 @@ class WundergroundWeather extends IPSModule {
 			$this->SendDebug("WGW HalfDays", print_r($WeatherNextHalfDays, true), 0);
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHalfDailyHalfDaysCount") ; $i++) {
-				SetValue($this->GetIDForIdent("HalfDailyHighTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius);
-				SetValue($this->GetIDForIdent("HalfDailyLowTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius);
+				SetValue($this->GetIDForIdent("HalfDailyHighTemp".(12*$i)."h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius));
+				SetValue($this->GetIDForIdent("HalfDailyLowTemp".(12*$i)."h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius));
 			}
 		}
 
@@ -190,29 +194,29 @@ class WundergroundWeather extends IPSModule {
 
 			//Unwetterdaten setzen
 			for ($i = 1; $i <= $this->ReadPropertyInteger("FetchStormWarningStormWarningCount"); $i++) {
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->date !== "")) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), strtotime($alerts[$i-1]->date));
+				if(isset($alerts[$i-1])) {
+					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), strtotime($this->FixupInvalidValue($alerts[$i-1]->date)));
 				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), 0);
-				}
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Date"), 0);
+                }
 
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->type !== "")) {
+				if(isset($alerts[$i-1])) {
 					SetValue($this->GetIDForIdent("StormWarning".$i."Type"), $alerts[$i-1]->type);
 				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Type"), "");
-				}
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Type"), "");
+                }
 
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->wtype_meteoalarm_name !== "")) {
+				if(isset($alerts[$i-1])) {
 					SetValue($this->GetIDForIdent("StormWarning".$i."Name"), $alerts[$i-1]->wtype_meteoalarm_name);
 				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Name"), "");
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Name"), "");
 				}
 
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->description !== "")) {
+				if(isset($alerts[$i-1])) {
 					SetValue($this->GetIDForIdent("StormWarning".$i."Text"), str_replace("deutsch:", "", $alerts[$i-1]->description));
 				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Text"), "");
-				}
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Text"), "");
+                }
 			}
 		}
 	}

@@ -23,7 +23,7 @@ Das Modul stellt überlaufende Zähler als kontinuierliche Zähler dar.
 ### 3. Software-Installation
 
 Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/paresy/SymconMisc.git`  
+`git://github.com/symcon/SymconMisc.git`  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 

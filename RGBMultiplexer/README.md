@@ -12,7 +12,7 @@
 
 ### 1. Funktionsumfang
 
-* Bietet ein Farbrad an, welches im Hintergrund drei einzelne R, G, B Kanäle ansteuert
+* Bietet ein Farbrad, welches im Hintergrund drei einzelne R, G, B Kanäle ansteuert
 * Sollten die R, G, B Kanäle den Wert ändern wird der neue Zustand auch ins Farbrad übertragen
 
 ### 2. Voraussetzungen
@@ -22,7 +22,7 @@
 ### 3. Software-Installation
 
 Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/paresy/SymconMisc.git`  
+`git://github.com/symcon/SymconMisc.git`  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 

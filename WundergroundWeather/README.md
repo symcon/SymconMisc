@@ -26,7 +26,7 @@ Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stü
 ### 3. Software-Installation
 
 Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/paresy/SymconMisc.git`  
+`git://github.com/symcon/SymconMisc.git`  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 

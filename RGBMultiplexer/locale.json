@@ -1,0 +1,13 @@
+{
+	"translations": {
+		"de": { 
+			"Variable (R)": "Variable (R)",
+			"Variable (G)": "Variable (G)",
+			"Variable (B)": "Variable (B)",
+			"R": "R",
+			"G": "G",
+			"B": "B",
+			"Set RGB": "RGB setzen"
+		}
+	}
+}

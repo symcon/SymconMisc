@@ -1,0 +1,15 @@
+{
+	"elements":
+	[
+		{ "name": "SourceVariableR", "type": "SelectVariable", "caption": "Variable (R)" },
+		{ "name": "SourceVariableG", "type": "SelectVariable", "caption": "Variable (G)" },
+		{ "name": "SourceVariableB", "type": "SelectVariable", "caption": "Variable (B)" }
+	],
+	"actions":
+	[
+		{ "name": "ValueR", "type": "NumberSpinner", "caption": "R" },
+		{ "name": "ValueG", "type": "NumberSpinner", "caption": "G" },
+		{ "name": "ValueB", "type": "NumberSpinner", "caption": "B" },
+		{ "type": "Button", "label": "Set RGB", "onClick": "RGBM_SetRGB($id, $ValueR, $ValueG, $ValueB);" }
+	]
+}

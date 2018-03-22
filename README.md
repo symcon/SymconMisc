@@ -26,6 +26,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Rechen-Modul__ ([Dokumentation](Rechenmodul))  
     Berechnung verschiedener Hilfswerte auf Basis einer Gruppe von Variablen, z.B. Summer oder Durchschnitt.
 
+- __RGB-Multiplexer__ ([Dokumentation](RGBMultiplexer))  
+    Verbindet einzelne R, G, B Kanäle zu einer Variable, welche mit dem Farbrad angesteuert werden kann.
+
 - __Szenen-Steuerung__ ([Dokumentation](SzenenSteuerung))  
 	Speichert den Zustand einer belieben Anzahl an Aktoren und macht diese via WebFront/PHP-Funktion abrufbar.
 

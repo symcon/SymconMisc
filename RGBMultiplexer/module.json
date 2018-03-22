@@ -1,0 +1,14 @@
+{
+	"id": "{49886D87-74B7-49E5-8C56-DD2BF058AB9D}",
+	"name": "RGBMultiplexer",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"RGB Multiplexer"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "RGBM"
+}

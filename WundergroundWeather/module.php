@@ -158,13 +158,23 @@ class WundergroundWeather extends IPSModule {
 			$this->SendDebug("WGW Hourly", print_r($WeatherNextHours, true), 0);
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHourlyHoursCount"); $i++) {
-				SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->temp->metric));
-				SetValue($this->GetIDForIdent("HourlySky".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->sky));
-				SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->condition);
-				SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->humidity));
-				SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->wspd->metric));
-				SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->mslp->metric));
-				SetValue($this->GetIDForIdent("HourlyRain".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->qpf->metric));
+				if(isset($WeatherNextHours->hourly_forecast[$i-1])) {
+                    SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->temp->metric));
+                    SetValue($this->GetIDForIdent("HourlySky".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->sky));
+                    SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->condition);
+                    SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->humidity));
+                    SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->wspd->metric));
+                    SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->mslp->metric));
+                    SetValue($this->GetIDForIdent("HourlyRain".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->qpf->metric));
+				} else {
+                    SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), 0);
+                    SetValue($this->GetIDForIdent("HourlySky".$i."h"), 0);
+                    SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), "");
+                    SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), 0);
+                    SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), 0);
+                    SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), 0);
+                    SetValue($this->GetIDForIdent("HourlyRain".$i."h"), 0);
+				}
 			}
 		}
 
@@ -175,8 +185,13 @@ class WundergroundWeather extends IPSModule {
 			$this->SendDebug("WGW HalfDays", print_r($WeatherNextHalfDays, true), 0);
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHalfDailyHalfDaysCount") ; $i++) {
-				SetValue($this->GetIDForIdent("HalfDailyHighTemp".(12*$i)."h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius));
-				SetValue($this->GetIDForIdent("HalfDailyLowTemp".(12*$i)."h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius));
+				if(isset($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1])) {
+                    SetValue($this->GetIDForIdent("HalfDailyHighTemp" . (12 * $i) . "h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius));
+                    SetValue($this->GetIDForIdent("HalfDailyLowTemp" . (12 * $i) . "h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius));
+                } else {
+                    SetValue($this->GetIDForIdent("HalfDailyHighTemp" . (12 * $i) . "h"), 0);
+                    SetValue($this->GetIDForIdent("HalfDailyLowTemp" . (12 * $i) . "h"), 0);
+				}
 			}
 		}
 
@@ -196,25 +211,13 @@ class WundergroundWeather extends IPSModule {
 			for ($i = 1; $i <= $this->ReadPropertyInteger("FetchStormWarningStormWarningCount"); $i++) {
 				if(isset($alerts[$i-1])) {
 					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), strtotime($this->FixupInvalidValue($alerts[$i-1]->date)));
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Type"), $alerts[$i-1]->type);
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Name"), $alerts[$i-1]->wtype_meteoalarm_name);
+                    SetValue($this->GetIDForIdent("StormWarning".$i."Text"), str_replace("deutsch:", "", $alerts[$i-1]->description));
 				} else {
                     SetValue($this->GetIDForIdent("StormWarning".$i."Date"), 0);
-                }
-
-				if(isset($alerts[$i-1])) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Type"), $alerts[$i-1]->type);
-				} else {
                     SetValue($this->GetIDForIdent("StormWarning".$i."Type"), "");
-                }
-
-				if(isset($alerts[$i-1])) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Name"), $alerts[$i-1]->wtype_meteoalarm_name);
-				} else {
                     SetValue($this->GetIDForIdent("StormWarning".$i."Name"), "");
-				}
-
-				if(isset($alerts[$i-1])) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Text"), str_replace("deutsch:", "", $alerts[$i-1]->description));
-				} else {
                     SetValue($this->GetIDForIdent("StormWarning".$i."Text"), "");
                 }
 			}

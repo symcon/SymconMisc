@@ -52,7 +52,7 @@
 
         }
         
-        public function SetActive($Value) {
+        public function SetActive(bool $Value) {
             SetValue($this->GetIDForIdent("Active"), $Value);
         }
         

@@ -119,7 +119,7 @@ class WundergroundWeather extends IPSModule {
 
 	}
 
-	public function FixupInvalidValue($Value) {
+	private function FixupInvalidValue($Value) {
 		if(is_numeric($Value)) {
 			return floatval($Value);
 		} else {

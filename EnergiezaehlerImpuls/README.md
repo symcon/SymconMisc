@@ -1,4 +1,4 @@
-# EnergiezählerStrom
+# EnergiezählerImpuls
 Das Modul berechnet via eines Stromzählers (z.B. S0-Anschluss) den momentanen und kumlativen Stromverbrauch.
 
 ### Inhaltverzeichnis
@@ -28,7 +28,7 @@ Das Modul berechnet via eines Stromzählers (z.B. S0-Anschluss) den momentanen u
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'EnergiezählerStrom'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
+- Unter "Instanz hinzufügen" ist das 'EnergiezählerImpuls'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
 
 __Konfigurationsseite__:
 
@@ -62,7 +62,7 @@ Es werden keine zusätzlichen Profile hinzugefügt
 ### 7. PHP-Befehlsreferenz
 
 `boolean EZS_Update(integer $InstanzID);`  
-Aktualisiert die berechneten Werte des EnergieZählerStrom-Moduls mit der InstanzID $InstanzID.  
+Aktualisiert die berechneten Werte des EnergieZählerImpuls-Moduls mit der InstanzID $InstanzID.  
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
-`EZS_Update(12345);`
+`EZI_Update(12345);`

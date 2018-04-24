@@ -2,8 +2,8 @@
 	"translations": {
 		"de": { 
 			"Source": "Quelle",
-			"Password": "Impulse",
-			"Sender": "Sekunden"
+			"Pulses": "Impulse",
+			"Seconds": "Sekunden"
 		}
 	}
 }

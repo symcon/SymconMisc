@@ -1,6 +1,6 @@
 <?
 
-	class EnergiezaehlerStrom extends IPSModule
+	class EnergiezaehlerImpuls extends IPSModule
 	{
 		
 		public function Create()
@@ -12,7 +12,7 @@
 			$this->RegisterPropertyInteger("Interval", 300);
 			$this->RegisterPropertyInteger("Impulses", 1000);
 			
-			$this->RegisterTimer("UpdateTimer", 0, 'EZS_Update($_IPS[\'TARGET\']);');
+			$this->RegisterTimer("UpdateTimer", 0, 'EZI_Update($_IPS[\'TARGET\']);');
 			
 			$this->RegisterVariableFloat("Current", "Current", "Watt.3680", 0);
 			$this->RegisterVariableFloat("Counter", "Counter", "Electricity", 1);
@@ -41,7 +41,7 @@
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
 		*
-		* EZS_Update($id);
+		* EZI_Update($id);
 		*
 		*/
 		public function Update()

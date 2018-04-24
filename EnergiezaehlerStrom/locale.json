@@ -1,0 +1,12 @@
+{
+	"translations": {
+		"de": {
+			"Type": "Typ",
+			"Source": "Quelle",
+			"Volt": "Volt",
+			"Seconds": "Sekunden",
+			"Power (W)": "Leistung (W)",
+			"Current (A)": "Strom (A)"
+		}
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"elements":
+	[
+		{ "type": "Select", "name": "SourceType", "caption": "Type",
+			"options": [
+				{ "label": "Power (W)", "value": 0 },
+				{ "label": "Current (A)", "value": 1 }
+			]
+		},
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
+		{ "name": "Voltage", "type": "NumberSpinner", "caption": "Volt" },
+		{ "name": "Interval", "type": "IntervalBox", "caption": "Seconds" }
+	]
+}

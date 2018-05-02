@@ -10,7 +10,7 @@
 		"add": true,
 		"delete": true,
 		"sort": {
-			"column": "InstanceID",
+			"column": "ID",
 			"direction": "ascending"
 		},
 		"columns": [{

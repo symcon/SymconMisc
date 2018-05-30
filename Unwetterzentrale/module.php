@@ -11,7 +11,7 @@
 			parent::__construct($InstanceID);
 			
 			//You can add custom code below.
-			$this->imagePath = "media/radar".$InstanceID.".png";
+			$this->imagePath = "media/radar".$InstanceID.".jpg";
 			
 		}
 		
@@ -37,7 +37,42 @@
 			$this->RegisterVariableInteger("RainValue", "Regenwert");
 
 		}
-	
+
+		private function ConvertArea($area) {
+
+			switch($area) {
+				case "DL":
+					return "brd";
+				case "BWB":
+					return "baw";
+                case "BAY":
+                    return "bay";
+                case "BRA":
+                    return "bbb";
+                case "HES":
+                    return "hes";
+                case "MVP":
+                    return "mvp";
+                case "NIE":
+                    return "nib";
+                case "NRW":
+                    return "nrw";
+                case "RHP":
+                    return "rps";
+                case "SAC":
+                    return "sac";
+                case "SAH":
+                    return "saa";
+                case "SHS":
+                    return "shh";
+                case "THU":
+                    return "thu";
+				default:
+					throw new Exception("Unknown area");
+			}
+
+		}
+
 		/**
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
@@ -64,18 +99,7 @@
 			);
 			$context = stream_context_create($opts);
 
-			$content = file_get_contents("https://www.wetteronline.de/regenradar", false, $context);
-			if(preg_match("/wmapsextract\/vermarktung\/global2maps\/(.*?)&/", $content, $url) != 1) {
-				echo "URL matching failed";
-				return;
-			}
-			
-			//replace DL to our area
-			$url = $url[1];
-			$url = str_replace("_DL", "_".$area, $url);
-			$url = str_replace("/DL/", "/".$area."/", $url);
-			
-			$remoteImage = "https://www.wetteronline.de/?ireq=true&pid=p_radar_map&src=wmapsextract/vermarktung/global2maps/".$url;
+			$remoteImage = "https://www.dwd.de/DWD/wetter/radar/rad_" . $this->ConvertArea($area) ."_akt.jpg";
 			$data = @file_get_contents($remoteImage, false, $context);
 
 			$this->SendDebug($http_response_header[0], $remoteImage, 0);
@@ -93,29 +117,28 @@
 			IPS_SendMediaEvent($mid);
 			
 			//Radarbild auswerten
-			$im = ImageCreateFromPNG($imagePath);
+			$im = ImageCreateFromJPEG($imagePath);
 
-			//St‰rken 
-			$regen[6] = imagecolorresolve($im, 252,65,255);
-			$regen[5] = imagecolorresolve($im, 153,51,153);
-			$regen[4] = imagecolorresolve($im,  28,126,217);
-			$regen[3] = imagecolorresolve($im,  42,170,255);
-			$regen[2] = imagecolorresolve($im,  83,210,255);
-			$regen[1] = imagecolorresolve($im, 170,255,255);
+			//St√§rken
+			$regen[6] = imagecolorresolve($im, 241,2,8);
+			$regen[5] = imagecolorresolve($im, 238,6,206);
+			$regen[4] = imagecolorresolve($im,  4,4,242);
+			$regen[3] = imagecolorresolve($im,  25,216,242);
+			$regen[2] = imagecolorresolve($im,  0,119,0);
+			$regen[1] = imagecolorresolve($im, 228,240,92);
 
 			//Pixel durchgehen
 			$regenmenge = 0;
 			for($x=$homeX-$homeRadius; $x<=$homeX+$homeRadius; $x++) {
-			for($y=$homeY-$homeRadius; $y<=$homeY+$homeRadius; $y++) {
-				$found = array_search(imagecolorat($im, $x, $y), $regen);
-				if(!($found === FALSE)) {
-					$regenmenge+=$found;
+				for($y=$homeY-$homeRadius; $y<=$homeY+$homeRadius; $y++) {
+					$found = array_search(imagecolorat($im, $x, $y), $regen);
+					if(!($found === FALSE)) {
+						$regenmenge+=$found;
+					}
 				}
-			}
 			}
 
 			// Bereich zeichnen
-			$schwarz = ImageColorAllocate ($im, 0, 0, 0);
 			$rot = ImageColorAllocate ($im, 255, 0, 0);
 			imagerectangle($im, $homeX-$homeRadius, $homeY-$homeRadius, $homeX+$homeRadius, $homeY+$homeRadius, $rot);
 			imagesetpixel($im, $homeX, $homeY, $rot);
@@ -146,11 +169,14 @@
 				IPS_SetIdent($mid, $Ident);
 				IPS_SetName($mid, $Name);
 				//IPS_SetReadOnly($mid, true);
-				
-				IPS_SetMediaFile($mid, $Path, false);
 			}
-			
-			return $mid;
+
+			//update path if needed
+			if(IPS_GetMedia($mid)['MediaFile'] != $Path) {
+                IPS_SetMediaFile($mid, $Path, false);
+			}
+
+            return $mid;
 			
 		}
 	

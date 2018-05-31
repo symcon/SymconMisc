@@ -142,7 +142,7 @@
 			$rot = ImageColorAllocate ($im, 255, 0, 0);
 			imagerectangle($im, $homeX-$homeRadius, $homeY-$homeRadius, $homeX+$homeRadius, $homeY+$homeRadius, $rot);
 			imagesetpixel($im, $homeX, $homeY, $rot);
-			imagepng($im, $imagePath);
+			imagejpeg($im, $imagePath);
 
 			imagedestroy($im);
 

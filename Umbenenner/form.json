@@ -1,6 +1,0 @@
-{
-	"elements":
-	[
-		{ "name": "SourceVariable", "type": "SelectObject", "caption": "Source" }
-	]
-}

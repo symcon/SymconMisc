@@ -1,0 +1,6 @@
+{
+	"elements":
+	[
+		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" }
+	]
+}

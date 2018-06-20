@@ -2,13 +2,13 @@
 
 	class VerbrauchZeitspanne extends IPSModule
 	{
-		
 		public function Create()
 		{
 			//Never delete this line!
 			parent::Create();
 			
 			$this->RegisterPropertyInteger("SourceVariable", 0);
+
 		}
 	
 		public function ApplyChanges()
@@ -16,32 +16,45 @@
 			
 			//Never delete this line!
 			parent::ApplyChanges();
-			
+
 			//Create variables
 			$this->RegisterVariableInteger("StartDate", "Start-Datum", "~UnixTimestampDate", 1);
 			$this->EnableAction("StartDate");
-            $this->RegisterVariableInteger("EndDate", "End-Datum", "~UnixTimestampDate", 2);
-            $this->EnableAction("EndDate");
+			$this->RegisterVariableInteger("EndDate", "End-Datum", "~UnixTimestampDate", 2);
+			$this->EnableAction("EndDate");
 
             $sourceVariable = $this->ReadPropertyInteger("SourceVariable");
-            $sourceProfile = "";
-            if($sourceVariable > 0) {
+            if($sourceVariable > 0 && IPS_VariableExists($sourceVariable)) {
+
+                $v = IPS_GetVariable($sourceVariable);
+
+                $sourceProfile = "";
                 if (IPS_VariableExists($sourceVariable)) {
-                	$v = IPS_GetVariable($sourceVariable);
                     $sourceProfile = $v['VariableCustomProfile'];
-                    if($sourceProfile == "") {
+                    if ($sourceProfile == "") {
                         $sourceProfile = $v['VariableProfile'];
-					}
-				}
-            }
+                    }
+                }
 
-            $this->RegisterVariableFloat("Usage", "Verbrauch", $sourceProfile, 3);
+                switch ($v['VariableType']) {
+                    case 1: /* Integer */
+                        $this->RegisterVariableInteger("Usage", "Verbrauch", $sourceProfile, 3);
+                        break;
+                    case 2: /* Float */
+                        $this->RegisterVariableFloat("Usage", "Verbrauch", $sourceProfile, 3);
+                        break;
+                    default:
+                        return;
+                }
 
-            if(GetValue($this->GetIDForIdent("StartDate")) == 0) {
-            	SetValue($this->GetIDForIdent("StartDate"), time());
-			}
-            if(GetValue($this->GetIDForIdent("EndDate")) == 0) {
-                SetValue($this->GetIDForIdent("EndDate"), time());
+
+                if (GetValue($this->GetIDForIdent("StartDate")) == 0) {
+                    SetValue($this->GetIDForIdent("StartDate"), time());
+                }
+                if (GetValue($this->GetIDForIdent("EndDate")) == 0) {
+                    SetValue($this->GetIDForIdent("EndDate"), time());
+                }
+
             }
 
 		}

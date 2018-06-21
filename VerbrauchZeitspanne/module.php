@@ -20,9 +20,18 @@
 			//Create variables
 			$this->RegisterVariableInteger("StartDate", "Start-Datum", "~UnixTimestampDate", 1);
 			$this->EnableAction("StartDate");
+
+            if (GetValue($this->GetIDForIdent("StartDate")) == 0) {
+                SetValue($this->GetIDForIdent("StartDate"), time());
+            }
+
 			$this->RegisterVariableInteger("EndDate", "End-Datum", "~UnixTimestampDate", 2);
 			$this->EnableAction("EndDate");
 
+            if (GetValue($this->GetIDForIdent("EndDate")) == 0) {
+                SetValue($this->GetIDForIdent("EndDate"), time());
+            }
+            
             $sourceVariable = $this->ReadPropertyInteger("SourceVariable");
             if($sourceVariable > 0 && IPS_VariableExists($sourceVariable)) {
 
@@ -45,14 +54,6 @@
                         break;
                     default:
                         return;
-                }
-
-
-                if (GetValue($this->GetIDForIdent("StartDate")) == 0) {
-                    SetValue($this->GetIDForIdent("StartDate"), time());
-                }
-                if (GetValue($this->GetIDForIdent("EndDate")) == 0) {
-                    SetValue($this->GetIDForIdent("EndDate"), time());
                 }
 
             }

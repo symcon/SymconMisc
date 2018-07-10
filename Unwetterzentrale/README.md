@@ -15,6 +15,7 @@ Das Modul berechnet einen gewichteten Regenwert in einem ausgewählten Bereich d
 
 * Berechnet in einem selbstbestimmten Bereich des Regenradars die momentane Regenmenge.
 * Auswahl zwischen bundesländischen oder bundesweiten Radarbildern.
+* Das Radarbild und die Berechnung findet alle 15 Min automatisch statt.
 
 
 ### 2. Voraussetzungen
@@ -50,7 +51,6 @@ Name        | Typ     | Beschreibung
 ----------- | ------- | ----------------
 Regenwert   | Integer | Gewichteter Wert der ausgewerteten Regenmenge. 6-stufige Gewichtung: Leichter Regen = Hellblau = 1 -> ... -> Starker Regen = Dunklblau = 6
 Radarbild   | Medien  | Radarbild des ausgewählten Kartenausschnitts
-UpdateTimer | Timer   | In welchem Intervall (Sekunden) das Radarbild und einhergehend die Berechnung aktualisiert wird. Alle 900 Sekunden (15 Min)
 
 ##### Profile:
 

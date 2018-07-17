@@ -95,7 +95,6 @@ class AnwesenheitsSimulation extends IPSModule
 		$dayStart = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 		$dayDiff = $day * 24 * 3600;
 		$dayData = array();
-		$values = array();
 
 		//Going through all linked variables
 		foreach($targetIDs as $targetID) {
@@ -120,9 +119,7 @@ class AnwesenheitsSimulation extends IPSModule
 		}
 
 		// return all values for linked variables for one day in a array
-		if (sizeof($values) > 0){
-			return array("Date" => date("d.m.Y", $dayStart - $dayDiff), "Data" => $dayData);
-		}
+		return array("Date" => date("d.m.Y", $dayStart - $dayDiff), "Data" => $dayData);
 
 	}
 

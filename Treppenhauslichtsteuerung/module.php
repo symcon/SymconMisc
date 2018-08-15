@@ -21,23 +21,32 @@
             $outputID = $this->ReadPropertyInteger("OutputID");
 
             $eid = @IPS_GetObjectIDByIdent("HoldEv", $this->InstanceID);
-            if ($eid === false){
-                $eid = IPS_CreateEvent(0 /* Trigger */);
-                IPS_SetParent($eid, $this->InstanceID);
-                IPS_SetName($eid, "On");
-                IPS_SetIdent($eid, "HoldEv");
-                IPS_SetEventActive($eid, true);
-                IPS_SetEventTriggerValue($eid, true);
-                IPS_SetEventTriggerSubsequentExecution($eid, true);
-                IPS_SetEventScript($eid, "THL_Start(\$_IPS['TARGET']);");
+            if ($eid === false) {
+                if($triggerID > 0) {
+                    $eid = IPS_CreateEvent(0 /* Trigger */);
+                    IPS_SetParent($eid, $this->InstanceID);
+                    IPS_SetName($eid, "On");
+                    IPS_SetIdent($eid, "HoldEv");
+                    IPS_SetEventActive($eid, true);
+                    IPS_SetEventTriggerSubsequentExecution($eid, true);
+                    IPS_SetEventScript($eid, "THL_Start(\$_IPS['TARGET']);");
+                }
+            } else {
+                if($triggerID == 0) {
+                    IPS_DeleteEvent($eid);
+                }
             }
-
+            
             if (($outputID != 0) && ($this->GetProfileAction(IPS_GetVariable($outputID)) < 10000)) {
                 echo $this->Translate("The output variable of the Treppenhauslichtsteuerung has no variable action. Please choose a variable with a variable action or add a variable action to the output variable.");
             }
 
-            IPS_SetEventActive($eid, !(($triggerID == 0) || ($outputID == 0)));
-            IPS_SetEventTrigger($eid, 4, $triggerID);
+            if ($eid) {
+                IPS_SetEventActive($eid, !(($triggerID == 0) || ($outputID == 0)));
+                IPS_SetEventTrigger($eid, 4, $triggerID);
+                IPS_SetEventTriggerValue($eid, true);
+            }
+
         }
 
         public function RequestAction($Ident, $Value) {

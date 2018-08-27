@@ -17,6 +17,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Energiezähler Impuls__ ([Dokumentation](EnergiezaehlerImpuls))  
 	Rechnet Zählerwerte in einen Momentanverbrauch um.
 
+- __Energiezähler Strom__ ([Dokumentation](EnergiezaehlerStrom))  
+	Rechnet aus Strom/Leistung den momentanen und kumlativen Stromverbrauch.
+
 - __Fertig-Melder__ ([Dokumentation](FertigMelder))  
 	Meldet nach einer Totzeit, nachdem ein Gerät einen gewissen Verbrauch unterschritten hat.
 
@@ -24,10 +27,10 @@ Folgende Module beinhaltet das SymconMisc Repository:
 	Empfängt Daten von der Geofency App für Apple iOS.
 
 - __Rechen-Modul__ ([Dokumentation](Rechenmodul))  
-    Berechnung verschiedener Hilfswerte auf Basis einer Gruppe von Variablen, z.B. Summer oder Durchschnitt.
+	Berechnung verschiedener Hilfswerte auf Basis einer Gruppe von Variablen, z.B. Summer oder Durchschnitt.
 
 - __RGB-Multiplexer__ ([Dokumentation](RGBMultiplexer))  
-    Verbindet einzelne R, G, B Kanäle zu einer Variable, welche mit dem Farbrad angesteuert werden kann.
+	Verbindet einzelne R, G, B Kanäle zu einer Variable, welche mit dem Farbrad angesteuert werden kann.
 
 - __Szenen-Steuerung__ ([Dokumentation](SzenenSteuerung))  
 	Speichert den Zustand einer belieben Anzahl an Aktoren und macht diese via WebFront/PHP-Funktion abrufbar.

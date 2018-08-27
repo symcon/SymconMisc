@@ -38,6 +38,9 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __Treppenhauslichtsteuerung__ ([Dokumentation](Treppenhauslichtsteuerung))  
 	Beim Aktivieren wird das Licht im Treppenhaus eingeschaltet und wird kurz nach Verlassen des Treppenhauses wieder ausgeschaltet.
 
+- __USB-Mapper__ ([Dokumentation](USBMapper))  
+	Setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
+
 - __Umrechnen__ ([Dokumentation](Umrechnen))  
 	Rechnet eine Variable über eine selbstdefinierte Formel um.
 
@@ -46,9 +49,6 @@ Folgende Module beinhaltet das SymconMisc Repository:
 
 - __Unwetterzentrale__ ([Dokumentation](Unwetterzentrale))  
 	Holt das aktuelle Regenradarbild von Wetteronline und wertet die Farbpixel der Regenmenge aus.
-
-- __USB-Mapper__ ([Dokumentation](USBMapper))  
-	Setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
 
 - __Verbrauch in Zeitspanne__ ([Dokumentation](VerbrauchZeitspanne))  
 	Berechnet den Verbrauch zwischen einem Start- und End-Datum

@@ -101,7 +101,7 @@ Höchsttemperatur | Float | Angabe in °C
 Tiefsttemperatur | Float | Angabe in °C
 
 ##### tägliche Vorhersage
-Die Variablen werden mit 1..4 (1 = morgen; 2 = übermorgen ... )
+Die Variablen werden mit 1..4d gekennzeichnet (1 = morgen; 2 = übermorgen ... )
 
 Name                    | Typ     | Beschreibung
 ----------------------- | ------- | ----------------

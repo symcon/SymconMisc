@@ -1,7 +1,7 @@
 # WundergroundWeather
 Das Modul fragt über die Wunderground API Wetterdaten ab.  
 Dafür ist eine Registrierung auf www.wunderground.com nötig, um einen API-Key zu erhalten.  
-Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stündliche Vorhersagen abgefragt werden.  
+Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch täglichen Vorhersagen abgefragt werden.  
 
 ### Inhaltverzeichnis
 
@@ -16,7 +16,7 @@ Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stü
 ### 1. Funktionsumfang
 
 * De-/Aktivierbare Abfrage von gewünschten Wetterdaten.
-* Einstellbarkeit der Menge der Unwetter, stündlichen und 12-stündlichen Daten.
+* Einstellbarkeit der Menge der Unwetter, stündlichen und täglichen Daten.
 * Timer für automatische Aktualisierung der Daten.
 
 ### 2. Voraussetzungen
@@ -51,7 +51,7 @@ Anzahl Vorhersagen (stdündlich)   | Die Anzahl der stündlichen Vorhersagen. Ma
 Anzahl Unwetterwarnung            | Die Anzahl der Unwetter Vorhersagen. Maximalwert: 6
 Update Wetterdaten                | Setzt den Timer in Minuten, wie oft die Wetterdaten aktualisiert werden sollen. (aktuell/stündlich/12-stündlich)
 Update Unwetterwarnungen          | Setzt den Timer in Minuten, wie oft die Unwetterwarnungen aktualisiert werden sollen.
-Button Update Wetter              | Aktualisiert die Wetterdaten (aktuell/stündlich/12-stündlich). Sofern alle drei Abfragen deaktiviert sind oder der Timer auf 0 gesetzt ist => Timer deaktiviert
+Button Update Wetter              | Aktualisiert die Wetterdaten (aktuell/stündlich/12-stündlich/täglich). Sofern alle drei Abfragen deaktiviert sind oder der Timer auf 0 gesetzt ist => Timer deaktiviert
 Button Update Unwetterwarnungen   | Aktualisiert die Unwetterwarnungen. Sofern die Unwetterwarnungsabfrage deaktiviert oder der Timer auf 0 gesetzt ist => Timer deaktiviert
 
 
@@ -94,6 +94,9 @@ Windrichtung        | Float   | Angabe in Himmelsrichtungen
 
 ##### 12-stündliche Vorhersage
 Die Variablen werden mit 12, 24..96h gekennzeichnet (12 = Vorhersage in 12 Stunden; 96 = Vorhersage in 96 Stunden)
+
+**Hinweis: die 12h-stündliche Vorhersage wird von WUnderground nicht mehr geliefert. Die Variablen bleiben aus Kompatibilitätsgründen erhalten, enthalten aber die Werte der täglichen Vorhersage.**
+
 
 Name             | Typ   | Beschreibung
 ---------------- | ----- | ----------------
@@ -141,7 +144,7 @@ WGW.ProbabilityOfRain | Integer
 ### 7. PHP-Befehlsreferenz
 
 `boolean WGW_UpdateWeatherData(integer $InstanzID);`  
-Aktualisiert die Wetterdaten (aktuell/stündlich/12-stündlich) des Weathergroundmoduls mit der InstanzID $InstanzID.  
+Aktualisiert die Wetterdaten (aktuell/stündlich/täglich) des Weathergroundmoduls mit der InstanzID $InstanzID.  
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
 `WGW_UpdateWeatherData(12345);`

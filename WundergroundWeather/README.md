@@ -43,8 +43,10 @@ API Key                           | Wunderground API-Key. Kann auf der Wundergro
 Aktuelle Daten abfragen           | Aktiviert die Abfrage der aktuellen Wetterdaten.
 Stündliche Vorhersage             | Aktiviert die Abfrage der stündlichen Vorhersage.
 12stündliche Vorhersage           | Aktiviert die Abfrage der 12-stündlichen Vorhersage.
+tägliche Vorhersage               | Aktiviert die Abfrage der täglichen Vorhersage.
 Unwetterwarnung abfragen          | Aktiviert die Abfrage der Unwetter Vorhersage.
 Anzahl Vorhersagen (12-stündlich) | Die Anzahl der 12-stündlichen Vorhersagen. Maximalwert: 8
+Anzahl Vorhersagen (täglich)      | Die Anzahl der täglichen Vorhersagen. Maximalwert: 4
 Anzahl Vorhersagen (stdündlich)   | Die Anzahl der stündlichen Vorhersagen. Maximalwert: 24
 Anzahl Unwetterwarnung            | Die Anzahl der Unwetter Vorhersagen. Maximalwert: 6
 Update Wetterdaten                | Setzt den Timer in Minuten, wie oft die Wetterdaten aktualisiert werden sollen. (aktuell/stündlich/12-stündlich)
@@ -84,9 +86,11 @@ Gegebenheit         | String  | Beschreibt das Wetter z.B. "Bedeckt", "Regen mö
 Luftfeuchtigkeit    | Float   | Angabe in %
 Luftdruck           | Float   | Angabe in hPa
 Regenmenge          | Float   | Angabe in Liter/m²
+Regenwahrscheinlichkeit | Integer   | Angabe in %
 Temperatur          | Float   | Angabe in °C
 Wolkendecke         | Integer | Angabe in %
 Windgeschwindigkeit | Float   | Angabe in km/h
+Windrichtung        | Float   | Angabe in Himmelsrichtungen
 
 ##### 12-stündliche Vorhersage
 Die Variablen werden mit 12, 24..96h gekennzeichnet (12 = Vorhersage in 12 Stunden; 96 = Vorhersage in 96 Stunden)
@@ -95,6 +99,20 @@ Name             | Typ   | Beschreibung
 ---------------- | ----- | ----------------
 Höchsttemperatur | Float | Angabe in °C
 Tiefsttemperatur | Float | Angabe in °C
+
+##### tägliche Vorhersage
+Die Variablen werden mit 1..4 (1 = morgen; 2 = übermorgen ... )
+
+Name                    | Typ     | Beschreibung
+----------------------- | ------- | ----------------
+Gegebenheit             | String  | Beschreibt das Wetter z.B. "Bedeckt", "Regen möglich"
+Höchsttemperatur        | Float   | Angabe in °C
+Tiefsttemperatur        | Float   | Angabe in °C
+Luftfeuchtigkeit        | Float   | Angabe in %
+Regenmenge              | Float   | Angabe in Liter/m²
+Regenwahrscheinlichkeit | Integer | Angabe in %
+Windgeschwindigkeit     | Float   | Angabe in km/h
+Windrichtung            | Float   | Angabe in Himmelsrichtungen
 
 ##### Unwetterwarnung
 
@@ -114,6 +132,7 @@ WGW.Sunray       | Float
 WGW.Visibility   | Float
 WGW.WindSpeedkmh | Float
 WGW.UVIndex      | Integer
+WGW.ProbabilityOfRain | Integer
 
 ### 6. WebFront
 

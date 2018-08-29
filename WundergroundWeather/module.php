@@ -184,6 +184,11 @@ class WundergroundWeather extends IPSModule {
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHourlyHoursCount"); $i++) {
 				if(isset($WeatherNextHours->hourly_forecast[$i-1])) {
+					$fc = $WeatherNextHours->hourly_forecast[$i-1];
+
+					$tstamp = date("d.m.Y H:i", $fc->FCTTIME->epoch);
+					$this->SendDebug("WGW Hourly" . $i, ' ab ' . $tstamp . ': ' . print_r($fc, true), 0);
+
                     SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->temp->metric));
                     SetValue($this->GetIDForIdent("HourlySky".$i."h"), $this->FixupInvalidValue($WeatherNextHours->hourly_forecast[$i-1]->sky));
                     SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->condition);
@@ -215,6 +220,11 @@ class WundergroundWeather extends IPSModule {
 
 			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHalfDailyHalfDaysCount") ; $i++) {
 				if(isset($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1])) {
+					$fc = $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1];
+
+					$tstamp = date("d.m.Y H:i", $fc->date->epoch);
+					$this->SendDebug("WGW HalfDays" . $i, ' ab ' . $tstamp . ': ' . print_r($fc, true), 0);
+
                     SetValue($this->GetIDForIdent("HalfDailyHighTemp" . (12 * $i) . "h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius));
                     SetValue($this->GetIDForIdent("HalfDailyLowTemp" . (12 * $i) . "h"), $this->FixupInvalidValue($WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius));
                 } else {
@@ -234,7 +244,9 @@ class WundergroundWeather extends IPSModule {
 				$vX = $i . "d";
 				if (isset($WeatherNextDays->forecast->simpleforecast->forecastday[$i-1])) {
 					$fc = $WeatherNextDays->forecast->simpleforecast->forecastday[$i-1];
-					$this->SendDebug("WGW Day" . $i, print_r($fc, true), 0);
+
+					$tstamp = date("d.m.Y H:i", $fc->date->epoch);
+					$this->SendDebug("WGW Days" . $i, ' ab ' . $tstamp . ': ' . print_r($fc, true), 0);
 
                     SetValue($this->GetIDForIdent("DailyCondition" . $vX), $fc->conditions);
                     SetValue($this->GetIDForIdent("DailyHighTemp" . $vX), $this->FixupInvalidValue($fc->high->celsius));

@@ -100,8 +100,12 @@
 			$context = stream_context_create($opts);
 
 			$remoteImage = "https://www.dwd.de/DWD/wetter/radar/rad_" . $this->ConvertArea($area) ."_akt.jpg";
-			$data = @file_get_contents($remoteImage, false, $context);
+			$data = file_get_contents($remoteImage, false, $context);
 
+			if($data === false) {
+				return;
+			}
+			
 			$this->SendDebug($http_response_header[0], $remoteImage, 0);
 			
 			if((strpos($http_response_header[0], "200") === false)) {

@@ -34,6 +34,7 @@
             } else {
                 if($triggerID == 0) {
                     IPS_DeleteEvent($eid);
+                    $eid = 0;
                 }
             }
             

@@ -91,11 +91,16 @@
 			
 			//Download picture
 			$opts = array(
-			'http'=>array(
-				'method'=>"GET",
-				'max_redirects'=>1,
-				'header'=>"User-Agent: "."Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
-			)
+				//Remove this after DWD has fixed their missing intermediate certificates!
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false
+                ),
+				'http'=>array(
+					'method'=>"GET",
+					'max_redirects'=>1,
+					'header'=>"User-Agent: "."Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+				)
 			);
 			$context = stream_context_create($opts);
 

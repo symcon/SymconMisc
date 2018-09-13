@@ -34,7 +34,7 @@ __Konfigurationsseite__:
 
 Name                      | Beschreibung
 ------------------------- | ---------------------------------
-Auswahl "Eingabesensor"   | Auswahl des Eingabesensors, bei dessen Aktivierung das Licht aktiviert werden soll, z.B. Bewegungssensor oder Taster
+Auswahl "Eingabesensor"   | Auswahl des Eingabesensors, bei dessen Aktivierung das Licht aktiviert werden soll, z.B. Bewegungssensor oder Taster - Das Licht wird aktiviert sobald die Variable auf einen Wert gesetzt wird, der nicht false, 0, oder "" ist.
 Dropdown "Dauer"          | Nachdem die ausgewählte Dauer ohne weitere Auslösung des Eingabesensors vergeht, wird das Licht deaktiviert
 Auswahl "Ausgabevariable" | Auswahl der Variablen, welche das Licht darstellt
 

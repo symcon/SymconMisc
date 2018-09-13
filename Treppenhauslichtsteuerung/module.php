@@ -18,36 +18,15 @@
             parent::ApplyChanges();
 
             $triggerID = $this->ReadPropertyInteger("InputTriggerID");
-            $outputID = $this->ReadPropertyInteger("OutputID");
 
-            $eid = @IPS_GetObjectIDByIdent("HoldEv", $this->InstanceID);
-            if ($eid === false) {
-                if($triggerID > 0) {
-                    $eid = IPS_CreateEvent(0 /* Trigger */);
-                    IPS_SetParent($eid, $this->InstanceID);
-                    IPS_SetName($eid, "On");
-                    IPS_SetIdent($eid, "HoldEv");
-                    IPS_SetEventActive($eid, true);
-                    IPS_SetEventTriggerSubsequentExecution($eid, true);
-                    IPS_SetEventScript($eid, "THL_Start(\$_IPS['TARGET']);");
-                }
-            } else {
-                if($triggerID == 0) {
-                    IPS_DeleteEvent($eid);
-                    $eid = 0;
-                }
-            }
-            
-            if (($outputID != 0) && ($this->GetProfileAction(IPS_GetVariable($outputID)) < 10000)) {
-                echo $this->Translate("The output variable of the Treppenhauslichtsteuerung has no variable action. Please choose a variable with a variable action or add a variable action to the output variable.");
-            }
+            $this->RegisterMessage($triggerID, 10603 /* VM_UPDATE */);
+        }
 
-            if ($eid) {
-                IPS_SetEventActive($eid, !(($triggerID == 0) || ($outputID == 0)));
-                IPS_SetEventTrigger($eid, 4, $triggerID);
-                IPS_SetEventTriggerValue($eid, true);
+        public function MessageSink ($TimeStamp, $SenderID, $Message, $Data) {
+            $triggerID = $this->ReadPropertyInteger("InputTriggerID");
+            if (($SenderID == $triggerID) && ($Message == 10603) && (boolval($Data[0]))) {
+                $this->Start();
             }
-
         }
 
         public function RequestAction($Ident, $Value) {

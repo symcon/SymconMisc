@@ -92,7 +92,7 @@
 			SetValue($this->CreateVariableByIdent($deviceID, "Latitude", "Latitude", 2), floatval($_POST['latitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), floatval($_POST['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_POST['date'])));
-			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_POST['id']), utf8_decode($_POST['name']), 0, "~Presence"), intval($_POST['entry']) > 0);
+			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_POST['id']), $_POST['name'], 0, "~Presence"), intval($_POST['entry']) > 0);
             if (isset($_POST['wifiBSSID'], $_POST['wifiSSID'])){ //ab Version 5.7 im Webhook enthalten
                 SetValue($this->CreateVariableByIdent($deviceID, "WifiBSSID", "WifiBSSID", 3), $_POST['wifiBSSID']);
                 SetValue($this->CreateVariableByIdent($deviceID, "WifiSSID", "WifiSSID", 3), $_POST['wifiSSID']);

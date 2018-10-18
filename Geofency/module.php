@@ -38,6 +38,14 @@
                 Array(337, "NNW",  "", -1)
             ), 1);
 
+            $this->RegisterProfileAssociation('Geofency.Motion', 'Motion', '', '', 0, 5, 0, 0,
+                [[0, 'Unbekannt', '', -1],
+                    [1, 'Stationär', '', -1],
+                    [2, 'Gehen', '', -1],
+                    [3, 'Laufen', '', -1],
+                    [4, 'Autofahren', '', -1],
+                    [5, 'Radfahren', '', -1]
+                    ], 1);
 		}
 
 		public function ApplyChanges() {
@@ -85,12 +93,17 @@
 			SetValue($this->CreateVariableByIdent($deviceID, "Longitude", "Longitude", 2), floatval($_POST['longitude']));
 			SetValue($this->CreateVariableByIdent($deviceID, "Timestamp", "Timestamp", 1, "~UnixTimestamp"), intval(strtotime($_POST['date'])));
 			SetValue($this->CreateVariableByIdent($deviceID, $this->ReduceGUIDToIdent($_POST['id']), utf8_decode($_POST['name']), 0, "~Presence"), intval($_POST['entry']) > 0);
+            if (isset($_POST['wifiBSSID'], $_POST['wifiSSID'])){ //ab Version 5.7 im Webhook enthalten
+                SetValue($this->CreateVariableByIdent($deviceID, "WifiBSSID", "WifiBSSID", 3), $_POST['wifiBSSID']);
+                SetValue($this->CreateVariableByIdent($deviceID, "WifiSSID", "WifiSSID", 3), $_POST['wifiSSID']);
+            }
 
             $currentLatitudeID = $this->CreateVariableByIdent($deviceID, "CurrentLatitude", "Current Latitude", 2);
             $currentLongitude = $this->CreateVariableByIdent($deviceID, "CurrentLongitude", "Current Longitude", 2);
             $directionID = $this->CreateVariableByIdent($deviceID, "Direction", "Direction", 1, "~WindDirection");
 			$orientationID = $this->CreateVariableByIdent($deviceID, "Orientation", "Orientation", 1, "Geofency.Orientation");
             $distanceID = $this->CreateVariableByIdent($deviceID, "Distance", "Distance", 2, "Geofency.Distance.m");
+            $motionID = $this->CreateVariableByIdent($deviceID, "Motion", "Motion", 1, "Geofency.Motion"); // kann ab Version 5.7 aktiviert werden
 
 			if(isset($_POST['currentLatitude']) && $_POST['currentLatitude'] > 0 && isset($_POST['currentLongitude']) && $_POST['currentLongitude'] > 0)
             {
@@ -107,13 +120,39 @@
                 SetValue($distanceID, 0);
             }
 
+            if(isset($_POST['motion'])){
+                SetValueInteger($motionID, $this->getValueOfMotion($_POST['motion']));
+            } else {
+                SetValueInteger($motionID, 0);
+            }
+
 		}
-		
-		private function ReduceGUIDToIdent($guid) {
-			return str_replace(Array("{", "-", "}"), "", $guid);
-		}
-		
-		private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {
+
+        private function getValueOfMotion($motion) {
+            switch ($motion){
+                case 'unknown':
+                    return 0;
+                case 'stationary':
+                    return 1;
+                case 'walking':
+                    return 2;
+                case 'running':
+                    return 3;
+                case 'automotive':
+                    return 4;
+                case 'cycling':
+                    return 5;
+                default:
+                    throw new InvalidArgumentException ('Unknown motion: ' . $motion);
+            }
+        }
+
+        private function ReduceGUIDToIdent($guid) {
+            return str_replace(Array("{", "-", "}"), "", $guid);
+        }
+
+
+        private function CreateVariableByIdent($id, $ident, $name, $type, $profile = "") {
 			 $vid = @IPS_GetObjectIDByIdent($ident, $id);
 			 if($vid === false) {
 				 $vid = IPS_CreateVariable($type);

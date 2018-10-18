@@ -94,6 +94,10 @@ Timestamp               | Integer         | UnixTimestamp der letzten Aktivität
 Beispielstandort (Büro) | Boolean         | Present oder Absent. Information wird von Gefency geliefert.
 aktuelle Longitude      | Float           | Aktueller Breitengrad
 aktuelle Latitude       | Float           | Aktueller Längengrad
+Motion                  | Integer         | aktueller Bewegungszustand wie Gehen, Autofahren etc.
+WifiBSSD                | String          | BSSID des verbundenen WLANs
+WifiSSID                | String          | SSID des verbundenen WLANs
+
 
 Beispiel:
 ![](Geofency-Variablen.png)

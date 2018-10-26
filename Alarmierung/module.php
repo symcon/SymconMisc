@@ -25,6 +25,7 @@ if (!defined('VM_UPDATE')) {
 			$this->EnableAction("Active");
 			$this->RegisterVariableBoolean("Alert", $this->Translate("Alert"), "~Alert", 0);
 			$this->EnableAction("Alert");
+			$this->RegisterVariableInteger("LastAlert",$this->Translate("Last Alert"),"",0);
 
 			$sensors = json_decode($this->ReadPropertyString("Sensors"));
 			foreach ($sensors as $sensor) {
@@ -54,16 +55,18 @@ if (!defined('VM_UPDATE')) {
 			if(!GetValue($this->GetIDForIdent("Active"))) {
 				return;
 			}
-			
+
 			switch($this->GetProfileName(IPS_GetVariable($SourceID))) {
 				case "~Window.Hoppe":
 					if($SourceValue == 0 || $SourceValue == 2) {
 						$this->SetAlert(true);
+                        $this->SetValue("LastAlert",$SourceID);
 					}
 					break;
 				case "~Window.HM":
 					if($SourceValue == 1 || $SourceValue == 2) {
 						$this->SetAlert(true);
+                        $this->SetValue("LastAlert",$SourceID);
 					}
 					break;
 				case "~Lock.Reversed":
@@ -72,11 +75,13 @@ if (!defined('VM_UPDATE')) {
 				case "~Window.Reversed":
 					if(!$SourceValue) {
 						$this->SetAlert(true);
+                        $this->SetValue("LastAlert",$SourceID);
 					}
 					break;
 				default:
 					if($SourceValue) {
 						$this->SetAlert(true);
+                        $this->SetValue("LastAlert",$SourceID);
 					}
 					break;
 			}

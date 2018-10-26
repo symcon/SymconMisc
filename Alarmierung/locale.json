@@ -4,6 +4,7 @@
 			"Converting successful! Please reopen this configuration page. If everything is correct, all events and categories of this instance can be deleted" : "Konvertierung erfolgreich! Bitte diese Konfigurationsseite neu öffnen. Wenn alles korrekt ist können die Kategorien und Ereignisse unterhalb der Instanz gelöscht werden.",
 			"Active" : "Aktiv",
 			"Alert" : "Alarm",
+			"Last Alert" : "Letzter Alarm",
 			"Convert" : "Konvertieren",
 			"Add/Delete sensor variables, which activate the alarm" : "Hinzufügen/Löschen von Sensorvariablen, welche den Alarm auslösen",
 			"Add/Delete target variables, which react on the alarm" : "Hinzufügen/Löschen von Zielvariablen, welche bei Alarm geschaltet werden",

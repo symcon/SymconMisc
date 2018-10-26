@@ -50,6 +50,7 @@ Name         | Typ       | Beschreibung
 ------------ | --------- | ----------------
 Active       | Boolean   | De-/Aktiviert die Alarmierung. Wird die Alarmierung deaktiviert, so wird auch der ggf. vorhandene Alarm deaktiviert.
 Alert        | Boolean   | De-/Aktiviert den Alarm.
+Last Alert   | Integer   | Die VariablenID, der letzten Sensors, der ausgelöst hat.
 
 ##### Profile:
 

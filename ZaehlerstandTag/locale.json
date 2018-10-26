@@ -1,0 +1,10 @@
+{
+	"translations": {
+		"de": { 
+			"Source": "Quelle",
+			"Value": "Wert",
+			"First reading of the day": "Erster Wert des Tages",
+			"Last reading of the day": "Letzter Wert des Tages"
+		}
+	}
+}

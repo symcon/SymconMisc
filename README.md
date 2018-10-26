@@ -62,5 +62,8 @@ Folgende Module beinhaltet das SymconMisc Repository:
 - __WundergroundWeather__ ([Dokumentation](WundergroundWeather))  
 	Holt Wetterdaten (Aktuell/stündlich/12-stündlich/Unwetterwarnung) via API von www.wunderground.com
 
+- __Zählerstand (Tag)__ ([Dokumentation](ZaehlerstandTag))  
+	Für ein ausgewähltes Datum kann der Zählerstand angezeigt werden
+
 - __Zähler-Überlauf__ ([Dokumentation](ZaehlerUeberlauf))  
 	Zähler, welche überlaufen können als Zähler dargestellt werden.

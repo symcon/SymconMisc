@@ -1,0 +1,14 @@
+{
+	"id": "{A3034F5D-0723-4FA9-A4DD-D17BF18FCD2A}",
+	"name": "ZaehlerstandTag",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"Zählerstand (Tag)"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "ZST"
+}

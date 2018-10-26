@@ -25,7 +25,7 @@ if (!defined('VM_UPDATE')) {
 			$this->EnableAction("Active");
 			$this->RegisterVariableBoolean("Alert", $this->Translate("Alert"), "~Alert", 0);
 			$this->EnableAction("Alert");
-			$this->RegisterVariableInteger("LastAlert", $this->Translate("Last Alert"), "" ,0);
+			$this->RegisterVariableInteger("LastAlert", $this->Translate("Last Alert"), "" , 0);
 
 			$sensors = json_decode($this->ReadPropertyString("Sensors"));
 			foreach ($sensors as $sensor) {

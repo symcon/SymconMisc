@@ -60,13 +60,13 @@ if (!defined('VM_UPDATE')) {
 				case "~Window.Hoppe":
 					if($SourceValue == 0 || $SourceValue == 2) {
 						$this->SetAlert(true);
-                        $this->SetValue("LastAlert",$SourceID);
+                        $this->SetValue("LastAlert", $SourceID);
 					}
 					break;
 				case "~Window.HM":
 					if($SourceValue == 1 || $SourceValue == 2) {
 						$this->SetAlert(true);
-                        $this->SetValue("LastAlert",$SourceID);
+                        $this->SetValue("LastAlert", $SourceID);
 					}
 					break;
 				case "~Lock.Reversed":
@@ -75,13 +75,13 @@ if (!defined('VM_UPDATE')) {
 				case "~Window.Reversed":
 					if(!$SourceValue) {
 						$this->SetAlert(true);
-                        $this->SetValue("LastAlert",$SourceID);
+                        $this->SetValue("LastAlert", $SourceID);
 					}
 					break;
 				default:
 					if($SourceValue) {
 						$this->SetAlert(true);
-                        $this->SetValue("LastAlert",$SourceID);
+                        $this->SetValue("LastAlert", $SourceID);
 					}
 					break;
 			}

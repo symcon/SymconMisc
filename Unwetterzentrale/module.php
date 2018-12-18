@@ -112,16 +112,9 @@
 				echo $http_response_header[0]." ".$data;
 				return;
 			}
-
-			file_put_contents($imagePath, $data);
-
-			$mid = $this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
-			
-			//Bild aktualisiern lassen in IP-Symcon
-			IPS_SendMediaEvent($mid);
 			
 			//Radarbild auswerten
-			$im = ImageCreateFromJPEG($imagePath);
+			$im = ImageCreateFromString($data);
 
 			//Stärken
 			$rainColors[6] = array(
@@ -208,7 +201,13 @@
 			imagedestroy($im);
 
 			SetValue($this->GetIDForIdent("RainValue"), $rainValue);
+
+			//Bild registrieren
+			$mid = $this->RegisterMediaImage("RadarImage", "Radarbild", $this->imagePath);
 			
+			//Bild aktualisiern lassen in IP-Symcon
+			IPS_SendMediaEvent($mid);
+
 		}
 		
 		private function RegisterMediaImage($Ident, $Name, $Path) {

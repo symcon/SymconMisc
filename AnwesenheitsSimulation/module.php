@@ -250,32 +250,32 @@ class AnwesenheitsSimulation extends IPSModule
 
 			if(!isset($NextSimulationData[$linkedTargetID])) {
 				$this->SendDebug("Update", "Device ".$linkedTargetID." has no simulation data for now!", 0);
-
-				$targetValue = false;
 			} else {
 				$this->SendDebug("Update", "Device ".$linkedTargetID." shall be ".(int)$NextSimulationData[$linkedTargetID]['currentValue']." since ".$NextSimulationData[$linkedTargetID]['currentTime']." and currently is ".(int)$v["VariableValue"], 0);
 
 				//Set variableValue, if there is a currentValue and its not the same as already set
 				$targetValue = $NextSimulationData[$linkedTargetID]['currentValue'];
-			}
 
-			if ($targetValue != $v["VariableValue"]) {
-
-				$o = IPS_GetObject($linkedTargetID);
-				if($v['VariableCustomAction'] != "") {
-					$actionID = $v['VariableCustomAction'];
-				} else {
-					$actionID = $v['VariableAction'];
+				//Only update if target differs
+				if ($targetValue != $v["VariableValue"]) {
+	
+					$o = IPS_GetObject($linkedTargetID);
+					if($v['VariableCustomAction'] != "") {
+						$actionID = $v['VariableCustomAction'];
+					} else {
+						$actionID = $v['VariableAction'];
+					}
+	
+					$this->SendDebug("Action", "Device ".$linkedTargetID." will be updated!", 0);
+	
+					if(IPS_InstanceExists($actionID)) {
+						IPS_RequestAction($actionID, $o['ObjectIdent'], $targetValue);
+					} else if(IPS_ScriptExists($actionID)) {
+						echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $linkedTargetID, "VALUE" => $targetValue));
+					}
+	
 				}
-
-				$this->SendDebug("Action", "Device ".$linkedTargetID." will be updated!", 0);
-
-				if(IPS_InstanceExists($actionID)) {
-					IPS_RequestAction($actionID, $o['ObjectIdent'], $targetValue);
-				} else if(IPS_ScriptExists($actionID)) {
-					echo IPS_RunScriptWaitEx($actionID, Array("VARIABLE" => $linkedTargetID, "VALUE" => $targetValue));
-				}
-
+			
 			}
 		}
 

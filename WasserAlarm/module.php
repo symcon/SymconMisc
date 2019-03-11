@@ -64,8 +64,8 @@ class WasserAlarm extends IPSModule {
 		
 		if ($this->ReadPropertyInteger("MeterID") != 0) {
 			$MeterValue = GetValue($this->ReadPropertyInteger("MeterID"));
-			$this->SetBuffer("LeakBuffer", $MeterValue);
-			$this->SetBuffer("PipeBurstBuffer", $MeterValue);
+			$this->SetBuffer("LeakBuffer", json_encode($MeterValue));
+			$this->SetBuffer("PipeBurstBuffer", json_encode($MeterValue));
 			$this->SetTimerInterval("UpdateLeak", $this->ReadPropertyInteger("LeakInterval") * 60 * 1000);
 			$this->SetTimerInterval("UpdatePipeBurst", $this->ReadPropertyInteger("PipeBurstInterval") * 60 * 1000);
 		}
@@ -75,17 +75,17 @@ class WasserAlarm extends IPSModule {
 	public function CheckAlert(String $ThresholdName, String $BufferName) {
 		
 		$MeterValue = GetValue($this->ReadPropertyInteger("MeterID"));
-		$ValueOld = $this->GetBuffer($BufferName);
+		$ValueOld = json_decode($this->GetBuffer($BufferName));
 		
 		// if Threshold is exceeded -> Set Alert
 		if (($MeterValue - $ValueOld) > GetValueFloat($this->GetIDForIdent($ThresholdName))) {
 			if ($ThresholdName == "LeakThreshold") {
 				SetValue($this->GetIDForIdent("Leak"), GetValueInteger($this->GetIDForIdent("Leak")) + 1);
-				$this->SetBuffer($BufferName, $MeterValue);
+				$this->SetBuffer($BufferName, json_encode($MeterValue));
 			}
 			elseif (GetValueFloat($this->GetIDForIdent($ThresholdName)) != 0) {
 				SetValue($this->GetIDForIdent("PipeBurst"), true);
-				$this->SetBuffer($BufferName, $MeterValue);
+				$this->SetBuffer($BufferName, json_encode($MeterValue));
 			}
 			
 		} 
@@ -93,11 +93,11 @@ class WasserAlarm extends IPSModule {
 		else {
 			if ($ThresholdName == "LeakThreshold") {
 				SetValue($this->GetIDForIdent("Leak"), 0);
-				$this->SetBuffer($BufferName, $MeterValue);
+				$this->SetBuffer($BufferName, json_encode($MeterValue));
 			}
 			elseif (GetValueFloat($this->GetIDForIdent($ThresholdName)) != 0) {
 				SetValue($this->GetIDForIdent("PipeBurst"), false);
-				$this->SetBuffer($BufferName, $MeterValue);
+				$this->SetBuffer($BufferName, json_encode($MeterValue));
 			}
 		}
 	}

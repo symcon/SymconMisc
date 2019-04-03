@@ -85,22 +85,33 @@
             $variableID = $this->ReadPropertyInteger("SourceVariable");
             $date = GetValue($this->GetIDForIdent("Date"));
 
-            $values = AC_GetLoggedValues($acID, $variableID, $date, $date + (24*3600) - 1, 0);
+            //Falls der "erste Wert" am Tag gesucht wird, betrachte erstmal nur den gewählten Tag.
+            //Falls dort keine Werte vorhanden sind sind nutzen wir die Funktionsweise von "letzter Wert" am Tag, der dann auch den Wert von Vortagen ausgibt.
+            if($this->ReadPropertyInteger("ValueType") == 0) {
+                $values = AC_GetLoggedValues($acID, $variableID, $date, $date + (24 * 3600) - 1, 0);
+            }
+
+            if($values === false) {
+                return;
+            }
+            
+            //Der letzte Wert am Tag fragt alle Werte bis zum Endzeitpunkt ab mit Limit 1.
+            //Da AC_GetLoggedValues immer den neusten Wert zuerst ausgibt ist es genau der Wert den wir suchen
+            if($this->ReadPropertyInteger("ValueType") == 1 || sizeof($values) == 0) {
+                $values = AC_GetLoggedValues($acID, $variableID, 0, $date + (24 * 3600) - 1, 1);
+            }
 
             if($values === false) {
                 return;
             }
 
             if(sizeof($values) == 0) {
-            	echo "Leider ist kein Wert für diesen Tag verfügbar";
+            	echo "Leider wurden noch keine Werte im Archiv gespeichert!";
             	return;
             }
-            
-            if($this->ReadPropertyInteger("ValueType") == 0) {
-                SetValue($this->GetIDForIdent("Reading"), $values[0]['Value']);
-            } else {
-                SetValue($this->GetIDForIdent("Reading"), $values[sizeof($values)-1]['Value']);
-            }
+
+            //Immer den letzten Wert im Array ausgeben
+            SetValue($this->GetIDForIdent("Reading"), $values[sizeof($values)-1]['Value']);
 
         }
 	

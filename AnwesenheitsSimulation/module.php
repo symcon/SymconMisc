@@ -246,11 +246,11 @@ class AnwesenheitsSimulation extends IPSModule
 			//resolve link to linked targetID
 			$linkedTargetID = IPS_GetLink($targetID)['TargetID'];
 
-			$v = IPS_GetVariable($linkedTargetID);
-
 			if(!isset($NextSimulationData[$linkedTargetID])) {
 				$this->SendDebug("Update", "Device ".$linkedTargetID." has no simulation data for now!", 0);
 			} else {
+				$v = IPS_GetVariable($linkedTargetID);
+
 				$this->SendDebug("Update", "Device ".$linkedTargetID." shall be ".(int)$NextSimulationData[$linkedTargetID]['currentValue']." since ".$NextSimulationData[$linkedTargetID]['currentTime']." and currently is ".(int)$v["VariableValue"], 0);
 
 				//Set variableValue, if there is a currentValue and its not the same as already set

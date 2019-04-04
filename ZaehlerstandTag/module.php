@@ -89,24 +89,22 @@
             //Falls dort keine Werte vorhanden sind sind nutzen wir die Funktionsweise von "letzter Wert" am Tag, der dann auch den Wert von Vortagen ausgibt.
             if($this->ReadPropertyInteger("ValueType") == 0) {
                 $values = AC_GetLoggedValues($acID, $variableID, $date, $date + (24 * 3600) - 1, 0);
-            }
-
-            if($values === false) {
-                return;
+                if($values === false) {
+                    return;
+                }
             }
             
             //Der letzte Wert am Tag fragt alle Werte bis zum Endzeitpunkt ab mit Limit 1.
             //Da AC_GetLoggedValues immer den neusten Wert zuerst ausgibt ist es genau der Wert den wir suchen
-            if($this->ReadPropertyInteger("ValueType") == 1 || sizeof($values) == 0) {
+            if($this->ReadPropertyInteger("ValueType") == 1 || (isset($values) && sizeof($values) == 0)) {
                 $values = AC_GetLoggedValues($acID, $variableID, 0, $date + (24 * 3600) - 1, 1);
+                if($values === false) {
+                    return;
+                }
             }
 
-            if($values === false) {
-                return;
-            }
-
-            if(sizeof($values) == 0) {
-            	echo "Leider wurden noch keine Werte im Archiv gespeichert!";
+            if(!isset($values) || sizeof($values) == 0) {
+            	echo "Leider wurden für den gewählten Zeitraum keine Werte im Archiv gespeichert!";
             	return;
             }
 

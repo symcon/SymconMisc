@@ -2,7 +2,8 @@
 	"translations": {
 		"de": { 
 			"Source": "Quelle",
-			"Maximum value": "Maximalwert"
+			"Maximum value": "Maximalwert",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/ZaehlerUeberlauf" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerUeberlauf"
 		}
 	}
 }

@@ -24,7 +24,8 @@
 			"Border 9": "Grenzwert 9",
 			"Border 10": "Grenzwert 10",
 			"Value": "Wert",
-			"Calculate": "Berechne"
+			"Calculate": "Berechne",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/Rechenmodule" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Rechenmodule"
 		}
 	}
 }

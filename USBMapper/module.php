@@ -134,7 +134,7 @@ class USBMapper extends IPSModule {
 			$selectUSB[] = array("label" => "". substr($usbDevice['product'], 0, 16) . "(now: ". $usbDevice['device'] .")", "value" => $usbDevice['id']);
 		}
 		
-		$formdata->elements[1]->columns[2]->edit->options = $selectUSB;
+		$formdata->elements[2]->columns[2]->edit->options = $selectUSB;
 		
 		if($this->ReadPropertyString("Devices") != "") {
 			//Annotate existing elements
@@ -150,13 +150,13 @@ class USBMapper extends IPSModule {
 						$rowColor = "#FFFF00";
 					}
 					
-					$formdata->elements[1]->values[] = Array(
+					$formdata->elements[2]->values[] = Array(
 						"Name" => IPS_GetName($device->ID),
 						"rowColor" => $rowColor,
 						
 					);
 				} else {
-					$formdata->elements[1]->values[] = Array(
+					$formdata->elements[2]->values[] = Array(
 						"Name" => "Not found!",
 						"rowColor" => "#FF0000",
 					);

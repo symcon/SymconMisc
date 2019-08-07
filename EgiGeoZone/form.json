@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+		{ "type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/EgiGeoZone" },
 		{ "name": "Username", "type": "ValidationTextBox", "caption": "Username" },
 		{ "name": "Password", "type": "PasswordTextBox", "caption": "Password" }
 	]

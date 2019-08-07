@@ -1,4 +1,7 @@
 # WundergroundWeather
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/WundergroundWeather_
+
 Das Modul fragt über die Wunderground API Wetterdaten ab.  
 Dafür ist eine Registrierung auf www.wunderground.com nötig, um einen API-Key zu erhalten.  
 Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch täglichen Vorhersagen abgefragt werden.  

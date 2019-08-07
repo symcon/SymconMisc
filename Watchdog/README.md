@@ -1,4 +1,7 @@
 # Watchdog
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/_
+
 Checkt ob verlinkte Variablen überfällig sind.
 Sind Variablen überfällig, wird ein Alarm gesetzt und eine Liste dieser im WebFront angezeigt.
 

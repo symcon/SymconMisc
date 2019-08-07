@@ -1,4 +1,7 @@
 # Szenensteuerung
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/_
+
 Die Szenensteuerung speichert Werte von verlinkten Variablen in Szenen und kann diese via Knopfdruck aus dem WebFront und mobilen Apps wieder aufrufen.  
 Die zu schaltenden Variablen müssen dazu im "Targets" Ordner verlinkt werden.
 

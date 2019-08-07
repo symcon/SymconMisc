@@ -1,4 +1,7 @@
 # Geofency
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Geofency_
+
 Das Modul dient zum empfangen von Geofency Daten.
 
 ### Inhaltverzeichnis

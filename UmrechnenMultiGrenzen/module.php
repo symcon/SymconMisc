@@ -42,6 +42,7 @@ class UmrechnenMultiGrenzen extends IPSModule {
 	public function GetConfigurationForm() {
 		
 		$arrayElements = array();
+		$arrayElements[] = array("type" => "Label", "caption" => "This module is no longer maintained. The current version can be found here: https://github.com/symcon/Rechenmodule");
 		$arrayElements[] = array("name" => "SourceVariable", "type" => "SelectVariable", "caption" => "Source");
 		$arrayElements[] = array("name" => "Border0", "type" => "NumberSpinner", "caption" => "Border 0", "digits" => 4);
 		

@@ -1,5 +1,7 @@
 {
-    "elements": [{
+    "elements": [
+        {"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/Rechenmodule"},
+        {
         "type": "Select",
         "name": "Calculation",
         "caption": "Calculation",

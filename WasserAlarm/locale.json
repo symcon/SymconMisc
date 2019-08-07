@@ -17,7 +17,8 @@
 			"Leak threshold" : "Leckage Grenzwert",
 			"Pipe burst" : "Rohrbruch",
 			"Pipe burst threshold" : "Rohrburch Grenzwert",
-			"Invalid Ident" : "Unzulässiger Ident"
+			"Invalid Ident" : "Unzulässiger Ident",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/WasserAlarm" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/WasserAlarm"
 		}
 	}
 }

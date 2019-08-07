@@ -7,7 +7,8 @@
 			"R": "R",
 			"G": "G",
 			"B": "B",
-			"Set RGB": "RGB setzen"
+			"Set RGB": "RGB setzen",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/RGBMultiplexer" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/RGBMultiplexer"
 		}
 	}
 }

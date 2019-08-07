@@ -1,4 +1,7 @@
 # Zählerstand (Tag)
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerstandTag_
+
 Das Modul erlaubt die Auswahl eines Datums und zeigt dann den jeweiligen (Ersten/Letzten) Zählerwert dieses Tages an.
 
 ### Inhaltverzeichnis

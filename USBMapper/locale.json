@@ -3,7 +3,9 @@
 		"de": { 
 			"Devices": "Geräte",
 			"Set port": "Gesetzter Port",
-			"This module is only functional with Linux and Raspberry Pi": "Dieses Modul funktioniert nur unter Linux und Raspberry Pi"
+			"This module is only functional with Linux and Raspberry Pi": "Dieses Modul funktioniert nur unter Linux und Raspberry Pi",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/USBMapper" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/USBMapper"
+			
 		}
 	}
 }

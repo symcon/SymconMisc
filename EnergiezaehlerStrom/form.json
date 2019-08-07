@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+		{"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/Energiezaehler"},
 		{ "type": "Select", "name": "SourceType", "caption": "Type",
 			"options": [
 				{ "label": "Power (W)", "value": 0 },

@@ -1,6 +1,7 @@
 {
   "elements":
   [
+  {"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/SzenenSteuerung"},
 	{ "type": "Label", "label": "Number of Scenes" },
 	{ "type": "NumberSpinner", "name": "SceneCount", "caption": "Scenes" }
   ]

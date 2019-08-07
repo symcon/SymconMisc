@@ -1,6 +1,7 @@
 {
   "elements":
   [
+	{"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/BildArchiv"},
 	{ "type": "Label", "label": "Image which should be copied." },
 	{ "type": "SelectMedia", "name": "ImageID", "caption": "Image" },
 	{ "type": "Label", "label": "Maximum quantity of images stored" },

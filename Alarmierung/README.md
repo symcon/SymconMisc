@@ -1,4 +1,7 @@
 # Alarmierung
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Alarmierung_
+
 Das Modul löst einen Alarm aus, wenn eine der Sensorenvariablen aktiv wird.
 Dabei werden Zielvariablen bei einem Alarm auf den maximalen Wert bzw. An (True) gesetzt.
 Ein einmal geschalteter Alarm wird nicht automatisch deaktiviert, dieser muss manuell zurückgesetzt werden.

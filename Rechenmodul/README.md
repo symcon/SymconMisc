@@ -1,4 +1,7 @@
 # Rechen-Modul
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Rechenmodule_
+
 Dieses Modul kann verschiedene Hilfsberechnungen auf einer Menge von Variablen durchführen, beispielsweise die Summe oder den Durchschnitt.
 
 ### Inhaltverzeichnis

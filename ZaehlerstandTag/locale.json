@@ -1,6 +1,7 @@
 {
 	"translations": {
-		"de": { 
+		"de": {
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/ZaehlerstandTag" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerstandTag",
 			"Source": "Quelle",
 			"Value": "Wert",
 			"First reading of the day": "Erster Wert des Tages",

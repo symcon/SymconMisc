@@ -1,4 +1,7 @@
 # Bildarchiv
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/BildArchiv_
+
 Das Modul kopiert bei Auslösung durch eine gewählte Variable ein Bild. Es ist einstellbar wieviele Bilder gespeichert werden sollen.
 
 ### Inhaltverzeichnis

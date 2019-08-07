@@ -1,4 +1,7 @@
 # EgiGeoZone
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/EgiGeoZone_
+
 Das Modul dient zum empfangen von EgiGeoZone Daten.
 
 ### Inhaltverzeichnis

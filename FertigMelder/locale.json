@@ -6,7 +6,8 @@
 			"Bordervalue which forces a reaction.": "Grenzwert bei dessen Unterschreitung reagiert werden soll.",
 			"Bordervalue": "Grenzwert",
 			"Elapsing-Time til 'Done'-Message": "Ablaufzeit bis 'Fertigmeldung'",
-			"Seconds": "Sekunden"
+			"Seconds": "Sekunden",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/FertigMelder" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/FertigMelder"
 		}
 	}
 }

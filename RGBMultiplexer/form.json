@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+		{"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/RGBMultiplexer"},
 		{ "name": "SourceVariableR", "type": "SelectVariable", "caption": "Variable (R)" },
 		{ "name": "SourceVariableG", "type": "SelectVariable", "caption": "Variable (G)" },
 		{ "name": "SourceVariableB", "type": "SelectVariable", "caption": "Variable (B)" }

@@ -1,4 +1,7 @@
 # EnergiezählerImpuls
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/_
+
 Das Modul berechnet via eines Stromzählers (z.B. S0-Anschluss) den momentanen und kumlativen Stromverbrauch.
 
 ### Inhaltverzeichnis

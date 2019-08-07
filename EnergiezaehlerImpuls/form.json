@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+		{"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/Energiezaehler"},
 		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
 		{ "name": "Impulses", "type": "NumberSpinner", "caption": "Pulses" },
 		{ "name": "Interval", "type": "IntervalBox", "caption": "Seconds" }

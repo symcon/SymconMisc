@@ -1,4 +1,7 @@
 # Unwetterzentrale
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Unwetterzentrale_
+
 Das Modul berechnet einen gewichteten Regenwert in einem ausgewählten Bereich des Radarbilds.
 
 ### Inhaltverzeichnis

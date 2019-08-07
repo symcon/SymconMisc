@@ -8,7 +8,8 @@
 			"Hours": "Stunden",
 			"Days": "Tage",
 			"Time value": "Zeitwert",
-			"Interval which checks the linked objects": "Intervall in dem die verlinkten Objekte geprüft werden"
+			"Interval which checks the linked objects": "Intervall in dem die verlinkten Objekte geprüft werden",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/Watchdog" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Watchdog"
 		}
 	}
 }

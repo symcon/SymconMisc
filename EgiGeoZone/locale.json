@@ -2,7 +2,8 @@
 	"translations": {
 		"de": { 
 			"Username": "Benutzername",
-			"Password": "Passwort"
+			"Password": "Passwort",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/EgiGeoZone" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/EgiGeoZone"
 		}
 	}
 }

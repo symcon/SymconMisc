@@ -1,4 +1,7 @@
 # EnergiezählerStrom
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Energiezaehler_
+
 Das Modul berechnet via eines Stromzählers (Strom oder Leistung) den momentanen und kumlativen Stromverbrauch.
 
 ### Inhaltverzeichnis

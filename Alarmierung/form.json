@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+      {"type" : "Label", "label" :"This module is no longer maintained. The current version can be found here: https://github.com/symcon/Alarmierung"},
       { "type": "Label", "label": "Add/Delete sensor variables, which activate the alarm" },
       {
         "type": "List",

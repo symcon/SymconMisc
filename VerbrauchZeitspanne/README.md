@@ -1,5 +1,7 @@
 # VerbrauchZeitspanne
 
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/VerbrauchZeitspanne_
+
 ### Inhaltverzeichnis
 
 1. [Funktionsumfang](#1-funktionsumfang)

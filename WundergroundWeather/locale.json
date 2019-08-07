@@ -24,7 +24,8 @@
 			"Update Stormwarning": "Unwetterwarnungen aktualisieren",
 			"Instance getting created!": "Instanz wird erstellt!",
 			"Instance is active!": "Instanz ist aktiv!",
-			"Instance is inactive!": "Instanz ist inaktiv"
+			"Instance is inactive!": "Instanz ist inaktiv",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/WundergroundWeather" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/WundergroundWeather"
 		}
 	}
 }

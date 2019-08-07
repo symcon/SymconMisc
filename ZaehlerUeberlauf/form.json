@@ -1,6 +1,7 @@
 {
 	"elements":
 	[
+		{"type": "Label", "label": "This module is no longer maintained. The current version can be found here: https://github.com/symcon/ZaehlerUeberlauf"},
 		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
 		{ "name": "MaximumValue", "type": "NumberSpinner", "caption": "Maximum value" }
 	]

@@ -1,9 +1,11 @@
 {
 	"translations": {
-		"de": { 
+		"de": {
+			 
 			"Source": "Quelle",
 			"Pulses": "Impulse",
-			"Seconds": "Sekunden"
+			"Seconds": "Sekunden",
+			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/Energiezaehler" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/EnergieZaehler"
 		}
 	}
 }

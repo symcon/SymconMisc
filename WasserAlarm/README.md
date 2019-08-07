@@ -1,4 +1,7 @@
 # WasserAlarm
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/WasserAlarm_
+
 Das Modul dient dazu einen unnatürlich hohen Wasserverbrauch festzustellen. Es reagiert auf eine Zählervariable und schaltet unter bestimmten Bedingungen einen Alarm.
 Es gibt zwei Alarmvariablen.  
 Einen Rohrbruch-Alarm, welcher schaltet wenn große Mengen auf einmal fließen.

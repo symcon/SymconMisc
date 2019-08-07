@@ -1,4 +1,7 @@
 # Treppenhauslichtsteuerung
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Treppenhauslichtsteuerung_
+
 Nachdem ein Auslöser aktiviert wird, geht das Licht im Treppenhaus an. Wird das Auslöser wiederholt aktiviert bleibt das Licht an. Erst wenn für eine vorgegebene Zeit keine weitere Auslösung stattfindet wird das Licht ausgeschaltet.
 
 

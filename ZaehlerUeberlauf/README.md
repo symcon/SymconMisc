@@ -1,4 +1,7 @@
 # Zählerüberlauf
+
+_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerUeberlauf_
+
 Das Modul stellt überlaufende Zähler als kontinuierliche Zähler dar.
 
 ### Inhaltverzeichnis

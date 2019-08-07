@@ -1,5 +1,8 @@
 # SymconMisc
 
+_Diese Module werden nicht mehr gepflegt._
+_Die entsprechende aktuelle Version ist im Modul Store zu finden._
+
 Folgende Module beinhaltet das SymconMisc Repository:
 
 - __Alarmierung__ ([Dokumentation](Alarmierung))  

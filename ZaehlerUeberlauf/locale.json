@@ -3,7 +3,7 @@
 		"de": { 
 			"Source": "Quelle",
 			"Maximum value": "Maximalwert",
-			"This module is no longer maintained. The current version can be found here: https://github.com/symcon/ZaehlerUeberlauf" : "Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerUeberlauf"
+			"The current version of this module is no longer available in SymconMisc.\nThe current version can be found in the Module Store, available since version 5.1.\n Alternatively you can install it via Module Control: https://github.com/symcon/ZaehlerUeberlauf" : "Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/ZaehlerUeberlauf"
 		}
 	}
 }

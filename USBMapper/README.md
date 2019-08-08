@@ -1,4 +1,7 @@
 # USB Mapper
+
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/USBMapper_
+
 Das Modul setzt automatisch den korrekten USB-Port zu den eingetragenen Serial-Ports.
 
 ### Inhaltverzeichnis

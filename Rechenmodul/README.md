@@ -1,6 +1,6 @@
 # Rechen-Modul
 
-_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/Rechenmodule_
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/Rechenmodule_
 
 Dieses Modul kann verschiedene Hilfsberechnungen auf einer Menge von Variablen durchführen, beispielsweise die Summe oder den Durchschnitt.
 

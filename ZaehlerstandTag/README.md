@@ -1,6 +1,6 @@
 # Zählerstand (Tag)
 
-_Dieses Modul wird nicht mehr gepflegt. Die aktuelle Version ist hier zu finden: https://github.com/symcon/ZaehlerstandTag_
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/ZaehlerstandTag_
 
 Das Modul erlaubt die Auswahl eines Datums und zeigt dann den jeweiligen (Ersten/Letzten) Zählerwert dieses Tages an.
 

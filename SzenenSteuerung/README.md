@@ -1,6 +1,8 @@
 # Szenensteuerung
 
-_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/SzenenSteuerung_
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar._
+_Die aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store._
+_Alternativ können Sie es über das Module Control installieren: https://github.com/symcon/SzenenSteuerung_
 
 Die Szenensteuerung speichert Werte von verlinkten Variablen in Szenen und kann diese via Knopfdruck aus dem WebFront und mobilen Apps wieder aufrufen.  
 Die zu schaltenden Variablen müssen dazu im "Targets" Ordner verlinkt werden.

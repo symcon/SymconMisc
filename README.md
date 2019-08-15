@@ -1,8 +1,8 @@
 # SymconMisc
 
 _Die aktuellen Versionen dieser Module sind nicht mehr in SymconMisc verfügbar._
-_Die entsprechend aktuellen Versionen der Module sind im Modul Store zu finden._
-_Nähere Informationen gibt es in den jeweiligen Dokumentationen der Einzel-Module._
+_Die entsprechend aktuellen Versionen der Module finden Sie im Modul Store._
+_Nähere Informationen fidnen Sie in den jeweiligen Dokumentationen der Einzel-Module._
 
 Folgende Module beinhaltet das SymconMisc Repository:
 

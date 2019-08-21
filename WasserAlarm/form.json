@@ -1,6 +1,7 @@
 {
   "elements":
   [
+	{"type": "Label", "label": "The current version of this module is no longer available in SymconMisc.\nThe current version can be found in the Module Store, available since version 5.1.\n Alternatively you can install it via Module Control: https://github.com/symcon/WasserAlarm"},
 	{ "type": "Label", "label": "Metervalue which should be used" },
 	{ "type": "SelectVariable", "name": "MeterID", "caption": "Metervariable" }, 
 	{ "type": "Label", "label": "Leak timer interval" },

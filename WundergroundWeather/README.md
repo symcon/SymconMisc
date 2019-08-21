@@ -1,4 +1,9 @@
 # WundergroundWeather
+
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar._
+_Die aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store._
+_Alternativ können Sie es über das Module Control installieren: https://github.com/symcon/WundergroundWeather_
+
 Das Modul fragt über die Wunderground API Wetterdaten ab.  
 Dafür ist eine Registrierung auf www.wunderground.com nötig, um einen API-Key zu erhalten.  
 Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch täglichen Vorhersagen abgefragt werden.  

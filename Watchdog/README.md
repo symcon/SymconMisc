@@ -1,4 +1,9 @@
 # Watchdog
+
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar._
+_Die aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store._
+_Alternativ können Sie es über das Module Control installieren: https://github.com/symcon/Watchdog_
+
 Checkt ob verlinkte Variablen überfällig sind.
 Sind Variablen überfällig, wird ein Alarm gesetzt und eine Liste dieser im WebFront angezeigt.
 

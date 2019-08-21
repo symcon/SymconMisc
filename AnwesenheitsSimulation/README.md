@@ -1,4 +1,9 @@
 # Anwesenheits-Simulation
+
+_Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar._
+_Die aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store._
+_Alternativ können Sie es über das Module Control installieren: https://github.com/symcon/AnwesenheitsSimulation_
+
 Simuliert die Anwesenheit von Personen im Haushalt.
 Das Modul bezieht dafür zufällig die Tagesdaten von einem der letzten 4 identischen Wochentagen. Sind an keinem dieser 4 Tage genug Schaltvorgänge geloggt, wird zufällig einer der letzten 30 Tage gewählt.  
 Ist auch innerhalb dieser 30 Tage kein gültiger Tagesdatensatz vorhanden, ist keine Simulation möglich. Sollte keine Simulation möglich sein, wird dies als Nachricht in der Stringvariable "Simulationsquelle (Tag)" angezeigt.

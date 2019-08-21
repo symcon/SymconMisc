@@ -9,7 +9,8 @@
 			"Add/Delete target variables, which react on the alarm" : "Hinzufügen/Löschen von Zielvariablen, welche bei Alarm geschaltet werden",
 			"Sensorvariables" : "Sensorvariablen",
 			"Targetvariables" : "Zielvariablen",
-			"Not found!" : "Nicht gefunden!"
+			"Not found!" : "Nicht gefunden!",
+			"The current version of this module is no longer available in SymconMisc.\nThe current version can be found in the Module Store, available since version 5.1.\n Alternatively you can install it via Module Control: https://github.com/symcon/Alarmierung" : "Die aktuelle Version dieses Moduls ist nicht mehr in SymconMisc verfügbar.\nDie aktuelle Version finden Sie in dem seit Version 5.1 verfügbaren Module Store.\nAlternativ können Sie es über das Module Control installieren: https://github.com/symcon/Alarmierung" 
 		}
 	}
 }

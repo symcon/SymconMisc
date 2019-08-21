@@ -259,13 +259,13 @@ if (!defined('VM_UPDATE')) {
 						$rowColor = "#FFC0C0";
 					}				
 						
-					$formdata->elements[1]->values[] = Array(
+					$formdata->elements[2]->values[] = Array(
 						"Name" => IPS_GetName($sensor->ID),
 						"Status" => $status,
 					);
 					
 				} else {
-					$formdata->elements[1]->values[] = Array(
+					$formdata->elements[2]->values[] = Array(
 						"Name" => $this->Translate("Not found!"),
 						"rowColor" => "#FFC0C0",
 					);
@@ -288,13 +288,13 @@ if (!defined('VM_UPDATE')) {
 						$rowColor = "#FFC0C0";
 					}
 
-					$formdata->elements[3]->values[] = Array(
+					$formdata->elements[4]->values[] = Array(
 						"Name" => IPS_GetName($target->ID),
 						"Status" => $status,
 						"rowColor" => $rowColor,
 					);
 				} else {
-					$formdata->elements[3]->values[] = Array(
+					$formdata->elements[4]->values[] = Array(
 						"Name" => $this->Translate("Not found!"),
 						"rowColor" => "#FFC0C0",
 					);
